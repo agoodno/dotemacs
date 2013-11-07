@@ -1,6 +1,6 @@
 *.elc
 ac-comphist.dat
+places
 auto-save-list/*
 backups/*
 elpa/
-places/
