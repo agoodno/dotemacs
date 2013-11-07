@@ -39,6 +39,9 @@
 (require 'bar-cursor)
 (bar-cursor-mode 1)
 
+;; paste and backspace operations delete the selection and "pastes over" it
+(delete-selection-mode t)
+
 ;;Stop splash screen
 (setq inhibit-splash-screen t)
 

@@ -1,17 +1,20 @@
-(setq erc-autojoin-channels-alist '(("wicourts.gov" "#ccap3" "#cc")))
+(setq erc-autojoin-channels-alist
+      '(("freenode.net" "#emacs")
+        ("wicourts.gov" "#ccap3")))
 
 (setq erc-user-full-name "Andrew Goodnough")
 (setq erc-email-userid "andrew.goodnough@wicourts.gov")
 
 (erc :server "irc.wicourts.gov" :port 6667 :nick "agoodno")
+(erc :server "irc.freenode.net" :port 6667 :nick "agoodno")
 
 (setq erc-save-buffer-on-part nil
       erc-save-queries-on-quit nil
       erc-log-write-after-send t
       erc-log-write-after-insert t)
 
-(setq erc-autoaway-idle-seconds 300)
-(setq erc-auto-set-away t)
+;(setq erc-autoaway-idle-seconds 6000)
+;(setq erc-auto-set-away nil)
 ;;(setq erc-keywords '("agoodno*[,:;]" "\\bagoodno[!?.]+$" "codecommit*[,:;]" "\\bcodecommit[!?.]+$"))
 (setq erc-keywords '(".*agoodno.*" "^codecommit.*$"))
 ;;(setq erc-keywords '("\\b\\(andy\\|agoodno\\)[!?.,;]*$" "\\(andy\\|agoodno\\)[:!?,;]+" "\\b\\([hH]ey\\|[hH]i\\) \\(andy\\|agoodno\\|man\\)\\b"))
@@ -28,7 +31,7 @@
 (defvar my-erc-page-timeout 60
   "Number of seconds that must elapse between notifications from the same person.")
 
-(defun my-erc-page-popup-notification (nick, message)
+(defun my-erc-page-popup-notification (message)
   (when window-system
     ;; must set default directory, otherwise start-process is unhappy
     ;; when this is something remote or nonexistent
@@ -66,7 +69,7 @@ matches a regexp in `erc-keywords'."
              (null (string-match "\\(bot\\|serv\\)!" nick))
              ;; or from those who abuse the system
              (my-erc-page-allowed nick))
-    (my-erc-page-popup-notification nick message)))
+    (my-erc-page-popup-notification message)))
 (add-hook 'erc-text-matched-hook 'my-erc-page-me)
 
 (defun my-erc-page-me-PRIVMSG (proc parsed)
@@ -76,9 +79,33 @@ matches a regexp in `erc-keywords'."
     (when (and (erc-current-nick-p target)
                (not (erc-is-message-ctcp-and-not-action-p msg))
                (my-erc-page-allowed nick))
-      (my-erc-page-popup-notification nick msg)
+      (my-erc-page-popup-notification msg)
       nil)))
 (add-hook 'erc-server-PRIVMSG-functions 'my-erc-page-me-PRIVMSG)
 
 ;(eval-after-load 'erc-track-mode
 ;  '(define-key erc-mode-map (kbd "C-x C-u") 'browse-url))
+
+(and
+ (require 'erc-highlight-nicknames)
+; (add-to-list 'erc-modules 'autoaway)
+ (add-to-list 'erc-modules 'autojoin)
+ (add-to-list 'erc-modules 'button)
+ (add-to-list 'erc-modules 'completion)
+ (add-to-list 'erc-modules 'fill)
+ (add-to-list 'erc-modules 'highlight-nicknames)
+ (add-to-list 'erc-modules 'irccontrols)
+ (add-to-list 'erc-modules 'list)
+ (add-to-list 'erc-modules 'log)
+ (add-to-list 'erc-modules 'match)
+ (add-to-list 'erc-modules 'menu)
+ (add-to-list 'erc-modules 'move-to-prompt)
+ (add-to-list 'erc-modules 'netsplit)
+ (add-to-list 'erc-modules 'networks)
+ (add-to-list 'erc-modules 'noncommands)
+ (add-to-list 'erc-modules 'notify)
+ (add-to-list 'erc-modules 'readonly)
+ (add-to-list 'erc-modules 'ring)
+ (add-to-list 'erc-modules 'stamp)
+ (add-to-list 'erc-modules 'track )
+ (erc-update-modules))
