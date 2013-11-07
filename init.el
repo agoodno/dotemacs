@@ -33,6 +33,30 @@
 ;; sdds .emacs.d directory to the load path
 (add-to-list 'load-path dotfiles-dir)
 
+;; You can keep system- or user-specific customizations here
+(setq agg-system-config (concat user-emacs-directory system-name ".el")
+      agg-user-config (concat user-emacs-directory user-login-name ".el")
+      agg-system-dir (concat user-emacs-directory system-name)
+      agg-user-dir (concat user-emacs-directory user-login-name))
+
+(defun eval-after-init (form)
+  "Add `(lambda () FORM)' to `after-init-hook'.
+
+If Emacs has already finished initialization, also eval FORM immediately."
+  (let ((func (list 'lambda nil form)))
+    (add-hook 'after-init-hook func)
+    (when after-init-time
+      (eval form))))
+
+(eval-after-init
+ '(progn
+    (when (file-exists-p agg-system-config) (load agg-system-config))
+    (when (file-exists-p agg-user-config) (load agg-user-config))
+    (when (file-exists-p agg-system-dir)
+      (mapc 'load (directory-files agg-system-dir t "^[^#].*el$")))
+    (when (file-exists-p agg-user-dir)
+      (mapc 'load (directory-files agg-user-dir t "^[^#].*el$")))))
+
 (eval-after-load 'magit
   '(progn
      (set-face-foreground 'magit-diff-add "green4")
