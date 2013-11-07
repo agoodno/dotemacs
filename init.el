@@ -13,8 +13,7 @@
 (when (not package-archive-contents)
   (package-refresh-contents))
 
-(defvar my-packages '(ack bar-cursor bitlbee color-theme-solarized
-                          color-theme-emacs-revert-theme color-theme ensime ido js2-mode magit org paredit
+(defvar my-packages '(ack bar-cursor bitlbee ensime ido js2-mode magit org paredit
                           scala-mode2 yasnippet)
   "A list of packages to ensure are installed at launch.")
 
@@ -34,10 +33,14 @@
 (add-to-list 'load-path dotfiles-dir)
 
 ;; You can keep system- or user-specific customizations here
-(setq agg-system-config (concat user-emacs-directory system-name ".el")
-      agg-user-config (concat user-emacs-directory user-login-name ".el")
-      agg-system-dir (concat user-emacs-directory system-name)
-      agg-user-dir (concat user-emacs-directory user-login-name))
+(string-match "^\\([^\\.]+\\)\\(\\.\\(.*\\)\\)?$" (system-name))
+(defconst host-name (replace-match "\\1" t nil (system-name))
+  "Host part of function `system-name'.")
+
+(setq agg-system-config (concat dotfiles-dir host-name ".el")
+      agg-user-config (concat dotfiles-dir user-login-name ".el")
+      agg-system-dir (concat dotfiles-dir host-name)
+      agg-user-dir (concat dotfiles-dir user-login-name))
 
 (defun eval-after-init (form)
   "Add `(lambda () FORM)' to `after-init-hook'.
