@@ -83,17 +83,12 @@ matches a regexp in `erc-keywords'."
       nil)))
 (add-hook 'erc-server-PRIVMSG-functions 'my-erc-page-me-PRIVMSG)
 
-;(eval-after-load 'erc-track-mode
-;  '(define-key erc-mode-map (kbd "C-x C-u") 'browse-url))
-
 (and
- (require 'erc-highlight-nicknames)
 ; (add-to-list 'erc-modules 'autoaway)
  (add-to-list 'erc-modules 'autojoin)
  (add-to-list 'erc-modules 'button)
  (add-to-list 'erc-modules 'completion)
  (add-to-list 'erc-modules 'fill)
- (add-to-list 'erc-modules 'highlight-nicknames)
  (add-to-list 'erc-modules 'irccontrols)
  (add-to-list 'erc-modules 'list)
  (add-to-list 'erc-modules 'log)

@@ -122,20 +122,21 @@
 
 (setq split-width-threshold nil)
 
+(put 'downcase-region 'disabled nil)
+(put 'upcase-region 'disabled nil)
 
+;; Add color to a shell running in emacs 'M-x shell'
+(autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
+(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
+
+;; Makes the prompt read-only running in emacs 'M-x shell'
+(add-hook 'shell-mode-hook
+     '(lambda () (toggle-truncate-lines 1)))
+(setq comint-prompt-read-only t)
 
 ;; ;; scala mode hooks
 ;; (add-hook 'scala-mode-hook 'scala-turnoff-indent-tabs-mode)
 ;; ;; end Scala Mode
-
-;; ;; Add color to a shell running in emacs 'M-x shell'
-;; (autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
-;; (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
-
-;; ;; Makes the prompt read-only running in emacs 'M-x shell'
-;; (add-hook 'shell-mode-hook
-;;      '(lambda () (toggle-truncate-lines 1)))
-;; (setq comint-prompt-read-only t)
 
 ;; ;; Scala Mode
 ;; (add-to-list 'load-path "~/.emacs.d/custom/scala-mode")
@@ -145,14 +146,6 @@
 ;;   (setq indent-tabs-mode nil))
 ;; ;; end Scala Mode
 
-;; Ensime Mode
-;(add-to-list 'load-path "~/.emacs.d/custom/ensime/elisp/")
-;(require 'ensime)
-
-;; Load ENSIME
-;(add-to-list 'load-path "/home/agoodno/.emacs.d/ensime/elisp/")
-;(require 'ensime)
-
 ;; This step causes the ensime-mode to be started whenever
 ;; scala-mode is started for a buffer. You may have to customize this step
 ;; if you're not using the standard scala mode.
@@ -160,15 +153,7 @@
 
 ;; MINI HOWTO:
 ;; Open .scala file. M-x ensime (once per project)
-
 ;; end ENSIME
-
-;(add-to-list 'load-path
-;             "~/.emacs.d/color-themes/emacs-color-theme-solarized")
-;(require 'color-theme-solarized)
-;(load-file "~/.emacs.d/color-themes/color-theme-blackboard.el")
-
-;(load-file "~/.emacs.d/custom/javascript.el")
 
 ;; Create a symbol by which this script can be referenced by a require
 (provide 'agg-misc)
