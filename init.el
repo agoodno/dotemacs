@@ -76,7 +76,7 @@ If Emacs has already finished initialization, also eval FORM immediately."
   '(progn
      (set-face-foreground 'magit-diff-add "green4")
      (set-face-foreground 'magit-diff-del "red3")
-     (set-face-background 'magit-item-highlight "#333333")
+     (set-face-background 'magit-item-highlight "#000000")
      (set-face-background 'diff-file-header "#000000")
      (set-face-foreground 'diff-context "#777777")
      (set-face-background 'diff-added "#000000")
