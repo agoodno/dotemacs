@@ -19,10 +19,6 @@
 ;; Turn on the menu bar for exploring new modes
 (global-set-key (kbd "C-<f10>") 'menu-bar-mode)
 
-;; ;; Font size
-;; (define-key global-map (kbd "C-+") 'text-scale-increase)
-;; (define-key global-map (kbd "C--") 'text-scale-decrease)
-
 ;; Use regex searches by default.
 (global-set-key (kbd "C-s") 'isearch-forward-regexp)
 (global-set-key (kbd "\C-r") 'isearch-backward-regexp)
@@ -115,6 +111,8 @@
 
 (global-set-key [f9] 'undo)
 
+(global-set-key [f10] 'shell)
+
 (global-set-key [f12] 'toggle-truncate-lines)
 
 (defun back-window ()
@@ -130,26 +128,6 @@
 (global-set-key (kbd "M-n") 'next-buffer)
 
 (global-set-key (kbd "C-c g") 'magit-status)
-
-(defun alt-shell-dwim (arg)
-  "Run an inferior shell like `shell'. If an inferior shell as its I/O
-through the current buffer, then pop the next buffer in `buffer-list'
-whose name is generated from the string \"*shell*\". When called with
-an argument, start a new inferior shell whose I/O will go to a buffer
-named after the string \"*shell*\" using `generate-new-buffer-name'."
-  (interactive "P")
-  (let* ((shell-buffer-list
-          (let (blist)
-            (dolist (buff (buffer-list) blist)
-              (when (string-match "^\\*shell\\*" (buffer-name buff))
-                (setq blist (cons buff blist))))))
-         (name (if arg
-                   (generate-new-buffer-name "*shell*")
-                 (car shell-buffer-list))))
-    (shell name)))
-
-;; http://www.emacswiki.org/emacs/ShellMode#toc3
-;; (global-set-key [f7] 'alt-shell-dwim)
 
 ;; Create a symbol by which this script can be referenced by a require
 (provide 'agg-bindings)

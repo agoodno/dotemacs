@@ -13,7 +13,7 @@
 (when (not package-archive-contents)
   (package-refresh-contents))
 
-(defvar my-packages '(ack bar-cursor bitlbee ensime erc erc-hl-nicks
+(defvar my-packages '(ack bar-cursor bitlbee blank-mode ensime erc erc-hl-nicks
                           ercn ido js2-mode magit org paredit
                           scala-mode2 yasnippet)
   "A list of packages to ensure are installed at launch.")
@@ -30,14 +30,25 @@
 (setq dotfiles-dir (file-name-directory
                     (or (buffer-file-name) load-file-name)))
 
-;; sdds .emacs.d directory to the load path
+;; adds .emacs.d directory to the load path
 (add-to-list 'load-path dotfiles-dir)
 
-;; You can keep system- or user-specific customizations here
 (string-match "^\\([^\\.]+\\)\\(\\.\\(.*\\)\\)?$" (system-name))
 (defconst host-name (replace-match "\\1" t nil (system-name))
   "Host part of function `system-name'.")
 
+(cond
+ ((string-equal system-type "darwin")
+  (progn
+    (message "Mac OS X")))
+ ((string-equal system-type "gnu/linux")
+  (progn
+    (message "Linux")))
+ ((string-equal system-type "windows-nt")
+  (progn
+    (message "Windows"))))
+
+;; you can keep system- or user-specific customizations here
 (setq agg-system-config (concat dotfiles-dir host-name ".el")
       agg-user-config (concat dotfiles-dir user-login-name ".el")
       agg-system-dir (concat dotfiles-dir host-name)
@@ -64,7 +75,12 @@ If Emacs has already finished initialization, also eval FORM immediately."
 (eval-after-load 'magit
   '(progn
      (set-face-foreground 'magit-diff-add "green4")
-     (set-face-foreground 'magit-diff-del "red3")))
+     (set-face-foreground 'magit-diff-del "red3")
+     (set-face-background 'magit-item-highlight "#333333")
+     (set-face-background 'diff-file-header "#000000")
+     (set-face-foreground 'diff-context "#777777")
+     (set-face-background 'diff-added "#000000")
+     (set-face-background 'diff-removed "#000000")))
 
 ;; loads agg customizations
 (require 'agg-misc)
