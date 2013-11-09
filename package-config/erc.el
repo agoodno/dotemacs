@@ -1,8 +1,4 @@
-(setq erc-autojoin-channels-alist
-      '(("freenode.net" "#emacs")))
-
 (setq erc-user-full-name "Andrew Goodnough")
-(setq erc-email-userid "andrew.goodnough@wicourts.gov")
 
 (erc :server "irc.freenode.net" :port 6667 :nick "agoodno")
 
@@ -10,13 +6,6 @@
       erc-save-queries-on-quit nil
       erc-log-write-after-send t
       erc-log-write-after-insert t)
-
-;(setq erc-autoaway-idle-seconds 6000)
-;(setq erc-auto-set-away nil)
-;;(setq erc-keywords '("agoodno*[,:;]" "\\bagoodno[!?.]+$" "codecommit*[,:;]" "\\bcodecommit[!?.]+$"))
-(setq erc-keywords '(".*agoodno.*" "^codecommit.*$"))
-;;(setq erc-keywords '("\\b\\(andy\\|agoodno\\)[!?.,;]*$" "\\(andy\\|agoodno\\)[:!?,;]+" "\\b\\([hH]ey\\|[hH]i\\) \\(andy\\|agoodno\\|man\\)\\b"))
-(erc-match-mode 1)
 
 ;;; Notify me when a keyword is matched (someone wants to reach me)
 

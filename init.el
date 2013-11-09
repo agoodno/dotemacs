@@ -52,7 +52,8 @@
 (setq agg-system-config (concat dotfiles-dir host-name ".el")
       agg-user-config (concat dotfiles-dir user-login-name ".el")
       agg-system-dir (concat dotfiles-dir host-name)
-      agg-user-dir (concat dotfiles-dir user-login-name))
+      agg-user-dir (concat dotfiles-dir user-login-name)
+      agg-package-config-dir (concat dotfiles-dir "package-config"))
 
 (defun eval-after-init (form)
   "Add `(lambda () FORM)' to `after-init-hook'.
@@ -70,7 +71,9 @@ If Emacs has already finished initialization, also eval FORM immediately."
     (when (file-exists-p agg-system-dir)
       (mapc 'load (directory-files agg-system-dir t "^[^#].*el$")))
     (when (file-exists-p agg-user-dir)
-      (mapc 'load (directory-files agg-user-dir t "^[^#].*el$")))))
+      (mapc 'load (directory-files agg-user-dir t "^[^#].*el$")))
+    (when (file-exists-p agg-package-config-dir)
+      (mapc 'load (directory-files agg-package-config-dir t "^[^#].*el$")))))
 
 (eval-after-load 'magit
   '(progn
