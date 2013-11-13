@@ -1,6 +1,8 @@
-(setq erc-user-full-name "Andrew Goodnough")
-
-(erc :server "irc.freenode.net" :port 6667 :nick "agoodno")
+(setq
+  erc-server "irc.freenode.net"
+  erc-port "6667"
+  erc-nick "agoodno"
+  erc-user-full-name "Andrew Goodnough")
 
 (setq erc-save-buffer-on-part nil
       erc-save-queries-on-quit nil
@@ -91,3 +93,5 @@ matches a regexp in `erc-keywords'."
  (add-to-list 'erc-modules 'stamp)
  (add-to-list 'erc-modules 'track )
  (erc-update-modules))
+
+(erc)
