@@ -37,16 +37,11 @@
 (defconst host-name (replace-match "\\1" t nil (system-name))
   "Host part of function `system-name'.")
 
-(cond
- ((string-equal system-type "darwin")
-  (progn
-    (message "Mac OS X")))
- ((string-equal system-type "gnu/linux")
-  (progn
-    (message "Linux")))
- ((string-equal system-type "windows-nt")
-  (progn
-    (message "Windows"))))
+(defconst system-desc
+  (cond
+   ((string-equal system-type "darwin") "Mac OS X")
+   ((string-equal system-type "gnu/linux") "Linux")
+   ((string-equal system-type "windows-nt") "Windows")))
 
 ;; you can keep system- or user-specific customizations here
 (setq agg-system-config (concat dotfiles-dir host-name ".el")
