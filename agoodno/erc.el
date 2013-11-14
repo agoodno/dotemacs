@@ -1,4 +1,4 @@
-(setq erc-autojoin-channels-alist '(("wicourts.gov" "#ccap3")))
+(setq erc-autojoin-channels-alist '(("wicourts.gov" "#ccap3" "#ccap3design")))
 
 (setq erc-email-userid "andrew.goodnough@wicourts.gov")
 
