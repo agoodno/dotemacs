@@ -134,6 +134,15 @@
      '(lambda () (toggle-truncate-lines 1)))
 (setq comint-prompt-read-only t)
 
+;; Add color to a shell running in emacs 'M-x shell'
+(autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
+(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
+
+;; Makes the prompt read-only running in emacs 'M-x shell'
+(add-hook 'shell-mode-hook
+     '(lambda () (toggle-truncate-lines 1)))
+(setq comint-prompt-read-only t)
+
 ;; ;; scala mode hooks
 ;; (add-hook 'scala-mode-hook 'scala-turnoff-indent-tabs-mode)
 ;; ;; end Scala Mode
