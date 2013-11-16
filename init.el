@@ -39,36 +39,41 @@
 
 (defconst system-desc
   (cond
-   ((string-equal system-type "darwin") "Mac OS X")
-   ((string-equal system-type "gnu/linux") "Linux")
-   ((string-equal system-type "windows-nt") "Windows")))
+   ((string-equal system-type "darwin") "mac")
+   ((string-equal system-type "gnu/linux") "linux")
+   ((string-equal system-type "windows-nt") "windows")))
 
-;; you can keep system- or user-specific customizations here
-(setq agg-system-config (concat dotfiles-dir host-name ".el")
-      agg-user-config (concat dotfiles-dir user-login-name ".el")
-      agg-system-dir (concat dotfiles-dir host-name)
-      agg-user-dir (concat dotfiles-dir user-login-name)
-      agg-package-config-dir (concat dotfiles-dir "package-config"))
+;; environment customizations here (system-specific, user-specific, or host-specific)
+(setq package-config-dir (concat dotfiles-dir "package-config/")
+      env-config-dir (concat dotfiles-dir "env-config/")
+      system-file (concat env-config-dir system-desc ".el")
+      system-dir (concat env-config-dir system-desc)
+      user-file (concat env-config-dir user-login-name ".el")
+      user-dir (concat env-config-dir user-login-name)
+      host-file (concat env-config-dir host-name ".el")
+      host-dir (concat env-config-dir host-name))
 
-(defun eval-after-init (form)
-  "Add `(lambda () FORM)' to `after-init-hook'.
-
-If Emacs has already finished initialization, also eval FORM immediately."
-  (let ((func (list 'lambda nil form)))
-    (add-hook 'after-init-hook func)
-    (when after-init-time
-      (eval form))))
+;; loads agg customizations
+(require 'agg-misc)
+(require 'agg-bindings)
+(require 'agg-defuns)
 
 (eval-after-init
  '(progn
-    (when (file-exists-p agg-system-config) (load agg-system-config))
-    (when (file-exists-p agg-user-config) (load agg-user-config))
-    (when (file-exists-p agg-system-dir)
-      (mapc 'load (directory-files agg-system-dir t "^[^#].*el$")))
-    (when (file-exists-p agg-user-dir)
-      (mapc 'load (directory-files agg-user-dir t "^[^#].*el$")))
-    (when (file-exists-p agg-package-config-dir)
-      (mapc 'load (directory-files agg-package-config-dir t "^[^#].*el$")))))
+    (when (file-exists-p system-file)
+      (load system-file))
+    (when (file-exists-p system-dir)
+      (mapc 'load (directory-files system-dir t "^[^#].*el$")))
+    (when (file-exists-p user-file)
+      (load user-file))
+    (when (file-exists-p user-dir)
+      (mapc 'load (directory-files user-dir t "^[^#].*el$")))
+    (when (file-exists-p host-file)
+      (load host-file))
+    (when (file-exists-p host-dir)
+      (mapc 'load (directory-files host-dir t "^[^#].*el$")))
+    (when (file-exists-p package-config-dir)
+      (mapc 'load (directory-files package-config-dir t "^[^#].*el$")))))
 
 (eval-after-load 'magit
   '(progn
@@ -80,8 +85,4 @@ If Emacs has already finished initialization, also eval FORM immediately."
      (set-face-background 'diff-added "#000000")
      (set-face-background 'diff-removed "#000000")))
 
-;; loads agg customizations
-(require 'agg-misc)
-(require 'agg-bindings)
-
-(server-start)
+;(server-start)
