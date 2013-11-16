@@ -14,7 +14,7 @@
   (package-refresh-contents))
 
 (defvar my-packages '(ack bar-cursor bitlbee blank-mode ensime erc erc-hl-nicks
-                          ercn ido js2-mode magit org paredit
+                          ercn find-file-in-project ido js2-mode magit org paredit
                           scala-mode2 yasnippet)
   "A list of packages to ensure are installed at launch.")
 
@@ -84,4 +84,4 @@
      (set-face-background 'diff-added "#000000")
      (set-face-background 'diff-removed "#000000")))
 
-;(server-start)
+(server-start)

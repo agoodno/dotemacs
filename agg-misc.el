@@ -1,6 +1,5 @@
 ;; my miscellaneous
 
-;; start better-defaults
 (ido-mode t)
 (setq ido-enable-flex-matching t)
 
@@ -16,25 +15,16 @@
 (require 'saveplace)
 (setq-default save-place t)
 
-(global-set-key (kbd "M-/") 'hippie-expand)
-(global-set-key (kbd "C-x C-b") 'ibuffer)
-
-(global-set-key (kbd "C-s") 'isearch-forward-regexp)
-(global-set-key (kbd "C-r") 'isearch-backward-regexp)
-(global-set-key (kbd "C-M-s") 'isearch-forward)
-(global-set-key (kbd "C-M-r") 'isearch-backward)
-
 (show-paren-mode 1)
 (setq-default indent-tabs-mode nil)
 (setq x-select-enable-clipboard t
-      x-select-enable-primary t
+      ;; x-select-enable-primary t ;;causes problems with delete-selection-mode
       save-interprogram-paste-before-kill t
       apropos-do-all t
       mouse-yank-at-point t
       save-place-file (concat user-emacs-directory "places")
       backup-directory-alist `(("." . ,(concat user-emacs-directory
                                                "backups"))))
-;; end better-defaults
 
 (require 'bar-cursor)
 (bar-cursor-mode 1)

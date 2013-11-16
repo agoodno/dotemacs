@@ -1,12 +1,5 @@
 ;; my key bindings
 
-;;; starter-kit-bindings.el --- Set up some handy key bindings
-;;
-;; Part of the Emacs Starter Kit.
-
-;; You know, like Readline.
-(global-set-key (kbd "C-M-h") 'backward-kill-word)
-
 ;; Align your code in a pretty way.
 (global-set-key (kbd "C-x \\") 'align-regexp)
 
@@ -21,7 +14,7 @@
 
 ;; Use regex searches by default.
 (global-set-key (kbd "C-s") 'isearch-forward-regexp)
-(global-set-key (kbd "\C-r") 'isearch-backward-regexp)
+(global-set-key (kbd "C-r") 'isearch-backward-regexp)
 (global-set-key (kbd "C-M-s") 'isearch-forward)
 (global-set-key (kbd "C-M-r") 'isearch-backward)
 
@@ -32,9 +25,12 @@
 (global-set-key (kbd "C-x M-f") 'ido-find-file-other-window)
 (global-set-key (kbd "C-x C-M-f") 'find-file-in-project)
 (global-set-key (kbd "C-x f") 'recentf-ido-find-file)
+
+;; Buffers
 (global-set-key (kbd "C-c y") 'bury-buffer)
 (global-set-key (kbd "C-c r") 'revert-buffer)
 (global-set-key (kbd "M-`") 'file-cache-minibuffer-complete)
+; Use ibuffer which is better than switch buffer
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
 ;; Window switching. (C-x o goes to the next window)
@@ -86,9 +82,6 @@
 ;; Org
 (define-key global-map "\C-cl" 'org-store-link)
 (define-key global-map "\C-ca" 'org-agenda)
-
-(provide 'starter-kit-bindings)
-;;; starter-kit-bindings.el ends here
 
 (define-key global-map (kbd "C-M-+") 'text-scale-increase)
 (define-key global-map (kbd "C-M-_") 'text-scale-decrease)
