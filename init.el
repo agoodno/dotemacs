@@ -43,7 +43,7 @@
    ((string-equal system-type "gnu/linux") "linux")
    ((string-equal system-type "windows-nt") "windows")))
 
-;; environment customizations here (system-specific, user-specific, or host-specific)
+;; environment customizations here (user-specific, system-specific or host-specific)
 (setq package-config-dir (concat dotfiles-dir "package-config/")
       env-config-dir (concat dotfiles-dir "env-config/")
       system-file (concat env-config-dir system-desc ".el")
@@ -58,22 +58,21 @@
 (require 'agg-bindings)
 (require 'agg-defuns)
 
-(eval-after-init
- '(progn
-    (when (file-exists-p system-file)
-      (load system-file))
-    (when (file-exists-p system-dir)
-      (mapc 'load (directory-files system-dir t "^[^#].*el$")))
-    (when (file-exists-p user-file)
-      (load user-file))
-    (when (file-exists-p user-dir)
-      (mapc 'load (directory-files user-dir t "^[^#].*el$")))
-    (when (file-exists-p host-file)
-      (load host-file))
-    (when (file-exists-p host-dir)
-      (mapc 'load (directory-files host-dir t "^[^#].*el$")))
-    (when (file-exists-p package-config-dir)
-      (mapc 'load (directory-files package-config-dir t "^[^#].*el$")))))
+(progn
+  (when (file-exists-p package-config-dir)
+    (mapc 'load (directory-files package-config-dir t "^[^#].*el$")))
+  (when (file-exists-p user-file)
+    (load user-file))
+  (when (file-exists-p user-dir)
+    (mapc 'load (directory-files user-dir t "^[^#].*el$")))
+  (when (file-exists-p system-file)
+    (load system-file))
+  (when (file-exists-p system-dir)
+    (mapc 'load (directory-files system-dir t "^[^#].*el$")))
+  (when (file-exists-p host-file)
+    (load host-file))
+  (when (file-exists-p host-dir)
+    (mapc 'load (directory-files host-dir t "^[^#].*el$"))))
 
 (eval-after-load 'magit
   '(progn
