@@ -13,7 +13,7 @@
 (when (not package-archive-contents)
   (package-refresh-contents))
 
-(defvar my-packages '(ack bar-cursor bitlbee blank-mode ensime erc erc-hl-nicks
+(defvar my-packages '(ack bar-cursor bitlbee ensime erc erc-hl-nicks
                           ercn find-file-in-project ido js2-mode magit org paredit
                           scala-mode2 yasnippet)
   "A list of packages to ensure are installed at launch.")

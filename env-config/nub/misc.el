@@ -1,5 +1,5 @@
 (set-face-attribute 'default nil
-                 :family "Monaco" :height 80 :weight 'normal)
+                 :family "Monaco" :height 98 :weight 'normal)
 
 ; default
 ; (set-background-color "white")

@@ -94,11 +94,14 @@
 ;;Opens browser to url
 (global-set-key (kbd "C-x C-u") 'browse-url)
 
+;;Toggles whitespace
+(global-set-key (kbd "C-c w") 'whitespace-mode)
+
 (global-set-key [f5] 'revert-buffer)
 
 (global-set-key [f6] 'bury-buffer)
 
-(global-set-key [f7] 'blank-mode)
+(global-set-key [f7] 'whitespace-mode)
 
 (global-set-key [f8] 'comint-previous-prompt)
 
