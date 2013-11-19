@@ -61,18 +61,18 @@
 (progn
   (when (file-exists-p package-config-dir)
     (mapc 'load (directory-files package-config-dir t "^[^#].*el$")))
-  (when (file-exists-p user-file)
-    (load user-file))
   (when (file-exists-p user-dir)
     (mapc 'load (directory-files user-dir t "^[^#].*el$")))
-  (when (file-exists-p system-file)
-    (load system-file))
   (when (file-exists-p system-dir)
     (mapc 'load (directory-files system-dir t "^[^#].*el$")))
-  (when (file-exists-p host-file)
-    (load host-file))
   (when (file-exists-p host-dir)
-    (mapc 'load (directory-files host-dir t "^[^#].*el$"))))
+    (mapc 'load (directory-files host-dir t "^[^#].*el$")))
+  (when (file-exists-p user-file)
+    (load user-file))
+  (when (file-exists-p system-file)
+    (load system-file))
+  (when (file-exists-p host-file)
+    (load host-file)))
 
 (eval-after-load 'magit
   '(progn

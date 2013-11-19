@@ -94,5 +94,3 @@ matches a regexp in `erc-keywords'."
    (add-to-list 'erc-modules 'stamp)
    (add-to-list 'erc-modules 'track )
    (erc-update-modules)))
-
-;(erc)
