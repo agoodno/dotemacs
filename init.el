@@ -60,8 +60,6 @@
 (require 'agg-defuns)
 
 (progn
-  (when (file-exists-p package-config-dir)
-    (mapc 'load (directory-files package-config-dir t "^[^#].*el$")))
   (when (file-exists-p user-dir)
     (mapc 'load (directory-files user-dir t "^[^#].*el$")))
   (when (file-exists-p system-dir)
@@ -73,9 +71,19 @@
   (when (file-exists-p system-file)
     (load system-file))
   (when (file-exists-p host-file)
-    (load host-file)))
+    (load host-file))
   (when (file-exists-p custom-file)
     (load custom-file)))
+
+(eval-after-load 'erc
+  '(progn
+     (load (concat package-config-dir "erc.el"))
+     (when (file-exists-p (concat user-dir "erc.el"))
+       (load (concat user-dir "erc.el")))
+     (when (file-exists-p (concat system-dir "erc.el"))
+       (load (concat system-dir "erc.el")))
+     (when (file-exists-p (concat host-dir "erc.el"))
+       (load (concat host-dir "erc.el")))))
 
 (eval-after-load 'magit
   '(progn
