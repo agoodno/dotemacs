@@ -51,7 +51,8 @@
       user-file (concat env-config-dir user-login-name ".el")
       user-dir (concat env-config-dir user-login-name)
       host-file (concat env-config-dir host-name ".el")
-      host-dir (concat env-config-dir host-name))
+      host-dir (concat env-config-dir host-name)
+      custom-file (concat dotfiles-dir "custom.el"))
 
 ;; loads agg customizations
 (require 'agg-misc)
@@ -73,6 +74,8 @@
     (load system-file))
   (when (file-exists-p host-file)
     (load host-file)))
+  (when (file-exists-p custom-file)
+    (load custom-file)))
 
 (eval-after-load 'magit
   '(progn
