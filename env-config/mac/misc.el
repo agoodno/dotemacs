@@ -1,7 +1,7 @@
 ;; mac specific settings
 
 ;; switch default key bindings
-(setq mac-option-modifier 'alt)
+(setq mac-option-modifier 'super)
 (setq mac-command-modifier 'meta)
 
 ;; sets fn-delete to be right-delete
