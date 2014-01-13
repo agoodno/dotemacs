@@ -133,6 +133,10 @@
      '(lambda () (toggle-truncate-lines 1)))
 (setq comint-prompt-read-only t)
 
+(setq gnus-button-url 'browse-url-generic
+      browse-url-generic-program "firefox"
+      browse-url-browser-function gnus-button-url)
+
 ;; ;; scala mode hooks
 ;; (add-hook 'scala-mode-hook 'scala-turnoff-indent-tabs-mode)
 ;; ;; end Scala Mode
