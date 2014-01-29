@@ -65,14 +65,6 @@
 ;; So good!
 (global-set-key (kbd "C-x g") 'magit-status)
 
-;; This is a little hacky since VC doesn't support git add internally
-(eval-after-load 'vc
-  (define-key vc-prefix-map "i" '(lambda () (interactive)
-                                   (if (not (eq 'Git (vc-backend buffer-file-name)))
-                                       (vc-register)
-                                     (shell-command (format "git add %s" buffer-file-name))
-                                     (message "Staged changes.")))))
-
 ;; Activate occur easily inside isearch
 (define-key isearch-mode-map (kbd "C-o")
   (lambda () (interactive)
@@ -119,9 +111,9 @@
 
 (global-set-key (kbd "C-=") 'other-window)
 
-(global-set-key (kbd "M-p") 'previous-buffer)
+(global-set-key (kbd "s-p") 'previous-buffer)
 
-(global-set-key (kbd "M-n") 'next-buffer)
+(global-set-key (kbd "s-n") 'next-buffer)
 
 (global-set-key (kbd "C-c g") 'magit-status)
 

@@ -43,6 +43,10 @@
 ;; disable line wrap
 (setq default-truncate-lines t)
 
+;; Shows extra whitespace in normal (non-whitepace mode) buffer as a warning
+;; This would be fine but should do only for prog mode files
+;;(setq show-trailing-whitespace t)
+
 ;; make side by side buffers function the same as the main window
 (setq truncate-partial-width-windows nil)
 
@@ -83,7 +87,8 @@
           'ansi-color-for-comint-mode-on)
 
 ;; Customize HTML mode
-(add-hook 'html-mode-hook 'turn-off-flyspell)
+(add-hook 'html-mode-hook 'progmodes-hooks)
+(add-hook 'html-mode-hook 'turn-off-auto-fill)
 (add-hook 'html-mode-hook 'turn-off-auto-fill)
 
 ;;http://www.emacswiki.org/cgi-bin/emacs-en/LoadPath
@@ -137,17 +142,8 @@
       browse-url-generic-program "firefox"
       browse-url-browser-function gnus-button-url)
 
-;; ;; scala mode hooks
-;; (add-hook 'scala-mode-hook 'scala-turnoff-indent-tabs-mode)
-;; ;; end Scala Mode
-
-;; ;; Scala Mode
-;; (add-to-list 'load-path "~/.emacs.d/custom/scala-mode")
-;; (require 'scala-mode-auto)
-
-;; (defun scala-turnoff-indent-tabs-mode ()
-;;   (setq indent-tabs-mode nil))
-;; ;; end Scala Mode
+;; Customize scala mode 2
+(add-hook 'scala-mode-hook 'progmodes-hooks)
 
 ;; This step causes the ensime-mode to be started whenever
 ;; scala-mode is started for a buffer. You may have to customize this step
