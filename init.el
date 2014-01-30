@@ -93,6 +93,7 @@
      (set-face-background 'diff-file-header "#000000")
      (set-face-foreground 'diff-context "#777777")
      (set-face-background 'diff-added "#000000")
-     (set-face-background 'diff-removed "#000000")))
+     (set-face-background 'diff-removed "#000000")
+     (define-key magit-mode-map (kbd "C-c C-d") 'magit-diff-staged)))
 
 (server-start)
