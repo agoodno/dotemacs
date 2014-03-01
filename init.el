@@ -96,4 +96,9 @@
      (set-face-background 'diff-removed "#000000")
      (define-key magit-mode-map (kbd "C-c C-d") 'magit-diff-staged)))
 
+;(load (concat package-config-dir "eclim.el"))
+
+(require 'yasnippet)
+(yas-global-mode nil)
+
 (server-start)
