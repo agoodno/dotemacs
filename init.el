@@ -13,9 +13,8 @@
 (when (not package-archive-contents)
   (package-refresh-contents))
 
-(defvar my-packages '(ack bar-cursor bitlbee coffee-mode ensime erc erc-hl-nicks
-                          ercn find-file-in-project ido js2-mode magit org paredit
-                          sbt-mode scala-mode2 yasnippet)
+(defvar my-packages '(ack bar-cursor bitlbee coffee-mode erc erc-hl-nicks ercn
+                      ido js2-mode magit org paredit sbt-mode scala-mode2)
   "A list of packages to ensure are installed at launch.")
 
 (dolist (p my-packages)
@@ -98,7 +97,7 @@
 
 ;(load (concat package-config-dir "eclim.el"))
 
-(require 'yasnippet)
-(yas-global-mode nil)
+;(require 'yasnippet)
+;(yas-global-mode nil)
 
 (server-start)
