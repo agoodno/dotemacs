@@ -33,3 +33,6 @@
 ; reverse-video
 (set-foreground-color "white")
 (set-background-color "black")
+
+(global-set-key (kbd "C-x C-l")
+  (lambda (&optional arg) "Keyboard macro." (interactive "p") (kmacro-exec-ring-item (quote ([134217847 16 5 return 112 117 116 115 32 34 25 61 35 123 25 125 34] 0 "%d")) arg)))

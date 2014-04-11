@@ -5,3 +5,5 @@ auto-save-list/*
 backups/*
 elpa/
 url/
+tramp
+jabber-avatar-cache/

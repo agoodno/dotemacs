@@ -44,6 +44,7 @@
 
 ;; environment customizations here (user-specific, system-specific or host-specific)
 (setq package-config-dir (concat dotfiles-dir "package-config/")
+      non-elpa-dir (concat dotfiles-dir "non-elpa/")
       env-config-dir (concat dotfiles-dir "env-config/")
       system-file (concat env-config-dir system-desc ".el")
       system-dir (concat env-config-dir system-desc)
@@ -84,6 +85,16 @@
      (when (file-exists-p (concat host-dir "erc.el"))
        (load (concat host-dir "erc.el")))))
 
+(eval-after-load 'jabber
+  '(progn
+     (load (concat package-config-dir "jabber.el"))
+     (when (file-exists-p (concat user-dir "jabber.el"))
+       (load (concat user-dir "jabber.el")))
+     (when (file-exists-p (concat system-dir "jabber.el"))
+       (load (concat system-dir "jabber.el")))
+     (when (file-exists-p (concat host-dir "jabber.el"))
+       (load (concat host-dir "jabber.el")))))
+
 (eval-after-load 'magit
   '(progn
      (set-face-foreground 'magit-diff-add "green4")
@@ -95,7 +106,9 @@
      (set-face-background 'diff-removed "#000000")
      (define-key magit-mode-map (kbd "C-c C-d") 'magit-diff-staged)))
 
-;(load (concat package-config-dir "eclim.el"))
+(load (concat package-config-dir "ruby-mode.el"))
+
+(load (concat non-elpa-dir "autotest.el"))
 
 ;(require 'yasnippet)
 ;(yas-global-mode nil)
