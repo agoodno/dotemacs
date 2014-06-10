@@ -25,5 +25,24 @@ If Emacs has already finished initialization, also eval FORM immediately."
   "Hooks for programming modes"
   (add-hook 'before-save-hook 'progmodes-before-save-hook))
 
+(defun shell-dir (name dir)
+  "Opens a shell into the specified directory"
+  (let ((default-directory dir))
+    (shell name)))
+
+(defun insert-current-date ()
+  (interactive)
+
+  (insert (shell-command-to-string "echo -n $(date %Y-%m-%d)")))
+
+(require 'calendar)
+(defun insdate-insert-current-date (&optional omit-day-of-week-p)
+    "Insert today's date using the current locale.
+  With a prefix argument, the date is inserted without the day of
+  the week."
+    (interactive "P*")
+    (insert (calendar-date-string (calendar-current-date) nil
+				  omit-day-of-week-p)))
+
 ;; Create a symbol by which this script can be referenced by a require
 (provide 'agg-defuns)

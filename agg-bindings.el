@@ -33,6 +33,9 @@
 ; Use ibuffer which is better than switch buffer
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
+;; Insert
+(global-set-key "\C-x\M-d" `insdate-insert-current-date)
+
 ;; Window switching. (C-x o goes to the next window)
 (windmove-default-keybindings) ;; Shift+direction
 (global-set-key (kbd "C-x O") (lambda () (interactive) (other-window -1))) ;; back one
@@ -61,6 +64,9 @@
 
 ;; For debugging Emacs modes
 (global-set-key (kbd "C-c p") 'message-point)
+
+;; Comment or uncomment region
+(global-set-key (kbd "C-c C-;") 'comment-or-uncomment-region)
 
 ;; So good!
 (global-set-key (kbd "C-x g") 'magit-status)

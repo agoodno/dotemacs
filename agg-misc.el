@@ -100,10 +100,6 @@
 
 ;;(autoload 'tail "tail" "Tail." t)
 
-;; (add-to-list 'load-path "~/.emacs.d/rinari")
-;; (require 'rinari)
-;; (add-to-list 'auto-mode-alist '("\\.rb\\'" . ruby-mode))
-
 ;; (add-to-list 'load-path "~/.emacs.d/rhtml")
 ;; (require 'rhtml-mode)
 ;;   (add-hook 'rhtml-mode-hook
@@ -153,6 +149,10 @@
 ;; MINI HOWTO:
 ;; Open .scala file. M-x ensime (once per project)
 ;; end ENSIME
+
+;; #+TODO: TODO(t) STARTED(s) WAITING(w) | DONE(d) CANCELED(c)
+(setq org-todo-keywords
+       '((sequence "TODO" "STARTED" "WAITING" "FEEDBACK" "VERIFY" "|" "DONE" "DELEGATED")))
 
 ;; Create a symbol by which this script can be referenced by a require
 (provide 'agg-misc)

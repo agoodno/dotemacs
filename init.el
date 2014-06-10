@@ -13,8 +13,9 @@
 (when (not package-archive-contents)
   (package-refresh-contents))
 
-(defvar my-packages '(ack bar-cursor bitlbee coffee-mode erc erc-hl-nicks ercn
-                      ido js2-mode magit org paredit sbt-mode scala-mode2)
+(defvar my-packages '(ack bar-cursor bitlbee coffee-mode enh-ruby-mode erc
+                      erc-hl-nicks ercn ido js2-mode magit org paredit
+                      ruby-mode rinari sbt-mode scala-mode2)
   "A list of packages to ensure are installed at launch.")
 
 (dolist (p my-packages)
@@ -106,11 +107,13 @@
      (set-face-background 'diff-removed "#000000")
      (define-key magit-mode-map (kbd "C-c C-d") 'magit-diff-staged)))
 
-(load (concat package-config-dir "ruby-mode.el"))
+(load (concat package-config-dir "enh-ruby-mode.el"))
 
 (load (concat non-elpa-dir "autotest.el"))
 
 ;(require 'yasnippet)
 ;(yas-global-mode nil)
+
+(add-hook 'enh-ruby-mode-hook (rinari-minor-mode t))
 
 (server-start)

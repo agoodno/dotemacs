@@ -34,5 +34,17 @@
 (set-foreground-color "white")
 (set-background-color "black")
 
+(shell-dir "cmd-customerservice" "/Users/agoodnough/src/customerservice/")
+(shell-dir "cmd-onevueapi" "/Users/agoodnough/src/onevueapi/")
+(shell-dir "cmd-rails" "/Users/agoodnough/src/rails/")
+(shell-dir "run-backend" "/Users/agoodnough/src/customerservice/")
+(shell-dir "run-frontend" "/Users/agoodnough/src/onevueweb/")
+
+;; (shell "cmd-customerservice")
+;; (shell "cmd-onevueapi")
+;; (shell "cmd-rails")
+;; (shell "backend")
+;; (shell "frontend")
+
 (global-set-key (kbd "C-x C-l")
   (lambda (&optional arg) "Keyboard macro." (interactive "p") (kmacro-exec-ring-item (quote ([134217847 16 5 return 112 117 116 115 32 34 25 61 35 123 25 125 34] 0 "%d")) arg)))
