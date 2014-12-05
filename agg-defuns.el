@@ -42,7 +42,32 @@ If Emacs has already finished initialization, also eval FORM immediately."
   the week."
     (interactive "P*")
     (insert (calendar-date-string (calendar-current-date) nil
-				  omit-day-of-week-p)))
+          omit-day-of-week-p)))
 
 ;; Create a symbol by which this script can be referenced by a require
 (provide 'agg-defuns)
+
+(calendar-current-date)
+
+(defun insert-date (prefix)
+    "Insert the current date. With prefix-argument, use ISO format. With
+   two prefix arguments, write out the day and month name."
+    (interactive "P")
+    (let ((format "%Y-%m-%d")
+          (system-time-locale "en_US"))
+      (insert (format-time-string format))))
+
+(defun ins-tommorrows-date ()
+  (interactive)
+  (insert (format-time-string "%A, %B %e, %Y" (time-add (current-time) (seconds-to-time (* 60 (* 60 (* 24))))))))
+
+;; (float-time)
+;; (calendar-date-string (decode-time (seconds-to-time (+ (* 60 (* 60 (* 24))) (float-time (current-time))))))
+
+;; (format-time-string "%A, %B %e, %Y" (decode-time (time-add (current-time) (seconds-to-time (* 60 (* 60 (* 24)))))))
+
+;; (seconds-to-time (* 60 (* 60 (* 24))))
+
+;; (format-time-string "%A, %B %e, %Y" (current-time))
+;; (format-time-string "%A, %B %e, %Y" (time-add (current-time) (seconds-to-time (* 60 (* 60 (* 24))))))
+;; (decode-time (seconds-to-time (+ (float-time (current-time)) (* 60 (* 60 (* 24))))))

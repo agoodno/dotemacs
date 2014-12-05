@@ -135,7 +135,7 @@
 (setq comint-prompt-read-only t)
 
 (setq gnus-button-url 'browse-url-generic
-      browse-url-generic-program "firefox"
+      browse-url-generic-program "/Applications/Firefox.app/Contents/MacOS/firefox"
       browse-url-browser-function gnus-button-url)
 
 ;; Customize scala mode 2
@@ -152,7 +152,10 @@
 
 ;; #+TODO: TODO(t) STARTED(s) WAITING(w) | DONE(d) CANCELED(c)
 (setq org-todo-keywords
-       '((sequence "TODO" "STARTED" "WAITING" "FEEDBACK" "VERIFY" "|" "DONE" "DELEGATED")))
+       '((sequence "TODO" "PROGRAMMING" "WAITING" "CHECKLIST" "PR" "|" "MERGED" "DELEGATED" "DONE")))
+(setq org-log-done nil)
+
+(add-to-list 'auto-mode-alist '("\\.log\\'" . auto-revert-mode))
 
 ;; Create a symbol by which this script can be referenced by a require
 (provide 'agg-misc)

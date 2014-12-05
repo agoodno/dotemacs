@@ -98,13 +98,7 @@
 
 (eval-after-load 'magit
   '(progn
-     (set-face-foreground 'magit-diff-add "green4")
-     (set-face-foreground 'magit-diff-del "red3")
-     (set-face-background 'magit-item-highlight "#000000")
-     (set-face-background 'diff-file-header "#000000")
-     (set-face-foreground 'diff-context "#777777")
-     (set-face-background 'diff-added "#000000")
-     (set-face-background 'diff-removed "#000000")
+     (define-key magit-mode-map (kbd "C-c C-u") 'magit-diff-unstaged)
      (define-key magit-mode-map (kbd "C-c C-d") 'magit-diff-staged)))
 
 (load (concat package-config-dir "enh-ruby-mode.el"))
