@@ -123,5 +123,22 @@
 
 (global-set-key (kbd "C-c g") 'magit-status)
 
+;; Two approaches are discussed here for local key bindings
+;; http://stackoverflow.com/questions/9818307/emacs-mode-specific-custom-key-bindings-local-set-key-vs-define-key
+
+;; This is a general approach to binding a specific key binding to one
+;; or more modes. Should be used in this file.
+;; (defun my/bindkey-recompile ()
+;;   "Bind <F5> to `recompile'."
+;;   (local-set-key (kbd "<f5>") 'recompile))
+;; (add-hook 'c-mode-common-hook 'my/bindkey-recompile)
+
+;; This is a general approach for binding a specific key binding for
+;; use in one mode. Should be used in the package-config/<mode>.el file.
+;; (eval-after-load "org-mode"
+;;   '(progn
+;;      (define-key org-mode-map (kbd "C-c t") 'ins-tommorrows-date)))
+;;      (define-key org-mode-map (kbd "C-c d") 'insdate-insert-current-date)
+
 ;; Create a symbol by which this script can be referenced by a require
 (provide 'agg-bindings)

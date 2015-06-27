@@ -152,10 +152,16 @@
 
 ;; #+TODO: TODO(t) STARTED(s) WAITING(w) | DONE(d) CANCELED(c)
 (setq org-todo-keywords
-       '((sequence "TODO" "PROGRAMMING" "WAITING" "CHECKLIST" "PR" "|" "MERGED" "DELEGATED" "DONE")))
+       '((sequence "TODO" "PROGRAMMING" "DESIGNING" "WAITING" "CHECKLIST" "PR" "APPROVED" "|" "MERGED" "DELEGATED" "DONE" "CANCELED")))
 (setq org-log-done nil)
 
 (add-to-list 'auto-mode-alist '("\\.log\\'" . auto-revert-mode))
+
+;;; Shell mode
+(setq ansi-color-names-vector ; better contrast colors
+      ["black" "red4" "green4" "yellow4"
+       "blue3" "magenta4" "cyan4" "white"])
+(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 
 ;; Create a symbol by which this script can be referenced by a require
 (provide 'agg-misc)

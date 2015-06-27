@@ -47,3 +47,5 @@
 ;; (yas/load-directory (concat ext-dir "feature-mode/snippets"))
 
 ;; (provide 'ruby-config)
+
+(remove-hook 'enh-ruby-mode-hook 'erm-define-faces)
