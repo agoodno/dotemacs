@@ -96,11 +96,6 @@
      (when (file-exists-p (concat host-dir "jabber.el"))
        (load (concat host-dir "jabber.el")))))
 
-(eval-after-load 'magit
-  '(progn
-     (define-key magit-mode-map (kbd "C-c C-u") 'magit-diff-unstaged)
-     (define-key magit-mode-map (kbd "C-c C-d") 'magit-diff-staged)))
-
 (load (concat package-config-dir "enh-ruby-mode.el"))
 
 (load (concat non-elpa-dir "autotest.el"))
