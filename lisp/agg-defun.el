@@ -1,12 +1,3 @@
-(defun eval-after-init (form)
-  "Add `(lambda () FORM)' to `after-init-hook'.
-
-If Emacs has already finished initialization, also eval FORM immediately."
-  (let ((func (list 'lambda nil form)))
-    (add-hook 'after-init-hook func)
-    (when after-init-time
-      (eval form))))
-
 (defun untabify-buffer ()
   "Untabify current buffer"
   (interactive)
@@ -32,7 +23,6 @@ If Emacs has already finished initialization, also eval FORM immediately."
 
 (defun insert-current-date ()
   (interactive)
-
   (insert (shell-command-to-string "echo -n $(date %Y-%m-%d)")))
 
 (require 'calendar)
@@ -43,11 +33,6 @@ If Emacs has already finished initialization, also eval FORM immediately."
     (interactive "P*")
     (insert (calendar-date-string (calendar-current-date) nil
           omit-day-of-week-p)))
-
-;; Create a symbol by which this script can be referenced by a require
-(provide 'agg-defuns)
-
-(calendar-current-date)
 
 (defun insert-date (prefix)
     "Insert the current date. With prefix-argument, use ISO format. With
@@ -71,3 +56,15 @@ If Emacs has already finished initialization, also eval FORM immediately."
 ;; (format-time-string "%A, %B %e, %Y" (current-time))
 ;; (format-time-string "%A, %B %e, %Y" (time-add (current-time) (seconds-to-time (* 60 (* 60 (* 24))))))
 ;; (decode-time (seconds-to-time (+ (float-time (current-time)) (* 60 (* 60 (* 24))))))
+
+(defun back-window ()
+  (interactive)
+  (other-window -1))
+
+(defun log-region (&optional arg)
+   "Keyboard macro."
+   (interactive "p")
+   (kmacro-exec-ring-item
+     (quote ([134217847 16 5 return 112 117 116 115 32 34 25 61 35 123 25 125 34] 0 "%d")) arg))
+
+(provide 'agg-defun)

@@ -1,5 +1,3 @@
-;; my key bindings
-
 ;; Align your code in a pretty way.
 (global-set-key (kbd "C-x \\") 'align-regexp)
 
@@ -109,10 +107,6 @@
 
 (global-set-key [f12] 'toggle-truncate-lines)
 
-(defun back-window ()
-  (interactive)
-  (other-window -1))
-
 (global-set-key (kbd "C--") 'back-window)
 
 (global-set-key (kbd "C-=") 'other-window)
@@ -122,6 +116,8 @@
 (global-set-key (kbd "s-n") 'next-buffer)
 
 (global-set-key (kbd "C-c g") 'magit-status)
+
+(global-set-key (kbd "C-x C-l") 'log-region)
 
 ;; Two approaches are discussed here for local key bindings
 ;; http://stackoverflow.com/questions/9818307/emacs-mode-specific-custom-key-bindings-local-set-key-vs-define-key
@@ -140,5 +136,4 @@
 ;;      (define-key org-mode-map (kbd "C-c t") 'ins-tommorrows-date)))
 ;;      (define-key org-mode-map (kbd "C-c d") 'insdate-insert-current-date)
 
-;; Create a symbol by which this script can be referenced by a require
-(provide 'agg-bindings)
+(provide 'agg-binding)
