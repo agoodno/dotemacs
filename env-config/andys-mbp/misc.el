@@ -27,80 +27,55 @@
 (set-face-attribute 'default nil :family "Monaco" :height 106 :weight 'normal)
 
 ;; reverse-video
-(set-foreground-color "white")
-(set-background-color "black")
+;; (set-foreground-color "white")
+;; (set-background-color "black")
 
-;; (eval-after-load 'magit
-;;   '(progn
-;;      (set-face-foreground 'magit-diff-add "green4")
-;;      (set-face-foreground 'magit-diff-del "red3")
-;;      (set-face-background 'magit-item-highlight "#000000")
-;; ;     (set-face-foreground 'magit-item-highlight "#FFFFFF")
-;;      (set-face-foreground 'diff-context "#777777")
-;;      (set-face-background 'diff-added "#000000")
-;;      (set-face-background 'diff-removed "#000000")
-;;      (set-face-background 'diff-file-header "#000000")
-;;      (set-face-foreground 'magit-log-head-label-default "#000000")
-;;      (set-face-background 'magit-log-head-label-default "grey")
-;;      (set-face-foreground 'magit-log-head-label-head "#000000")
-;;      (set-face-background 'magit-log-head-label-head "grey")
-;;      (set-face-foreground 'magit-log-head-label-local "#000000")
-;;      (set-face-background 'magit-log-head-label-local "grey")
-;;      (set-face-foreground 'magit-log-head-label-remote "#000000")
-;;      (set-face-background 'magit-log-head-label-remote "grey")
-;;      (set-face-foreground 'magit-log-head-label-wip "#000000")
-;;      (set-face-background 'magit-log-head-label-wip "grey")))
-
-(set-face-attribute  'mode-line-inactive
-                     nil
-                     :foreground "gray80"
-                     :background "gray25"
-                     :box '(:line-width 1 :style released-button))
-(set-face-attribute  'mode-line
-                     nil
-                     :foreground "gray25"
-                     :background "gray80"
-                     :box '(:line-width 1 :style released-button))
-
-(setq visible-bell 1)
-
-;; (set-foreground-color "black")
-;; (set-background-color "lightyellow")
-
-;; (eval-after-load 'magit
-;;   '(progn
-;;      (set-face-foreground 'magit-diff-add "darkgreen")
-;;      (set-face-foreground 'magit-diff-del "darkred")
-;;      (set-face-background 'magit-item-highlight "lightyellow")
-;;      (set-face-foreground 'diff-context "darkgrey")
-;;      (set-face-background 'diff-added "lightgrey")
-;;      (set-face-background 'diff-removed "lightgrey")
-;;      (set-face-background 'diff-file-header "darkgrey")
-;;      (set-face-background 'magit-log-head-label-remote "lightyellow")))
-
-;; (set-face-attribute  'mode-line
+;; (set-face-attribute  'mode-line-inactive
 ;;                      nil
 ;;                      :foreground "gray80"
 ;;                      :background "gray25"
 ;;                      :box '(:line-width 1 :style released-button))
-;; (set-face-attribute  'mode-line-inactive
+;; (set-face-attribute  'mode-line
 ;;                      nil
 ;;                      :foreground "gray25"
 ;;                      :background "gray80"
 ;;                      :box '(:line-width 1 :style released-button))
 
+;; regular video
+(add-to-list 'default-frame-alist '(foreground-color . "black"))
+(add-to-list 'default-frame-alist '(background-color . "lightyellow"))
+(add-to-list 'default-frame-alist '(cursor-color . "black"))
 
+;; (set-foreground-color "black")
+;; (set-background-color "lightyellow")
+
+(set-face-attribute  'mode-line
+                     nil
+                     :foreground "gray80"
+                     :background "gray25"
+                     :box '(:line-width 1 :style released-button))
+(set-face-attribute  'mode-line-inactive
+                     nil
+                     :foreground "gray25"
+                     :background "gray80"
+                     :box '(:line-width 1 :style released-button))
+
+;; (setq visible-bell 0)
+
+;; (shell-dir "cmd-py" "/Users/agoodnough/src/OVSensorReadingsProcessor/")
 (shell-dir "cmd-customerservice" "/Users/agoodnough/src/customerservice/")
-(shell-dir "cmd-deviceapi" "/Users/agoodnough/src/deviceapi/")
-(shell-dir "cmd-notificationservice" "/Users/agoodnough/src/notificationservice/")
-(shell-dir "cmd-onevueapi" "/Users/agoodnough/src/onevueapi/")
-(shell-dir "cmd-rails" "/Users/agoodnough/src/rails/")
+;; (shell-dir "cmd-deviceapi" "/Users/agoodnough/src/deviceapi/")
+;; (shell-dir "cmd-notificationservice" "/Users/agoodnough/src/notificationservice/")
+(shell-dir "cmd-mar-api" "/Users/agoodnough/src/mar-api/")
+(shell-dir "cmd-mar-hubapi" "/Users/agoodnough/src/mar-hubapi/")
+;; (shell-dir "cmd-onevueapi" "/Users/agoodnough/src/onevueapi/")
+;; (shell-dir "cmd-rails" "/Users/agoodnough/src/rails/")
 (shell-dir "procs" "/Users/agoodnough/src/customerservice/")
-(shell-dir "cmd-clockstatusesprocessor" "/Users/agoodnough/src/ov-clockstatusesprocessor/")
-(shell-dir "cmd-readingsprocessor" "/Users/agoodnough/src/ov-readingsprocessor/")
-(shell-dir "cmd-twilioprocessor" "/Users/agoodnough/src/ov-twilioprocessor/")
-(shell-command "java -jar /Users/agoodnough/opt/dynamodb_local/DynamoDBLocal.jar --port 4567 &")
-(shell-command "java -jar /Users/agoodnough/opt/dynamodb_local/DynamoDBLocal.jar --port 5678 &")
+;; (shell-dir "cmd-clockstatusesprocessor" "/Users/agoodnough/src/ov-clockstatusesprocessor/")
+;; (shell-dir "cmd-readingsprocessor" "/Users/agoodnough/src/ov-readingsprocessor/")
+;; (shell-dir "cmd-twilioprocessor" "/Users/agoodnough/src/ov-twilioprocessor/")
+(shell-command "java -Djava.library.path=/Users/agoodnough/opt/dynamodb_local/latest/DynamoDBLocal_lib -jar /Users/agoodnough/opt/dynamodb_local/latest/DynamoDBLocal.jar -dbPath /Users/agoodnough/opt/dynamodb_local/dbs/dev -port 4567 &")
+(shell-command "java -Djava.library.path=/Users/agoodnough/opt/dynamodb_local/latest/DynamoDBLocal_lib -jar /Users/agoodnough/opt/dynamodb_local/latest/DynamoDBLocal.jar -dbPath /Users/agoodnough/opt/dynamodb_local/dbs/test -port 5678 &")
 
 ;; (shell-dir "run-frontend" "/Users/agoodnough/src/onevueweb/")
 

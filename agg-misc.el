@@ -83,8 +83,9 @@
 (defalias 'yes-or-no-p 'y-or-n-p)
 
 ;;; Fix junk characters in shell-mode
-(add-hook 'shell-mode-hook
-          'ansi-color-for-comint-mode-on)
+;; Add color to a shell running in emacs 'M-x shell'
+(autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
+(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 
 ;; Customize HTML mode
 (add-hook 'html-mode-hook 'progmodes-hooks)
@@ -116,18 +117,10 @@
 (put 'downcase-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
 
-;; Add color to a shell running in emacs 'M-x shell'
-(autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
-(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
-
 ;; Makes the prompt read-only running in emacs 'M-x shell'
 (add-hook 'shell-mode-hook
      '(lambda () (toggle-truncate-lines 1)))
 (setq comint-prompt-read-only t)
-
-;; Add color to a shell running in emacs 'M-x shell'
-(autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
-(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 
 ;; Makes the prompt read-only running in emacs 'M-x shell'
 (add-hook 'shell-mode-hook
@@ -135,7 +128,7 @@
 (setq comint-prompt-read-only t)
 
 (setq gnus-button-url 'browse-url-generic
-      browse-url-generic-program "/Applications/Firefox.app/Contents/MacOS/firefox"
+      browse-url-generic-program "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
       browse-url-browser-function gnus-button-url)
 
 ;; Customize scala mode 2

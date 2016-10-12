@@ -4,10 +4,10 @@
 ;; -Neal Stephenson, "In the Beginning was the Command Line"
 
 (require 'package)
+;(add-to-list 'package-archives
+;             '("marmalade" . "http://marmalade-repo.org/packages/") t)
 (add-to-list 'package-archives
-             '("marmalade" . "http://marmalade-repo.org/packages/") t)
-(add-to-list 'package-archives
-             '("melpa" . "http://melpa.milkbox.net/packages/") t)
+             '("melpa-stable" . "http://stable.melpa.org/packages/") t)
 (package-initialize)
 
 (when (not package-archive-contents)
@@ -21,6 +21,8 @@
 (dolist (p my-packages)
   (when (not (package-installed-p p))
     (package-install p)))
+
+(setq exec-path (append "/usr/local/bin" exec-path))
 
 ;; turn off mouse interface early in startup to avoid momentary display
 (dolist (mode '(menu-bar-mode tool-bar-mode scroll-bar-mode))
@@ -96,7 +98,18 @@
      (when (file-exists-p (concat host-dir "jabber.el"))
        (load (concat host-dir "jabber.el")))))
 
+(eval-after-load 'jabber-hipchat
+  '(progn
+     (load (concat package-config-dir "jabber-hipchat.el"))
+     (when (file-exists-p (concat user-dir "jabber-hipchat.el"))
+       (load (concat user-dir "jabber-hipchat.el")))
+     (when (file-exists-p (concat system-dir "jabber-hipchat.el"))
+       (load (concat system-dir "jabber-hipchat.el")))
+     (when (file-exists-p (concat host-dir "jabber-hipchat.el"))
+       (load (concat host-dir "jabber-hipchat.el")))))
+
 (load (concat package-config-dir "enh-ruby-mode.el"))
+(load (concat package-config-dir "markdown-mode.el"))
 
 (load (concat non-elpa-dir "autotest.el"))
 

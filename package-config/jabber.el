@@ -1,1 +1,1 @@
-(require 'jabber)
+;;(require 'jabber)

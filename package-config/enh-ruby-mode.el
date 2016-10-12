@@ -20,11 +20,12 @@
 ;(require 'ruby-block)
 ;(require 'ruby-end)
 
-;(require 'rinari)
+;;(require 'rinari)
 
-(defun turn-on-rinari () (rinari-minor-mode 1))
-(add-hook 'enh-ruby-mode-hook 'turn-on-rinari)
+;;(defun turn-on-rinari () (rinari-minor-mode 1))
+;;(add-hook 'enh-ruby-mode-hook 'turn-on-rinari)
 (add-hook 'enh-ruby-mode-hook 'progmodes-hooks)
+(add-hook 'ruby-mode-hook 'progmodes-hooks)
 ;          '(lambda ()
 ;             (coding-hook)
 ;             (inf-ruby-keys)
