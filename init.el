@@ -47,6 +47,8 @@
 ;; packages
 (require 'agg-aggressive-indent)
 (require 'agg-bar-cursor)
+(require 'agg-bundler)
+(require 'agg-chruby)
 (require 'agg-html-mode)
 (require 'agg-markdown-mode)
 (require 'agg-restclient)
