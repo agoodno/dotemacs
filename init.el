@@ -47,11 +47,10 @@
 ;; packages
 (require 'agg-aggressive-indent)
 (require 'agg-bar-cursor)
-(require 'agg-enh-ruby-mode)
 (require 'agg-html-mode)
 (require 'agg-markdown-mode)
 (require 'agg-restclient)
-;; (require 'agg-ruby-mode)
+(require 'agg-ruby-mode)
 (require 'agg-json-mode)
 (require 'agg-org-mode)
 (require 'agg-saveplace)

@@ -1,5 +1,4 @@
 (use-package aggressive-indent
-  :ensure t
-  :init (global-aggressive-indent-mode 1))
+  :ensure t)
 
 (provide 'agg-aggressive-indent)

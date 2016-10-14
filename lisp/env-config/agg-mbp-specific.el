@@ -1,5 +1,5 @@
 ;; switch default key bindings
-;(setq mac-right-option-modifier 'control)
+                                        ;(setq mac-right-option-modifier 'control)
 
 ;; Above was my first attempt to get a control key on the right side
 
@@ -23,7 +23,7 @@
 ;; Last issue is the function key. I often hit it when I want my Left Cntl Key so I'd like to swap Function and Left Cntl.
 
 ;; (shell-dir "cmd-py" "/Users/agoodnough/src/OVSensorReadingsProcessor/")
-(shell-dir "cmd-customerservice" "/Users/agoodnough/src/customerservice/")
+;; (shell-dir "cmd-customerservice" "/Users/agoodnough/src/customerservice/")
 ;; (shell-dir "cmd-deviceapi" "/Users/agoodnough/src/deviceapi/")
 ;; (shell-dir "cmd-notificationservice" "/Users/agoodnough/src/notificationservice/")
 ;; (shell-dir "cmd-mar-api" "/Users/agoodnough/src/mar-api/")
