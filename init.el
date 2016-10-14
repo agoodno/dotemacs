@@ -59,5 +59,6 @@
 (require 'agg-shell-mode)
 (require 'agg-sql-mode)
 (require 'agg-uniquify)
+(require 'agg-yari)
 
 (server-start)
