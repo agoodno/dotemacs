@@ -52,6 +52,7 @@
 (require 'agg-restclient)
 (require 'agg-ruby-mode)
 (require 'agg-json-mode)
+(require 'agg-magit)
 (require 'agg-org-mode)
 (require 'agg-saveplace)
 (require 'agg-scala-mode)
