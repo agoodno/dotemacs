@@ -8,7 +8,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (html-mode restclient markdown-mode json-mode scala-mode use-package magit enh-ruby-mode bar-cursor auto-compile))))
+    (aggressive-indent html-mode restclient markdown-mode json-mode scala-mode use-package magit enh-ruby-mode bar-cursor auto-compile))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

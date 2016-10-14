@@ -45,6 +45,7 @@
 ;;(require 'agg-color-theme-light)
 
 ;; packages
+(require 'agg-aggressive-indent)
 (require 'agg-bar-cursor)
 (require 'agg-enh-ruby-mode)
 (require 'agg-html-mode)
