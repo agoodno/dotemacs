@@ -115,8 +115,6 @@
 
 (global-set-key (kbd "s-n") 'next-buffer)
 
-(global-set-key (kbd "C-c g") 'magit-status)
-
 (global-set-key (kbd "C-x C-l") 'log-region)
 
 ;; Two approaches are discussed here for local key bindings
