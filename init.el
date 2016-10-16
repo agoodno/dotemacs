@@ -39,17 +39,20 @@
 (require 'agg-misc)
 (require 'agg-defun)
 (require 'agg-binding)
+
+;; environment config
 (require 'agg-mac-specific)
 (require 'agg-mbp-specific)
 (require 'agg-color-theme-dark)
 ;;(require 'agg-color-theme-light)
 
-;; packages
+;; package config
 (require 'agg-aggressive-indent)
 (require 'agg-bar-cursor)
 (require 'agg-bundler)
 (require 'agg-chruby)
 (require 'agg-company)
+(require 'agg-ensime)
 (require 'agg-html-mode)
 (require 'agg-ido-mode)
 (require 'agg-ido-vertical-mode)
@@ -61,6 +64,7 @@
 (require 'agg-org-mode)
 (require 'agg-robe)
 (require 'agg-saveplace)
+(require 'agg-sbt-mode)
 (require 'agg-scala-mode)
 (require 'agg-shell-mode)
 (require 'agg-sql-mode)

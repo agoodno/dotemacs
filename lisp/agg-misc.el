@@ -1,8 +1,8 @@
 (setq user-full-name "Andrew Goodnough"
       user-mail-address "agoodno@gmail.com")
 
-(ido-mode t)
-(setq ido-enable-flex-matching t)
+;;(setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
+(setq exec-path (append exec-path '("/usr/local/bin")))
 
 (menu-bar-mode -1)
 (when (fboundp 'tool-bar-mode)
