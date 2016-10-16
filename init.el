@@ -56,6 +56,7 @@
 (require 'agg-html-mode)
 (require 'agg-ido-mode)
 (require 'agg-ido-vertical-mode)
+(require 'agg-js2-mode)
 (require 'agg-markdown-mode)
 (require 'agg-restclient)
 (require 'agg-ruby-mode)
