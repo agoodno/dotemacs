@@ -53,6 +53,8 @@
 (require 'agg-chruby)
 (require 'agg-company)
 (require 'agg-ensime)
+(require 'agg-erc)
+;(require 'agg-erc-hipchatify)
 (require 'agg-html-mode)
 (require 'agg-ido-mode)
 (require 'agg-ido-vertical-mode)
