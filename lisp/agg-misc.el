@@ -10,6 +10,8 @@
 (when (fboundp 'scroll-bar-mode)
   (scroll-bar-mode -1))
 
+(setq visible-bell 0)
+
 (show-paren-mode 1)
 (setq-default indent-tabs-mode nil)
 (setq x-select-enable-clipboard t

@@ -1,5 +1,4 @@
 (set-face-attribute 'default nil :family "Monaco" :height 106 :weight 'normal)
-(setq visible-bell 0)
 
 ;; reverse-video
 
