@@ -73,10 +73,6 @@
 (put 'downcase-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
 
-(setq gnus-button-url 'browse-url-generic
-      browse-url-generic-program "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
-      browse-url-browser-function gnus-button-url)
-
 (add-to-list 'auto-mode-alist '("\\.log\\'" . auto-revert-mode))
 
 (provide 'agg-misc)

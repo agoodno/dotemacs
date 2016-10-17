@@ -81,6 +81,7 @@
 
 ;;Opens browser to url
 (global-set-key (kbd "C-x C-u") 'browse-url)
+(global-set-key (kbd "C-c C-o") 'browse-url)
 
 ;;Toggles whitespace
 (global-set-key (kbd "C-c w") 'whitespace-mode)

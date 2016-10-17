@@ -50,6 +50,7 @@
 (require 'agg-aggressive-indent)
 (require 'agg-bar-cursor)
 (require 'agg-bundler)
+(require 'browse-url)
 (require 'agg-chruby)
 (require 'agg-company)
 (require 'agg-ensime)
