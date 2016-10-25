@@ -54,6 +54,8 @@
       ("~/src/ov-twilioprocessor" . 0)
       ("~/src/ov-utilities" . 0)
       ("~/src/queue-processor" . 0)
-      ("~/src/rails" . 0)))))
+      ("~/src/rails" . 0))))
+      (global-set-key (kbd "C-c g") 'magit-status)
+      (global-set-key (kbd "C-c l") 'magit-list-repositories))
 
 (provide 'agg-magit)

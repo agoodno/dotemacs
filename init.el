@@ -37,6 +37,7 @@
 
 ;; misc config
 (require 'agg-misc)
+(require 'agg-look-and-feel-sound-and-color)
 (require 'agg-defun)
 (require 'agg-binding)
 
@@ -55,7 +56,7 @@
 (require 'agg-company)
 (require 'agg-ensime)
 (require 'agg-erc)
-;(require 'agg-erc-hipchatify)
+;;(require 'agg-erc-hipchatify)
 (require 'agg-html-mode)
 (require 'agg-ido-mode)
 (require 'agg-ido-vertical-mode)

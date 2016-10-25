@@ -6,6 +6,7 @@
 ;; Otherwise, I could hack the bundler.el to set the path to bunlder
 ;; or allow setting it with a variable
 (use-package bundler
-  :ensure t)
+  :ensure t
+  :defer t)
 
 (provide 'agg-bundler)

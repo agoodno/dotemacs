@@ -34,8 +34,15 @@
 ;; (shell-dir "cmd-clockstatusesprocessor" "/Users/agoodnough/src/ov-clockstatusesprocessor/")
 ;; (shell-dir "cmd-readingsprocessor" "/Users/agoodnough/src/ov-readingsprocessor/")
 ;; (shell-dir "cmd-twilioprocessor" "/Users/agoodnough/src/ov-twilioprocessor/")
-;; (shell-command "java -Djava.library.path=/Users/agoodnough/opt/dynamodb_local/latest/DynamoDBLocal_lib -jar /Users/agoodnough/opt/dynamodb_local/latest/DynamoDBLocal.jar -dbPath /Users/agoodnough/opt/dynamodb_local/dbs/dev -port 4567 &")
-;; (shell-command "java -Djava.library.path=/Users/agoodnough/opt/dynamodb_local/latest/DynamoDBLocal_lib -jar /Users/agoodnough/opt/dynamodb_local/latest/DynamoDBLocal.jar -dbPath /Users/agoodnough/opt/dynamodb_local/dbs/test -port 5678 &")
+(defun init-dynamo-dbs ()
+  (interactive)
+  (init-dynamo-db 4567 "DynamoDBLocal-Dev")
+  (init-dynamo-db 5678 "DynamoDBLocal-Test"))
+
+(defun init-dynamo-db (port buffer-name)
+  (async-shell-command (format "java -Djava.library.path=/Users/agoodnough/opt/dynamodb_local/latest/DynamoDBLocal_lib -jar /Users/agoodnough/opt/dynamodb_local/latest/DynamoDBLocal.jar -dbPath /Users/agoodnough/opt/dynamodb_local/dbs/dev -port %d" port) buffer-name)
+  (bury-buffer buffer-name))
+
 
 ;; (shell-dir "run-frontend" "/Users/agoodnough/src/onevueweb/")
 

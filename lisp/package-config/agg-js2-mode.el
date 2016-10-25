@@ -1,4 +1,5 @@
 (use-package js2-mode
-  :ensure t)
+  :ensure t
+  :defer t)
 
 (provide 'agg-js2-mode)
