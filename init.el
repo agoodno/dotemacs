@@ -64,6 +64,7 @@
 (require 'agg-js2-mode)
 (require 'agg-json-mode)
 (require 'agg-markdown-mode)
+;(require 'agg-markdown-preview-eww)
 (require 'agg-magit)
 (require 'agg-org-mode)
 (require 'agg-restclient)
@@ -75,6 +76,7 @@
 (require 'agg-shell-mode)
 (require 'agg-sql-mode)
 (require 'agg-uniquify)
+(require 'agg-yaml-mode)
 (require 'agg-yari)
 
 (server-start)
