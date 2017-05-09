@@ -44,8 +44,8 @@
 ;; environment config
 (require 'agg-mac-specific)
 (require 'agg-mbp-specific)
-(require 'agg-color-theme-dark)
-;;(require 'agg-color-theme-light)
+;;(require 'agg-color-theme-dark)
+(require 'agg-color-theme-light)
 
 ;; package config
 (require 'agg-aggressive-indent)

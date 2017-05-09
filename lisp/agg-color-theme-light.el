@@ -8,9 +8,9 @@
 (add-to-list 'default-frame-alist '(background-color . "lightyellow"))
 (add-to-list 'default-frame-alist '(cursor-color . "black"))
 
-;; Didn't work with multiple frames
-;; (set-foreground-color "black")
-;; (set-background-color "lightyellow")
+;; Didn't work with multiple frames, but useful for ad-hoc switching
+(set-foreground-color "black")
+(set-background-color "lightyellow")
 
 (set-face-attribute  'mode-line
                      nil
