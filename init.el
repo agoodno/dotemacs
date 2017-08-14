@@ -53,6 +53,7 @@
 (require 'agg-bundler)
 (require 'browse-url)
 (require 'agg-chruby)
+(require 'agg-cider)
 (require 'agg-clojure-mode)
 (require 'agg-company)
 (require 'agg-ensime)
