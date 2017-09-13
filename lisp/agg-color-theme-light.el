@@ -1,4 +1,4 @@
-(set-face-attribute 'default nil :family "Monaco" :height 106 :weight 'normal)
+;; (set-face-attribute 'default nil :family "Monaco" :height 106 :weight 'normal)
 
 ;; regular video
 

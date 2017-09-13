@@ -44,8 +44,8 @@
 ;; environment config
 (require 'agg-mac-specific)
 (require 'agg-mbp-specific)
-;;(require 'agg-color-theme-dark)
-(require 'agg-color-theme-light)
+(require 'agg-color-theme-dark)
+;;(require 'agg-color-theme-light)
 
 ;; package config
 (require 'agg-aggressive-indent)
@@ -71,7 +71,7 @@
 (require 'agg-restclient)
 (require 'agg-ruby-mode)
 (require 'agg-robe)
-(require 'agg-saveplace)
+;;(require 'agg-saveplace)
 (require 'agg-sbt-mode)
 (require 'agg-scala-mode)
 (require 'agg-shell-mode)
