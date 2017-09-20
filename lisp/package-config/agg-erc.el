@@ -6,14 +6,19 @@
 (defvar bitlbee-password bitlbee-agoodno-pass)
 
 (setq
-  erc-server "chat.freenode.net"
+  erc-server "irc.wicourts.gov"
+  ;; erc-server "chat.freenode.net"
   erc-nick "agoodno"
   erc-prompt (lambda () (concat "[" (buffer-name) "]"))
-  erc-prompt-for-nickserv-password nil
-  erc-nickserv-passwords `((freenode ("agoodno" . ,freenode-password)))
-  erc-email-userid "agoodno@gmail.com"
+  ;; erc-prompt-for-nickserv-password nil
+  ;; erc-nickserv-passwords `((freenode ("agoodno" . ,freenode-password)))
+  erc-email-userid "andrew.goodnough@wicourts.gov"
+  ;; erc-email-userid "agoodno@gmail.com"
   erc-user-full-name "Andrew Goodnough"
-  erc-autojoin-channels-alist '(("freenode.net" "#emacs" "#elasticsearch"))
+  ;; erc-autojoin-channels-alist '(("irc.wicourts.gov" "#ccap3" "#cc"))
+  erc-autojoin-channels-alist
+    '(("freenode.net" "#emacs" "#elasticsearch")
+      ("wicourts.gov" "#ccap3" "#cc"))
   ;; erc-join-buffer 'bury
   erc-hide-list '("QUIT" "JOIN" "KICK" "NICK" "MODE")
   erc-echo-notices-in-minibuffer-flag t
@@ -48,7 +53,12 @@
   (interactive)
   (erc :server "127.0.0.1" :port 6667))
 
-(add-hook 'erc-join-hook 'bitlbee-identify)
+(defun wicourts-connect ()
+  "Connect to wicourts."
+  (interactive)
+  (erc :server "irc.wicourts.gov" :port 6667 :nick "agoodno"))
+
+;;(add-hook 'erc-join-hook 'bitlbee-identify)
 
 (defun bitlbee-identify ()
   "If we're on the bitlbee server, send the identify command to the &bitlbee channel."
