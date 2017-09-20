@@ -67,6 +67,7 @@
 (require 'agg-markdown-mode)
 ;(require 'agg-markdown-preview-eww)
 (require 'agg-magit)
+(require 'agg-nxml-mode)
 (require 'agg-org-mode)
 (require 'agg-restclient)
 (require 'agg-ruby-mode)
