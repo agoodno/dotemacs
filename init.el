@@ -49,13 +49,17 @@
 
 ;; package config
 (require 'agg-aggressive-indent)
+(require 'agg-auto-complete)
+(require 'agg-ac-emacs-eclim)
 (require 'agg-bar-cursor)
 (require 'agg-bundler)
 (require 'browse-url)
 (require 'agg-chruby)
 (require 'agg-cider)
 (require 'agg-clojure-mode)
+(require 'agg-company-emacs-eclim)
 (require 'agg-company)
+(require 'agg-eclim)
 (require 'agg-ensime)
 (require 'agg-erc)
 ;;(require 'agg-erc-hipchatify)
