@@ -33,6 +33,7 @@
 (require 'agg-sbt-mode)
 (require 'agg-scala-mode)
 (require 'agg-shell-mode)
+(require 'agg-smex)
 (require 'agg-sql-mode)
 (require 'agg-uniquify)
 (require 'agg-yaml-mode)
