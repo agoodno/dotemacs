@@ -59,8 +59,9 @@
 (require 'agg-look-and-feel-sound-and-color)
 (require 'agg-defun)
 (require 'agg-binding)
+(require 'agg-env)
 
-;; environment config
+;; environment-specific config
 (progn
   (when (file-exists-p user-file)
     (load user-file))
