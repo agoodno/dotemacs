@@ -1,8 +1,11 @@
 (use-package json-mode
   :ensure t
   :defer t
-  ;; Shows an example of how to set a Customize variable individually
-  ;; instead of in agg-custom.el
-  :init (customize-set-variable 'json-reformat:indent-width 2))
+  :init (add-hook 'json-mode-hook '(lambda ()
+          (setq indent-tabs-mode nil)
+          (setq tab-width 2)
+          (setq indent-line-function (quote insert-tab))
+          (local-set-key (kbd "C-c C-f") 'json-pretty-print-buffer))))
+
 
 (provide 'agg-json-mode)

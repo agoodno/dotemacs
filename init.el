@@ -68,6 +68,7 @@
 (require 'agg-ido-vertical-mode)
 (require 'agg-js2-mode)
 (require 'agg-json-mode)
+(require 'agg-json-reformat)
 (require 'agg-markdown-mode)
 ;(require 'agg-markdown-preview-eww)
 (require 'agg-magit)
