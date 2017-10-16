@@ -7,9 +7,6 @@
 ;; Perform general cleanup.
 (global-set-key (kbd "C-c n") 'cleanup-buffer)
 
-;; Turn on the menu bar for exploring new modes
-(global-set-key (kbd "C-<f10>") 'menu-bar-mode)
-
 ;; Use regex searches by default.
 (global-set-key (kbd "C-s") 'isearch-forward-regexp)
 (global-set-key (kbd "C-r") 'isearch-backward-regexp)
@@ -58,9 +55,6 @@
 ;; Comment or uncomment region
 (global-set-key (kbd "C-c C-;") 'comment-or-uncomment-region)
 
-;; So good!
-(global-set-key (kbd "C-x g") 'magit-status)
-
 ;; Activate occur easily inside isearch
 (define-key isearch-mode-map (kbd "C-o")
   (lambda () (interactive)
@@ -86,17 +80,24 @@
 ;;Toggles whitespace
 (global-set-key (kbd "C-c w") 'whitespace-mode)
 
+;; Launch a new shell. Use "C-u" to be prompted for the shell's name
+(global-set-key [f2] 'shell)
+
+;; Refresh file from disk
 (global-set-key [f5] 'revert-buffer)
 
+;; Moves current buffer to last buffer
 (global-set-key [f6] 'bury-buffer)
 
-(global-set-key [f7] 'whitespace-mode)
+;; Moves last buffer to current buffer
+(global-set-key [f7] 'unbury-buffer)
 
+;; In shell, moves the prompt to the line of previously executed command
 (global-set-key [f8] 'comint-previous-prompt)
 
 (global-set-key [f9] 'undo)
 
-(global-set-key [f10] 'shell)
+(global-set-key [f11] 'whitespace-mode)
 
 (global-set-key [f12] 'toggle-truncate-lines)
 
