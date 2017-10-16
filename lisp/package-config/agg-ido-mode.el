@@ -9,6 +9,4 @@
 ;; (global-set-key (kbd "C-x M-f") 'ido-find-file-other-window)
 (global-set-key (kbd "C-x f") 'recentf-ido-find-file)
 
-(ido-mode t)
-
 (provide 'agg-ido-mode)
