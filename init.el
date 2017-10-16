@@ -20,13 +20,32 @@
   :config (auto-compile-on-load-mode))
 (setq load-prefer-newer t)
 
-;; adds root and config directories to load-path
-(add-to-list 'load-path "~/.emacs.d/lisp")
-(let ((default-directory  "~/.emacs.d/lisp/"))
+;; set variable to the .emacs.d directory
+(setq lisp-dir (concat
+                (file-name-directory (or (buffer-file-name) load-file-name))
+                (file-name-as-directory "lisp")))
+
+;; adds lisp root and config directories to load-path
+(add-to-list 'load-path lisp-dir)
+(let ((default-directory lisp-dir))
   (normal-top-level-add-to-load-path '("package-config" "env-config")))
 
+(defconst system-desc
+  (cond
+   ((string-equal system-type "darwin") "mac")
+   ((string-equal system-type "gnu/linux") "linux")
+   ((string-equal system-type "windows-nt") "windows")))
+
+;; environment customizations here (user-specific, system-specific or host-specific)
+(setq package-config-dir (concat lisp-dir (file-name-as-directory "package-config"))
+      non-elpa-dir (concat lisp-dir (file-name-as-directory "non-elpa"))
+      env-config-dir (concat lisp-dir (file-name-as-directory "env-config"))
+      system-file (concat env-config-dir system-desc ".el")
+      user-file (concat env-config-dir user-login-name ".el")
+      host-file (concat env-config-dir system-name ".el"))
+
 ;; sets location of Customize file
-(setq custom-file "~/.emacs.d/lisp/agg-custom.el")
+(setq custom-file (concat lisp-dir "agg-custom.el"))
 (load custom-file)
 
 ;; loads my configuration
@@ -35,55 +54,24 @@
 ;; a symbol that this script can reference
 ;;   ex. (provide 'agg-bindings)
 
-;; misc config
+;; general config
 (require 'agg-misc)
 (require 'agg-look-and-feel-sound-and-color)
 (require 'agg-defun)
 (require 'agg-binding)
 
 ;; environment config
-(require 'agg-mac-specific)
-(require 'agg-mbp-specific)
-(require 'agg-color-theme-dark)
-;;(require 'agg-color-theme-light)
+(progn
+  (when (file-exists-p user-file)
+    (load user-file))
+  (when (file-exists-p system-file)
+    (load system-file))
+  (when (file-exists-p host-file)
+    (load host-file)))
 
-;; package config
-(require 'agg-aggressive-indent)
-(require 'agg-auto-complete)
-;; (require 'agg-ac-emacs-eclim)
-(require 'agg-bar-cursor)
-(require 'agg-bundler)
-(require 'browse-url)
-(require 'agg-chruby)
-(require 'agg-cider)
-(require 'agg-clojure-mode)
-;; (require 'agg-company-emacs-eclim)
-(require 'agg-company)
-;; (require 'agg-eclim)
-;; (require 'agg-ensime)
-;; (require 'agg-erc)
-;;(require 'agg-erc-hipchatify)
-(require 'agg-html-mode)
-(require 'agg-ido-mode)
-(require 'agg-ido-vertical-mode)
-(require 'agg-js2-mode)
-(require 'agg-json-mode)
-(require 'agg-json-reformat)
-(require 'agg-markdown-mode)
-;(require 'agg-markdown-preview-eww)
-(require 'agg-magit)
-(require 'agg-nxml-mode)
-(require 'agg-org-mode)
-(require 'agg-restclient)
-(require 'agg-ruby-mode)
-(require 'agg-robe)
-;;(require 'agg-saveplace)
-(require 'agg-sbt-mode)
-(require 'agg-scala-mode)
-(require 'agg-shell-mode)
-(require 'agg-sql-mode)
-(require 'agg-uniquify)
-(require 'agg-yaml-mode)
-(require 'agg-yari)
+;; -OR- Manual load like below if dynamic loading above causing problems
+;;(load (concat env-config-dir "agoodno.el"))
+;;(load (concat env-config-dir "linux.el"))
+;;(load (concat env-config-dir "agoodno-ThinkCentre-M910t.el"))
 
 (server-start)
