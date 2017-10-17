@@ -1,7 +1,6 @@
-(use-package company
-  :ensure t
-  :init
-  (progn (global-company-mode t)
-         (push 'company-robe company-backends)))
+;; This package is not used
+;; (use-package company
+;;   :ensure t
+;;   :init (global-company-mode t))
 
-(provide 'agg-company)
+;; (provide 'agg-company)
