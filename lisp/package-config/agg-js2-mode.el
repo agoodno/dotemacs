@@ -15,9 +15,8 @@
 (add-to-list 'auto-mode-alist '("\\.jsx?\\'" . js2-jsx-mode))
 (add-to-list 'interpreter-mode-alist '("node" . js2-jsx-mode))
 
-(custom-set-variables
- '(js2-basic-offset 2)
- '(js2-bounce-indent-p t))
+(customize-set-variable 'js2-basic-offset 2)
+(customize-set-variable 'js2-bounce-indent-p t)
 
 ;(add-hook 'js2-mode-hook (lambda () (setq js2-basic-offset 2)))
 
