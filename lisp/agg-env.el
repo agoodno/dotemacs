@@ -9,6 +9,7 @@
 ;; (require 'agg-chruby)
 (require 'agg-cider)
 (require 'agg-clojure-mode)
+(require 'agg-css)
 ;; (require 'agg-company-emacs-eclim)
 ;; (require 'agg-company-tern)
 ;; (require 'agg-company)
