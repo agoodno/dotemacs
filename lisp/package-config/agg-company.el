@@ -1,6 +1,5 @@
-;; This package is not used
-;; (use-package company
-;;   :ensure t
-;;   :init (global-company-mode t))
+(use-package company
+  :ensure t
+  :init (add-hook 'after-init-hook 'global-company-mode))
 
-;; (provide 'agg-company)
+(provide 'agg-company)
