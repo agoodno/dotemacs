@@ -9,10 +9,11 @@
 (autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
 
 ;; Fixes npm commands that attempt to color interactive user prompts
-(add-to-list
-         'comint-preoutput-filter-functions
-         (lambda (output)
-           (replace-regexp-in-string "\033\\[[0-9]+[A-Z]" "" output)))
+;; ...but messes with sbt and awk among others
+;; (add-to-list
+;;          'comint-preoutput-filter-functions
+;;          (lambda (output)
+;;            (replace-regexp-in-string "\033\\[[0-9]+[A-Z]" "" output)))
 
 ;; Fixes some bad characters appearing when color prompts are used
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
