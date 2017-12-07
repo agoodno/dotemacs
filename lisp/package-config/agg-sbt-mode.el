@@ -1,6 +1,7 @@
 (use-package sbt-mode
   :ensure t
-  :defer t)
+  :defer t
+  :pin melpa-stable)
 
 (provide 'agg-sbt-mode)
 
