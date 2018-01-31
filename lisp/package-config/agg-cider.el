@@ -1,6 +1,7 @@
 (use-package cider
   :ensure t
-  :init)
+  :defer t)
+;; :init
 ;;  (setq cider-repl-use-pretty-printing t)
 ;;  (setq cider-repl-wrap-history t)
 ;;  (setq cider-repl-history-size 1000)

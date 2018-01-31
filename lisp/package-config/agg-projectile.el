@@ -1,4 +1,5 @@
 (use-package projectile
-  :ensure t)
+  :ensure t
+  :defer t)
 
 (provide 'agg-projectile)
