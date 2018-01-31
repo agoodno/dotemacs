@@ -1,5 +1,6 @@
 (use-package ac-emacs-eclim
-  :ensure t)
+  :ensure t
+  :defer t)
 
 (require 'ac-emacs-eclim)
 (ac-emacs-eclim-config)

@@ -1,4 +1,5 @@
 (use-package tidy
-  :ensure t)
+  :ensure t
+  :defer t)
 
 (provide 'agg-tidy)
