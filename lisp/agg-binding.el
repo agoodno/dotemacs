@@ -99,6 +99,10 @@
 
 (global-set-key [f11] 'whitespace-mode)
 
+;; Unset F10 for tmux chicanery
+;; https://superuser.com/questions/1142577/bind-caps-lock-key-to-tmux-prefix-on-macos-sierra
+(global-unset-key [f10])
+
 (global-set-key [f12] 'toggle-truncate-lines)
 
 (global-set-key (kbd "C--") 'back-window)
