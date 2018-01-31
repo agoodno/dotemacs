@@ -47,6 +47,7 @@
 (require 'agg-sql-mode)
 (require 'agg-tern)
 (require 'agg-tidy)
+(require 'agg-tramp)
 (require 'agg-uniquify)
 (require 'agg-yaml-mode)
 (require 'agg-yari)
