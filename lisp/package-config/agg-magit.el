@@ -12,7 +12,6 @@
       magit-insert-sequencer-sequence
       magit-insert-bisect-output
       magit-insert-bisect-rest
-      magit-insert-bisect-log
       magit-insert-unpulled-from-upstream
       magit-insert-unpulled-from-pushremote
       magit-insert-unpushed-to-upstream
