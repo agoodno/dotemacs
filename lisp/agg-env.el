@@ -4,7 +4,7 @@
 ;; (require 'agg-ac-emacs-eclim)
 ;; (require 'agg-ac-js2)
 (require 'agg-bar-cursor)
-;; (require 'agg-bundler)
+(require 'agg-bundler)
 (require 'agg-browse-url)
 ;; (require 'agg-chruby)
 (require 'agg-cider)
