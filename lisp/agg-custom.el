@@ -13,7 +13,7 @@
    "/home/agoodno/opt/eclipse-java-oxygen-R-linux-gtk-x86_64/eclim")
  '(package-selected-packages
    (quote
-    (puppet-mode magit-filenotify magit-find-file tidy smex sbt-mode psci psc-ide projectile ido-completing-read+ flycheck-clojure flycheck cider yaml-mode yaml clojure-mode f erc-hipchatify js2-mode ensime ido-vertical-mode ido-mode company robe chruby bundler yari magit aggressive-indent html-mode restclient markdown-mode json-mode scala-mode use-package enh-ruby-mode bar-cursor auto-compile)))
+    (yaml-mode restclient markdown-mode psci psc-ide chruby puppet-mode magit-filenotify magit-find-file tidy smex projectile ido-completing-read+ flycheck-clojure flycheck cider yaml clojure-mode f erc-hipchatify js2-mode ido-vertical-mode ido-mode company bundler yari magit aggressive-indent html-mode json-mode enh-ruby-mode bar-cursor auto-compile)))
  '(safe-local-variable-values
    (quote
     ((scala-indent:use-javadoc-style . t)
