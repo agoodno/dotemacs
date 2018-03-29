@@ -24,6 +24,7 @@
 (require 'agg-ido-mode)
 (require 'agg-ido-vertical-mode)
 (require 'agg-ido-completing-read-+)
+(require 'agg-java-mode)
 (require 'agg-js2-mode)
 (require 'agg-json-mode)
 (require 'agg-json-reformat)
