@@ -1,12 +1,10 @@
-;; This package is not used
-;; (use-package company-tern
-;;   :ensure t
-;;   :defer t
-;;   :init
-;;     (add-hook 'js2-mode-hook (lambda () (tern-mode) (company-mode)))
-;;     (eval-after-load 'company '(push 'company-tern company-backends)))
+(use-package company-tern
+  :ensure t
+  :defer t
+  :init
+    (with-eval-after-load 'company
+      (add-to-list 'company-backends 'company-tern)))
 
-;; (define-key tern-mode-keymap (kbd "M-.") nil)
-;; (define-key tern-mode-keymap (kbd "M-,") nil)
+;;    (add-hook 'js2-mode-hook (lambda () (tern-mode) (company-mode)))
 
-;; (provide 'agg-company-tern)
+(provide 'agg-company-tern)
