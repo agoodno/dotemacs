@@ -14,4 +14,6 @@
 
 (add-to-list 'auto-mode-alist '("\\.log\\'" . auto-revert-mode))
 
+(global-auto-revert-mode t)
+
 (provide 'agg-misc)
