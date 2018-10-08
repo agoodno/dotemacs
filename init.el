@@ -5,11 +5,11 @@
 
 (require 'package)
 (add-to-list 'package-archives
-	     '("melpa" . "https://melpa.org/packages/"))
+       '("melpa" . "https://melpa.org/packages/"))
 (add-to-list 'package-archives
-	     '("melpa2" . "http://www.mirrorservice.org/sites/melpa.org/packages/"))
+       '("melpa2" . "http://www.mirrorservice.org/sites/melpa.org/packages/"))
 (add-to-list 'package-archives
-	     '("melpa3" . "http://www.mirrorservice.org/sites/stable.melpa.org/packages/"))
+       '("melpa3" . "http://www.mirrorservice.org/sites/stable.melpa.org/packages/"))
 (package-initialize)
 
 (when (not package-archive-contents)
@@ -58,8 +58,6 @@
 ;;   ex. (provide 'agg-bindings)
 
 ;; general config
-(require 'agg-defun)
-(require 'agg-binding)
 (require 'agg-env)
 
 ;; environment-specific config
