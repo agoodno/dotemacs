@@ -12,9 +12,9 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
 (global-auto-revert-mode t)
 #+END_SRC
 ** Setup environment
-*** Set path variable (disabled)
+*** Set path variable
 #+BEGIN_SRC emacs-lisp
-;;(setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
+(setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
 #+END_SRC
 *** Set pager to cat for shell
 #+BEGIN_SRC emacs-lisp
