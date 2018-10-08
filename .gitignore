@@ -14,3 +14,4 @@ ido.last
 smex-items
 projectile-bookmarks.eld
 /lisp/env-config/*.el
+/agginit.el

@@ -1,3 +1,8 @@
++ Look & Feel
+#+BEGIN_SRC emacs-lisp
+;; Turn off startup splash
+(setq inhibit-startup-message t)
+
 ;; Turn off menu
 (menu-bar-mode -1)
 
@@ -93,8 +98,10 @@
 (put 'downcase-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
 
-(provide 'agg-look-and-feel-sound-and-color)
-
 ;; (setq ring-bell-function (lambda ()
 ;;   (set-face-background 'default "DodgerBlue")
 ;;   (set-face-foreground 'default "black")))
+#+END_SRC
+
++ Color Themes
+

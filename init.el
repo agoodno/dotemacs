@@ -4,17 +4,20 @@
 ;; -Neal Stephenson, "In the Beginning was the Command Line"
 
 (require 'package)
-
 (add-to-list 'package-archives
-             '("melpa" . "http://melpa.org/packages/") t)
-;(add-to-list 'package-archives
-;             '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+	     '("melpa" . "https://melpa.org/packages/"))
+(add-to-list 'package-archives
+	     '("melpa2" . "http://www.mirrorservice.org/sites/melpa.org/packages/"))
+(add-to-list 'package-archives
+	     '("melpa3" . "http://www.mirrorservice.org/sites/stable.melpa.org/packages/"))
 (package-initialize)
+
 (when (not package-archive-contents)
   (package-refresh-contents))
 
 (unless (package-installed-p 'use-package)
   (package-install 'use-package))
+
 (require 'use-package)
 (use-package auto-compile
   :config (auto-compile-on-load-mode))
@@ -56,7 +59,6 @@
 
 ;; general config
 (require 'agg-misc)
-(require 'agg-look-and-feel-sound-and-color)
 (require 'agg-defun)
 (require 'agg-binding)
 (require 'agg-env)
@@ -74,5 +76,7 @@
 ;;(load (concat env-config-dir "agoodno.el"))
 ;;(load (concat env-config-dir "linux.el"))
 ;;(load (concat env-config-dir "agoodno-ThinkCentre-M910t.el"))
+
+(org-babel-load-file (expand-file-name "~/.emacs.d/agginit.org"))
 
 (server-start)
