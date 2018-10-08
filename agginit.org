@@ -1,21 +1,79 @@
-+ Look & Feel
+#+STARTUP: overview
+
+See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Reference Manual]]
+
+* Look & Feel
+** Turn off startup splash
+/Note: *inhibit-startup-message* and *inhibit-splash-screen* are aliases for this variable./
 #+BEGIN_SRC emacs-lisp
-;; Turn off startup splash
-(setq inhibit-startup-message t)
-
-;; Turn off menu
+(setq inhibit-startup-screen t)
+#+END_SRC
+** Turn off menu
+#+BEGIN_SRC emacs-lisp
 (menu-bar-mode -1)
-
-;; Turn off tool-bar
+#+END_SRC
+** Turn off tool-bar
+#+BEGIN_SRC emacs-lisp
 (when (fboundp 'tool-bar-mode)
   (tool-bar-mode -1))
-
-;; Turn off scroll-bar
+#+END_SRC
+** Turn off scroll-bar
+#+BEGIN_SRC emacs-lisp
 (when (fboundp 'scroll-bar-mode)
   (scroll-bar-mode -1))
+#+END_SRC
+** Turn off initial scratch buffer text message
+#+BEGIN_SRC emacs-lisp
+(setq initial-scratch-message nil)
+#+END_SRC
+** Disable line wrap
+#+BEGIN_SRC emacs-lisp
+(setq default-truncate-lines t)
+#+END_SRC
+** Highlight selected regions
+#+BEGIN_SRC emacs-lisp
+(setq transient-mark-mode t)
+#+END_SRC
+** Display line and column numbers
+#+BEGIN_SRC emacs-lisp
+(setq line-number-mode t)
+(setq column-number-mode t)
+#+END_SRC
+** Prompts
+#+BEGIN_SRC emacs-lisp
+;; "y or n" instead of "yes or no"
+(defalias 'yes-or-no-p 'y-or-n-p)
+#+END_SRC
+** Indenting
+#+BEGIN_SRC emacs-lisp
+(show-paren-mode 1)
+(setq-default indent-tabs-mode nil)
 
-;; Bell preference
+;; Indent with spaces, never with TABs
+(setq-default indent-tabs-mode nil)
 
+;; Sets basic offset
+(setq c-basic-offset 2)
+
+;; Indent to 2 spaces
+(setq-default tab-width 2)
+
+;; Tabs stop every 2 spaces
+(setq-default tab-stop-list (quote (2 4 6 8 10)))
+#+END_SRC
+** Selection
+#+BEGIN_SRC emacs-lisp
+(setq x-select-enable-clipboard t
+      ;; x-select-enable-primary t ;;causes problems with delete-selection-mode
+      save-interprogram-paste-before-kill nil
+      apropos-do-all t
+      mouse-yank-at-point nil)
+
+;; Paste and backspace operations delete the selection and "pastes over" it
+(delete-selection-mode t)
+#+END_SRC
+** Bell preference
+#+BEGIN_SRC emacs-lisp
 ;; Use default audible bell
 ;; (setq visible-bell nil)
 
@@ -42,66 +100,15 @@
 (setq visible-bell nil
       ring-bell-function #'friendly-visible-bell)
 
-(show-paren-mode 1)
-(setq-default indent-tabs-mode nil)
-(setq x-select-enable-clipboard t
-      ;; x-select-enable-primary t ;;causes problems with delete-selection-mode
-      save-interprogram-paste-before-kill nil
-      apropos-do-all t
-      mouse-yank-at-point nil)
-
-;; Paste and backspace operations delete the selection and "pastes over" it
-(delete-selection-mode t)
-
-;; Stop splash screen
-(setq inhibit-splash-screen t)
-
-;; Sets the scratch message to empty string
-(setq initial-scratch-message nil)
-
-;; See http://www.delorie.com/gnu/docs/elisp-manual-21/elisp_620.html
-;; and http://www.gnu.org/software/emacs/manual/elisp.pdf
-;; disable line wrap
-(setq default-truncate-lines t)
-
-;; Shows extra whitespace in normal (non-whitepace mode) buffer as a warning
-;; This would be fine but should do only for prog mode files
-;;(setq show-trailing-whitespace t)
-
-;; Make side by side buffers function the same as the main window
-(setq truncate-partial-width-windows nil)
-
-;; highlight selected regions and add special behaviors to regions.
-(setq transient-mark-mode t)
-
-;; Display line and column numbers
-(setq line-number-mode t)
-(setq column-number-mode t)
-
-;; Indent with spaces, never with TABs
-(setq-default indent-tabs-mode nil)
-
-;; Sets basic offset
-(setq c-basic-offset 2)
-
-;; Indent to 2 spaces
-(setq-default tab-width 2)
-
-;; Tabs stop every 2 spaces
-(setq-default tab-stop-list (quote (2 4 6 8 10)))
-
-;; "y or n" instead of "yes or no"
-(defalias 'yes-or-no-p 'y-or-n-p)
-
-(setq split-width-threshold nil)
-
-(put 'downcase-region 'disabled nil)
-(put 'upcase-region 'disabled nil)
-
 ;; (setq ring-bell-function (lambda ()
 ;;   (set-face-background 'default "DodgerBlue")
 ;;   (set-face-foreground 'default "black")))
 #+END_SRC
+** Windowing
+#+BEGIN_SRC emacs-lisp
+;; Make side by side buffers function the same as the main window
+(setq truncate-partial-width-windows nil)
 
-+ Color Themes
-
+(setq split-width-threshold nil)
+#+END_SRC
+* Color Theme
