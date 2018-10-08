@@ -2,6 +2,33 @@
 
 See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Reference Manual]]
 
+* General
+** Changes backups to go to a backup directory
+#+BEGIN_SRC emacs-lisp
+(setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
+#+END_SRC
+** Auto revert all files changed elsewhere
+#+BEGIN_SRC emacs-lisp
+(global-auto-revert-mode t)
+#+END_SRC
+** Setup environment
+*** Set path variable (disabled)
+#+BEGIN_SRC emacs-lisp
+;;(setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
+#+END_SRC
+*** Set pager to cat for shell
+#+BEGIN_SRC emacs-lisp
+(setenv "PAGER" "/bin/cat")
+#+END_SRC
+** Setup execution path
+*** Add user local binaries
+#+BEGIN_SRC emacs-lisp
+(setq exec-path (append exec-path '("/usr/local/bin")))
+#+END_SRC
+*** Add home binaries
+#+BEGIN_SRC emacs-lisp
+(setq exec-path (append exec-path (list (concat (getenv "HOME") "/bin"))))
+#+END_SRC
 * Look & Feel
 ** Turn off startup splash
 /Note: *inhibit-startup-message* and *inhibit-splash-screen* are aliases for this variable./
@@ -71,38 +98,6 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
 
 ;; Paste and backspace operations delete the selection and "pastes over" it
 (delete-selection-mode t)
-#+END_SRC
-** Bell preference
-#+BEGIN_SRC emacs-lisp
-;; Use default audible bell
-;; (setq visible-bell nil)
-
-;; Use a visible bell instead of audible bell
-;; (setq visible-bell t)
-
-;; Ignore bell usingn 'ignore function
-;; (setq ring-bell-function 'ignore)
-
-;; Play a wav file on bell
-;; (setq ring-bell-function (lambda ()
-;;                            (call-process "afplay" nil 0 nil
-;;                                          "/Users/agoodnough/Dropbox/emacs-bell.mp3")))
-
-;; (setq ring-bell-function (lambda ()
-;;                            (call-process "afplay" nil 0 nil
-;;                                          "/Users/agoodnough/Dropbox/emacs-bell2.mp3")))
-
-(defun friendly-visible-bell ()
-  "A friendlier visual bell effect."
-  (invert-face 'mode-line)
-  (run-with-timer 0.1 nil 'invert-face 'mode-line))
-
-(setq visible-bell nil
-      ring-bell-function #'friendly-visible-bell)
-
-;; (setq ring-bell-function (lambda ()
-;;   (set-face-background 'default "DodgerBlue")
-;;   (set-face-foreground 'default "black")))
 #+END_SRC
 ** Windowing
 #+BEGIN_SRC emacs-lisp

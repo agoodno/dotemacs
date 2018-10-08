@@ -1,0 +1,6 @@
+(setq user-full-name "Andy Goodnough"
+      user-mail-address "andy.goodnough@wisc.edu")
+
+;; theme config
+(require 'agg-color-theme-dark)
+;;(require 'agg-color-theme-light)

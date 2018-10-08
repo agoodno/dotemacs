@@ -58,7 +58,6 @@
 ;;   ex. (provide 'agg-bindings)
 
 ;; general config
-(require 'agg-misc)
 (require 'agg-defun)
 (require 'agg-binding)
 (require 'agg-env)
