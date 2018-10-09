@@ -4,12 +4,15 @@
 ;; -Neal Stephenson, "In the Beginning was the Command Line"
 
 (require 'package)
+(setq package-enable-at-startup nil)
 (add-to-list 'package-archives
-       '("melpa" . "https://melpa.org/packages/"))
-(add-to-list 'package-archives
-       '("melpa2" . "http://www.mirrorservice.org/sites/melpa.org/packages/"))
-(add-to-list 'package-archives
-       '("melpa3" . "http://www.mirrorservice.org/sites/stable.melpa.org/packages/"))
+             '("melpa" . "https://melpa.org/packages/"))
+;; (add-to-list 'package-archives
+;;              '("melpa2" . "http://www.mirrorservice.org/sites/melpa.org/packages/"))
+;; (add-to-list 'package-archives
+;;              '("melpa3" . "http://www.mirrorservice.org/sites/stable.melpa.org/packages/"))
+;; (add-to-list 'package-archives
+;;              '("melpa-stable" . "https://stable.melpa.org/packages/") t)
 (package-initialize)
 
 (when (not package-archive-contents)
@@ -50,15 +53,6 @@
 ;; sets location of Customize file
 (setq custom-file (concat lisp-dir "agg-custom.el"))
 (load custom-file)
-
-;; loads my configuration
-
-;; each of these files must end with a provide statement that creates
-;; a symbol that this script can reference
-;;   ex. (provide 'agg-bindings)
-
-;; general config
-(require 'agg-env)
 
 ;; environment-specific config
 (progn

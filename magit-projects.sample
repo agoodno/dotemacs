@@ -1,0 +1,4 @@
+(setq magit-projects
+  (quote (
+    ("~/.emacs.d" . 0)
+    ("~/src/rails" . 0))))
