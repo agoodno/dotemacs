@@ -54,6 +54,9 @@
 (setq custom-file (concat lisp-dir "agg-custom.el"))
 (load custom-file)
 
+;; load my configuration
+(org-babel-load-file (expand-file-name "~/.emacs.d/agginit.org"))
+
 ;; environment-specific config
 (progn
   (when (file-exists-p user-file)
@@ -67,7 +70,5 @@
 ;;(load (concat env-config-dir "agoodno.el"))
 ;;(load (concat env-config-dir "linux.el"))
 ;;(load (concat env-config-dir "agoodno-ThinkCentre-M910t.el"))
-
-(org-babel-load-file (expand-file-name "~/.emacs.d/agginit.org"))
 
 (server-start)
