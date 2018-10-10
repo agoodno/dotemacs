@@ -107,7 +107,7 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
 (setq split-width-threshold nil)
 #+END_SRC
 * Color Theme
-* COMMENT Functions
+* Functions
 #+BEGIN_SRC emacs-lisp
   (defun untabify-buffer ()
     "Untabify current buffer"
@@ -1165,4 +1165,33 @@ TODO: Does this need to be loaded before all the ac-* packages?
     :defer t
     ;; C-h R
     :init (define-key 'help-command "R" 'yari))
+#+END_SRC
+* Environment
+#+BEGIN_SRC emacs-lisp
+  ;; environment-specific config
+  (defconst system-desc
+    (cond
+     ((string-equal system-type "darwin") "mac")
+     ((string-equal system-type "gnu/linux") "linux")
+     ((string-equal system-type "windows-nt") "windows")))
+
+  ;; define locations here (user-specific, system-specific or host-specific)
+  (setq non-elpa-dir (concat lisp-dir (file-name-as-directory "non-elpa"))
+        env-config-dir (concat lisp-dir (file-name-as-directory "env-config"))
+        system-file (concat env-config-dir system-desc ".el")
+        user-file (concat env-config-dir user-login-name ".el")
+        host-file (concat env-config-dir system-name ".el"))
+
+  (progn
+    (when (file-exists-p user-file)
+      (load user-file))
+    (when (file-exists-p system-file)
+      (load system-file))
+    (when (file-exists-p host-file)
+      (load host-file)))
+
+  ;; -OR- Manual load like below if dynamic loading above causing problems
+  ;;(load (concat env-config-dir "agoodno.el"))
+  ;;(load (concat env-config-dir "linux.el"))
+  ;;(load (concat env-config-dir "agoodno-ThinkCentre-M910t.el"))
 #+END_SRC

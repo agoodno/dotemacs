@@ -34,21 +34,7 @@
 ;; adds lisp root and config directories to load-path
 (add-to-list 'load-path lisp-dir)
 (let ((default-directory lisp-dir))
-  (normal-top-level-add-to-load-path '("package-config" "env-config")))
-
-(defconst system-desc
-  (cond
-   ((string-equal system-type "darwin") "mac")
-   ((string-equal system-type "gnu/linux") "linux")
-   ((string-equal system-type "windows-nt") "windows")))
-
-;; environment customizations here (user-specific, system-specific or host-specific)
-(setq package-config-dir (concat lisp-dir (file-name-as-directory "package-config"))
-      non-elpa-dir (concat lisp-dir (file-name-as-directory "non-elpa"))
-      env-config-dir (concat lisp-dir (file-name-as-directory "env-config"))
-      system-file (concat env-config-dir system-desc ".el")
-      user-file (concat env-config-dir user-login-name ".el")
-      host-file (concat env-config-dir system-name ".el"))
+  (normal-top-level-add-to-load-path '("env-config")))
 
 ;; sets location of Customize file
 (setq custom-file (concat lisp-dir "agg-custom.el"))
@@ -56,19 +42,5 @@
 
 ;; load my configuration
 (org-babel-load-file (expand-file-name "~/.emacs.d/agginit.org"))
-
-;; environment-specific config
-(progn
-  (when (file-exists-p user-file)
-    (load user-file))
-  (when (file-exists-p system-file)
-    (load system-file))
-  (when (file-exists-p host-file)
-    (load host-file)))
-
-;; -OR- Manual load like below if dynamic loading above causing problems
-;;(load (concat env-config-dir "agoodno.el"))
-;;(load (concat env-config-dir "linux.el"))
-;;(load (concat env-config-dir "agoodno-ThinkCentre-M910t.el"))
 
 (server-start)
