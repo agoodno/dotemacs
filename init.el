@@ -31,10 +31,8 @@
                 (file-name-directory (or (buffer-file-name) load-file-name))
                 (file-name-as-directory "lisp")))
 
-;; adds lisp root and config directories to load-path
+;; adds lisp root to load-path
 (add-to-list 'load-path lisp-dir)
-(let ((default-directory lisp-dir))
-  (normal-top-level-add-to-load-path '("env-config")))
 
 ;; sets location of Customize file
 (setq custom-file (concat lisp-dir "agg-custom.el"))

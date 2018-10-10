@@ -1,2 +1,3 @@
+;; user-specific
 (setq user-full-name "Andy Goodnough"
       user-mail-address "andy.goodnough@wisc.edu")

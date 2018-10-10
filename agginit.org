@@ -128,7 +128,8 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
     (add-hook 'before-save-hook 'progmodes-before-save-hook))
 
   (defun shell-dir (name dir)
-    "Opens a shell into the specified directory"
+    "Opens a shell into the specified directory
+   ex. (shell-dir "cmd-rails" "/Users/agoodnough/src/rails/")"
     (let ((default-directory dir))
       (shell name)))
 
@@ -541,7 +542,7 @@ TODO: Does this need to be loaded before all the ac-* packages?
 ##+END_SRC
 ** erc
 ##+BEGIN_SRC emacs-lisp
-(load "~/.ercpass")
+(load "~/.ercpass.el")
 
 (defvar freenode-password freenode-agoodno-pass)
 (defvar bitlbee-password bitlbee-agoodno-pass)
@@ -855,7 +856,7 @@ TODO: Does this need to be loaded before all the ac-* packages?
   (use-package magit
     :ensure t
     :init
-    (load "~/.magit-projects")
+    (load "~/.magit-projects.el")
     (customize-set-variable 'magit-display-buffer-function
       (quote magit-display-buffer-fullframe-status-v1))
     (customize-set-variable 'magit-status-sections-hook
@@ -1177,28 +1178,16 @@ TODO: Does this need to be loaded before all the ac-* packages?
 
   ;; define locations here (user-specific, system-specific or host-specific)
   (setq non-elpa-dir (concat lisp-dir (file-name-as-directory "non-elpa"))
-        env-config-dir (concat lisp-dir (file-name-as-directory "env-config"))
-        system-file (concat env-config-dir system-desc ".el")
-        user-file (concat env-config-dir user-login-name ".el")
-        host-file (concat env-config-dir system-name ".el"))
+        system-file (expand-file-name (concat system-desc ".el") lisp-dir)
+        user-file (expand-file-name (concat "." user-login-name ".el") "~")
+        host-file (expand-file-name (concat "." system-name ".el") "~"))
 
   (when (file-exists-p user-file)
-    (progn
-      (message "Loading user env file %s." (symbol-value 'user-file))
-      (load user-file)))
+    (load user-file))
 
   (when (file-exists-p system-file)
-    (progn
-      (message "Loading system env file %s." (symbol-value 'system-file))
-      (load system-file)))
+    (load system-file))
 
   (when (file-exists-p host-file)
-    (progn
-      (message "Loading host env file %s." (symbol-value 'host-file))
-      (load host-file)))
-
-  ;; -OR- Manual load like below if dynamic loading above causing problems
-  ;;(load (concat env-config-dir "agoodno.el"))
-  ;;(load (concat env-config-dir "linux.el"))
-  ;;(load (concat env-config-dir "agoodno-ThinkCentre-M910t.el"))
+    (load host-file))
 #+END_SRC

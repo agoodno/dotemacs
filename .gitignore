@@ -13,6 +13,6 @@ ido.last
 .DS_Store
 smex-items
 projectile-bookmarks.eld
-/lisp/env-config/*.el
 /agginit.el
 /network-security.data
+/README.html

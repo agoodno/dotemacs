@@ -39,4 +39,14 @@ So logs act like a real-time tail -f
 ;;   (set-face-background 'default "DodgerBlue")
 ;;   (set-face-foreground 'default "black")))
 #+END_SRC
-* Color Theme
+* Functions
+#+BEGIN_SRC emacs-lisp
+  (defun init-dynamo-dbs ()
+    (interactive)
+    (init-dynamo-db 4567 "DynamoDBLocal-Dev")
+    (init-dynamo-db 5678 "DynamoDBLocal-Test"))
+
+  (defun init-dynamo-db (port buffer-name)
+    (async-shell-command (format "java -Djava.library.path=/Users/agoodnough/opt/dynamodb_local/latest/DynamoDBLocal_lib -jar /Users/agoodnough/opt/dynamodb_local/latest/DynamoDBLocal.jar -dbPath /Users/agoodnough/opt/dynamodb_local/dbs/dev -port %d" port) buffer-name)
+    (bury-buffer buffer-name))
+#+END_SRC
