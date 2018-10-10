@@ -107,76 +107,143 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
 (setq split-width-threshold nil)
 #+END_SRC
 * Color Theme
-* Functions
+* COMMENT Functions
 #+BEGIN_SRC emacs-lisp
-(defun untabify-buffer ()
-  "Untabify current buffer"
-  (interactive)
-  (untabify (point-min) (point-max)))
+  (defun untabify-buffer ()
+    "Untabify current buffer"
+    (interactive)
+    (untabify (point-min) (point-max)))
 
-(defun progmodes-before-save-hook ()
-  "Hooks which run on file write for programming modes"
-  (require 'whitespace)
+  (defun progmodes-before-save-hook ()
+    "Hooks which run on file write for programming modes"
+    (require 'whitespace)
 
-  (prog1 nil
-    (set-buffer-file-coding-system 'utf-8-unix)
-    (untabify-buffer)
-    (whitespace-cleanup)))
+    (prog1 nil
+      (set-buffer-file-coding-system 'utf-8-unix)
+      (untabify-buffer)
+      (whitespace-cleanup)))
 
-(defun progmodes-hooks ()
-  "Hooks for programming modes"
-  (add-hook 'before-save-hook 'progmodes-before-save-hook))
+  (defun progmodes-hooks ()
+    "Hooks for programming modes"
+    (add-hook 'before-save-hook 'progmodes-before-save-hook))
 
-(defun shell-dir (name dir)
-  "Opens a shell into the specified directory"
-  (let ((default-directory dir))
-    (shell name)))
+  (defun shell-dir (name dir)
+    "Opens a shell into the specified directory"
+    (let ((default-directory dir))
+      (shell name)))
 
-(defun insert-current-date ()
-  (interactive)
-  (insert (shell-command-to-string "echo -n $(date %Y-%m-%d)")))
+  (defun insert-current-date ()
+    (interactive)
+    (insert (shell-command-to-string "echo -n $(date %Y-%m-%d)")))
 
-(require 'calendar)
-(defun insdate-insert-current-date (&optional omit-day-of-week-p)
-    "Insert today's date using the current locale.
-  With a prefix argument, the date is inserted without the day of
-  the week."
-    (interactive "P*")
-    (insert (calendar-date-string (calendar-current-date) nil
-          omit-day-of-week-p)))
+  (require 'calendar)
+  (defun insdate-insert-current-date (&optional omit-day-of-week-p)
+      "Insert today's date using the current locale.
+    With a prefix argument, the date is inserted without the day of
+    the week."
+      (interactive "P*")
+      (insert (calendar-date-string (calendar-current-date) nil
+            omit-day-of-week-p)))
 
-(defun insert-date (prefix)
-    "Insert the current date. With prefix-argument, use ISO format. With
-   two prefix arguments, write out the day and month name."
-    (interactive "P")
-    (let ((format "%Y-%m-%d")
-          (system-time-locale "en_US"))
-      (insert (format-time-string format))))
+  (defun insert-date (prefix)
+      "Insert the current date. With prefix-argument, use ISO format. With
+     two prefix arguments, write out the day and month name."
+      (interactive "P")
+      (let ((format "%Y-%m-%d")
+            (system-time-locale "en_US"))
+        (insert (format-time-string format))))
 
-(defun ins-tommorrows-date ()
-  (interactive)
-  (insert (format-time-string "%A, %B %e, %Y" (time-add (current-time) (seconds-to-time (* 60 (* 60 (* 24))))))))
+  (defun ins-tommorrows-date ()
+    (interactive)
+    (insert (format-time-string "%A, %B %e, %Y" (time-add (current-time) (seconds-to-time (* 60 (* 60 (* 24))))))))
 
-;; (float-time)
-;; (calendar-date-string (decode-time (seconds-to-time (+ (* 60 (* 60 (* 24))) (float-time (current-time))))))
+  ;; (float-time)
+  ;; (calendar-date-string (decode-time (seconds-to-time (+ (* 60 (* 60 (* 24))) (float-time (current-time))))))
 
-;; (format-time-string "%A, %B %e, %Y" (decode-time (time-add (current-time) (seconds-to-time (* 60 (* 60 (* 24)))))))
+  ;; (format-time-string "%A, %B %e, %Y" (decode-time (time-add (current-time) (seconds-to-time (* 60 (* 60 (* 24)))))))
 
-;; (seconds-to-time (* 60 (* 60 (* 24))))
+  ;; (seconds-to-time (* 60 (* 60 (* 24))))
 
-;; (format-time-string "%A, %B %e, %Y" (current-time))
-;; (format-time-string "%A, %B %e, %Y" (time-add (current-time) (seconds-to-time (* 60 (* 60 (* 24))))))
-;; (decode-time (seconds-to-time (+ (float-time (current-time)) (* 60 (* 60 (* 24))))))
+  ;; (format-time-string "%A, %B %e, %Y" (current-time))
+  ;; (format-time-string "%A, %B %e, %Y" (time-add (current-time) (seconds-to-time (* 60 (* 60 (* 24))))))
+  ;; (decode-time (seconds-to-time (+ (float-time (current-time)) (* 60 (* 60 (* 24))))))
 
-(defun back-window ()
-  (interactive)
-  (other-window -1))
+  (defun back-window ()
+    (interactive)
+    (other-window -1))
 
-(defun log-region (&optional arg)
-   "Keyboard macro."
-   (interactive "p")
-   (kmacro-exec-ring-item
-     (quote ([134217847 16 5 return 112 117 116 115 32 34 25 61 35 123 25 125 34] 0 "%d")) arg))
+  (defun log-region (&optional arg)
+     "Keyboard macro."
+     (interactive "p")
+     (kmacro-exec-ring-item
+       (quote ([134217847 16 5 return 112 117 116 115 32 34 25 61 35 123 25 125 34] 0 "%d")) arg))
+
+  (defun agg-set-background-color-dark ()
+    (progn
+      ;; (set-face-attribute 'default nil :family "Monaco" :height 106 :weight 'normal)
+
+      ;; reverse-video
+
+      ;; Setting this on the frame-level allows for new frames opened to
+      ;; automatically take on the same color scheme
+      (add-to-list 'default-frame-alist '(foreground-color . "white"))
+      (add-to-list 'default-frame-alist '(background-color . "black"))
+      (add-to-list 'default-frame-alist '(cursor-color . "white"))
+
+      ;; Didn't work with multiple frames, but useful for ad-hoc switching
+      (set-foreground-color "white")
+      (set-background-color "black")
+
+      (set-face-attribute  'mode-line-inactive
+                           nil
+                           :foreground "gray80"
+                           :background "gray25"
+                           :box '(:line-width 1 :style released-button))
+      (set-face-attribute  'mode-line
+                           nil
+                           :foreground "gray25"
+                           :background "gray80"
+                           :box '(:line-width 1 :style released-button))))
+
+  (defun agg-set-background-color-light ()
+    (progn
+      ;; (set-face-attribute 'default nil :family "Monaco" :height 106 :weight 'normal)
+
+      ;; regular video
+
+      ;; Setting this on the frame-level allows for new frames opened to
+      ;; automatically take on the same color scheme
+      (add-to-list 'default-frame-alist '(foreground-color . "black"))
+      (add-to-list 'default-frame-alist '(background-color . "lightyellow"))
+      (add-to-list 'default-frame-alist '(cursor-color . "black"))
+
+      ;; Didn't work with multiple frames, but useful for ad-hoc switching
+      (set-foreground-color "black")
+      (set-background-color "lightyellow")
+
+      (set-face-attribute  'mode-line
+                           nil
+                           :foreground "gray80"
+                           :background "gray25"
+                           :box '(:line-width 1 :style released-button))
+      (set-face-attribute  'mode-line-inactive
+                           nil
+                           :foreground "gray25"
+                           :background "gray80"
+                           :box '(:line-width 1 :style released-button))))
+
+  (defun agg-toggle-background-color ()
+    "Toggle background and foreground colors between light and dark."
+    (interactive)
+    ;; use a property “state”. Value is t or nil
+    (if (get 'agg-toggle-background-color 'state)
+        (progn
+          (agg-set-background-color-dark)
+          (put 'agg-toggle-background-color 'state nil))
+      (progn
+        (agg-set-background-color-light)
+        (put 'agg-toggle-background-color 'state t))))
+
 #+END_SRC
 * Bindings
 #+BEGIN_SRC emacs-lisp

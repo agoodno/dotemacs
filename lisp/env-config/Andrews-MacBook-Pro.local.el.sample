@@ -1,6 +1,2 @@
 (setq user-full-name "Andrew Goodnough"
       user-mail-address "agoodno@gmail.com")
-
-;; theme config
-;; (require 'agg-color-theme-dark)
-(require 'agg-color-theme-light)
