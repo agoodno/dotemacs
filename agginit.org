@@ -1182,12 +1182,19 @@ TODO: Does this need to be loaded before all the ac-* packages?
         user-file (concat env-config-dir user-login-name ".el")
         host-file (concat env-config-dir system-name ".el"))
 
-  (progn
-    (when (file-exists-p user-file)
-      (load user-file))
-    (when (file-exists-p system-file)
-      (load system-file))
-    (when (file-exists-p host-file)
+  (when (file-exists-p user-file)
+    (progn
+      (message "Loading user env file %s." (symbol-value 'user-file))
+      (load user-file)))
+
+  (when (file-exists-p system-file)
+    (progn
+      (message "Loading system env file %s." (symbol-value 'system-file))
+      (load system-file)))
+
+  (when (file-exists-p host-file)
+    (progn
+      (message "Loading host env file %s." (symbol-value 'host-file))
       (load host-file)))
 
   ;; -OR- Manual load like below if dynamic loading above causing problems
