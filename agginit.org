@@ -383,18 +383,19 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
 #+END_SRC
 * Packages
 ** ac-emacs-eclim
-##+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp
   (use-package ac-emacs-eclim
     :ensure t
-    :defer t)
-
-  (require 'ac-emacs-eclim)
-  (ac-emacs-eclim-config)
-##+END_SRC
+    :defer t
+    :after (auto-complete eclim)
+    :config
+    (ac-emacs-eclim-config))
+#+END_SRC
 ** ac-js2
 ##+BEGIN_SRC emacs-lisp
   (use-package ac-js2
     :ensure t
+    :after (auto-complete js2-mode)
     :init (add-hook 'js2-mode-hook 'ac-js2-mode))
 ##+END_SRC
 ** aggressive-indent
@@ -403,13 +404,11 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
     :ensure t)
 #+END_SRC
 ** auto-complete
-TODO: Does this need to be loaded before all the ac-* packages?
 #+BEGIN_SRC emacs-lisp
   (use-package auto-complete
-    :ensure t)
-
-  (require 'auto-complete-config)
-  (ac-config-default)
+    :ensure t
+    :config
+    (ac-config-default))
 #+END_SRC
 ** bar-cursor
 #+BEGIN_SRC emacs-lisp
@@ -461,21 +460,27 @@ TODO: Does this need to be loaded before all the ac-* packages?
     :ensure t
     :defer t)
 #+END_SRC
+** company
+#+BEGIN_SRC emacs-lisp
+  (use-package company
+    :ensure t
+    :init
+    (add-hook 'after-init-hook 'global-company-mode))
+#+END_SRC
 ** company-emacs-eclim
-##+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp
   (use-package company-emacs-eclim
-    :ensure t)
-
-  (require 'company)
-  (require 'company-emacs-eclim)
-  (company-emacs-eclim-setup)
-  (global-company-mode t)
-##+END_SRC
+    :ensure t
+    :after (company eclim)
+    :config
+    (company-emacs-eclim-setup))
+#+END_SRC
 ** company-tern
 ##+BEGIN_SRC emacs-lisp
   (use-package company-tern
     :ensure t
     :defer t
+    :after (company tern)
     :init
       (add-hook 'js2-mode-hook (lambda () (tern-mode) (company-mode)))
       (eval-after-load 'company '(push 'company-tern company-backends)))
@@ -483,48 +488,29 @@ TODO: Does this need to be loaded before all the ac-* packages?
   (define-key tern-mode-keymap (kbd "M-.") nil)
   (define-key tern-mode-keymap (kbd "M-,") nil)
 ##+END_SRC
-** company
-#+BEGIN_SRC emacs-lisp
-  (use-package company
-    :ensure t
-    :init (add-hook 'after-init-hook 'global-company-mode))
-#+END_SRC
 ** css
 #+BEGIN_SRC emacs-lisp
   (customize-set-variable 'css-indent-offset 2)
 #+END_SRC
 ** eclim
-##+BEGIN_SRC emacs-lisp
-(use-package eclim
-  :ensure t
-  :defer t)
-;;  :init (setq eclim-eclipse-dirs '("~/opt/eclipse"))
-;;        (setq eclim-executable "~/opt/eclipse/eclim"))
-
-(require 'eclim)
-(global-eclim-mode)
-
-;; (require 'eclim)
-;; ;(require 'eclimd)
-
-(setq eclim-auto-save t)
-
-;;(setenv "STATIC_JARS" "/home/agoodno/workspace/StaticJars/")
-
-;; ;; display compilation error messages in the echo area
-(setq help-at-pt-display-when-idle t)
-(setq help-at-pt-timer-delay 0.1)
-(help-at-pt-set-timer)
-
-;; configures company
-(require 'company)
-(require 'company-emacs-eclim)
-(company-emacs-eclim-setup)
-(global-company-mode t)
-
-;; ;; find the daemon
-;; (setq eclim-executable "/home/andrew/opt/eclipse-standard-kepler-SR1-linux-gtk-x86_64/plugins/org.eclim_2.3.2/bin/eclim")
-##+END_SRC
+#+BEGIN_SRC emacs-lisp
+  (use-package eclim
+    :ensure t
+    :defer t
+    :init
+    (setq eclimd-autostart nil)
+    (setq eclim-eclipse-dirs '("/Applications/SpringToolSuite4.app/Contents/Eclipse"))
+    (setq eclim-executable "/Applications/SpringToolSuite4.app/Contents/Eclipse/plugins/org.eclim_2.8.0/bin/eclim")
+    (setq eclim-auto-save t)
+    ;; display compilation error messages in the echo area
+    (setq help-at-pt-display-when-idle t)
+    (setq help-at-pt-timer-delay 0.1)
+    (defun my-java-mode-hook ()
+      (eclim-mode t))
+    (add-hook 'java-mode-hook 'my-java-mode-hook)
+    :config
+    (help-at-pt-set-timer))
+#+END_SRC
 ** ensime
 ##+BEGIN_SRC emacs-lisp
 (use-package ensime
