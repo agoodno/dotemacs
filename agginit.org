@@ -130,8 +130,8 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
   (defun shell-dir (name dir)
     "Opens a shell into the specified directory
    ex. (shell-dir "cmd-rails" "/Users/agoodnough/src/rails/")"
-    (let ((default-directory dir))
-      (shell name)))
+   (let ((default-directory dir))
+     (shell name)))
 
   (defun insert-current-date ()
     (interactive)
@@ -139,20 +139,20 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
 
   (require 'calendar)
   (defun insdate-insert-current-date (&optional omit-day-of-week-p)
-      "Insert today's date using the current locale.
+    "Insert today's date using the current locale.
     With a prefix argument, the date is inserted without the day of
     the week."
-      (interactive "P*")
-      (insert (calendar-date-string (calendar-current-date) nil
-            omit-day-of-week-p)))
+    (interactive "P*")
+    (insert (calendar-date-string (calendar-current-date) nil
+                                  omit-day-of-week-p)))
 
   (defun insert-date (prefix)
-      "Insert the current date. With prefix-argument, use ISO format. With
+    "Insert the current date. With prefix-argument, use ISO format. With
      two prefix arguments, write out the day and month name."
-      (interactive "P")
-      (let ((format "%Y-%m-%d")
-            (system-time-locale "en_US"))
-        (insert (format-time-string format))))
+    (interactive "P")
+    (let ((format "%Y-%m-%d")
+          (system-time-locale "en_US"))
+      (insert (format-time-string format))))
 
   (defun ins-tommorrows-date ()
     (interactive)
@@ -174,10 +174,10 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
     (other-window -1))
 
   (defun log-region (&optional arg)
-     "Keyboard macro."
-     (interactive "p")
-     (kmacro-exec-ring-item
-       (quote ([134217847 16 5 return 112 117 116 115 32 34 25 61 35 123 25 125 34] 0 "%d")) arg))
+    "Keyboard macro."
+    (interactive "p")
+    (kmacro-exec-ring-item
+     (quote ([134217847 16 5 return 112 117 116 115 32 34 25 61 35 123 25 125 34] 0 "%d")) arg))
 
   (defun agg-set-background-color-dark ()
     (progn
@@ -239,12 +239,11 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
     ;; use a property “state”. Value is t or nil
     (if (get 'agg-toggle-background-color 'state)
         (progn
-          (agg-set-background-color-dark)
+          (agg-set-background-color-light)
           (put 'agg-toggle-background-color 'state nil))
       (progn
-        (agg-set-background-color-light)
+        (agg-set-background-color-dark)
         (put 'agg-toggle-background-color 'state t))))
-
 #+END_SRC
 * Bindings
 #+BEGIN_SRC emacs-lisp
