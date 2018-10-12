@@ -392,12 +392,12 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
     (ac-emacs-eclim-config))
 #+END_SRC
 ** ac-js2
-##+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp
   (use-package ac-js2
     :ensure t
     :after (auto-complete js2-mode)
     :init (add-hook 'js2-mode-hook 'ac-js2-mode))
-##+END_SRC
+#+END_SRC
 ** aggressive-indent
 #+BEGIN_SRC emacs-lisp
   (use-package aggressive-indent
@@ -461,20 +461,20 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
     :defer t)
 #+END_SRC
 ** company
-#+BEGIN_SRC emacs-lisp
+##+BEGIN_SRC emacs-lisp
   (use-package company
     :ensure t
     :init
     (add-hook 'after-init-hook 'global-company-mode))
-#+END_SRC
+##+END_SRC
 ** company-emacs-eclim
-#+BEGIN_SRC emacs-lisp
+##+BEGIN_SRC emacs-lisp
   (use-package company-emacs-eclim
     :ensure t
     :after (company eclim)
     :config
     (company-emacs-eclim-setup))
-#+END_SRC
+##+END_SRC
 ** company-tern
 ##+BEGIN_SRC emacs-lisp
   (use-package company-tern
