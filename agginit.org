@@ -502,6 +502,7 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
     (setq eclim-eclipse-dirs '("/Applications/SpringToolSuite4.app/Contents/Eclipse"))
     (setq eclim-executable "/Applications/SpringToolSuite4.app/Contents/Eclipse/plugins/org.eclim_2.8.0/bin/eclim")
     (setq eclim-auto-save t)
+    (setq eclim-use-yasnippet t)
     ;; display compilation error messages in the echo area
     (setq help-at-pt-display-when-idle t)
     (setq help-at-pt-timer-delay 0.1)
@@ -740,6 +741,13 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
       (add-to-list 'erc-modules 'hipchatify)
       (erc-update-modules)))
 ##+END_SRC
+** exec-path-from-shell
+#+BEGIN_SRC emacs-lisp
+  (use-package exec-path-from-shell
+    :ensure t
+    :config
+    (exec-path-from-shell-initialize))
+#+END_SRC
 ** f
 #+BEGIN_SRC emacs-lisp
   (use-package f

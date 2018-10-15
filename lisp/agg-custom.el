@@ -9,7 +9,7 @@
  '(org-return-follows-link t)
  '(package-selected-packages
    (quote
-    (auto-complete-nxml fuzzy ac-cider ac-html ac-inf-ruby ac-js2 ac-emacs-eclim eclim markdown-preview-eww auto-complete unfill yaml-mode restclient markdown-mode chruby puppet-mode magit-filenotify magit-find-file tidy smex projectile ido-completing-read+ flycheck-clojure flycheck cider yaml clojure-mode f erc-hipchatify js2-mode ido-vertical-mode ido-mode bundler yari magit aggressive-indent html-mode json-mode enh-ruby-mode bar-cursor auto-compile)))
+    (exec-path-from-shell auto-complete-nxml fuzzy ac-cider ac-html ac-inf-ruby ac-js2 ac-emacs-eclim eclim markdown-preview-eww auto-complete unfill yaml-mode restclient markdown-mode chruby puppet-mode magit-filenotify magit-find-file tidy smex projectile ido-completing-read+ flycheck-clojure flycheck cider yaml clojure-mode f erc-hipchatify js2-mode ido-vertical-mode ido-mode bundler yari magit aggressive-indent html-mode json-mode enh-ruby-mode bar-cursor auto-compile)))
  '(safe-local-variable-values
    (quote
     ((scala-indent:use-javadoc-style . t)
