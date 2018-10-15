@@ -403,6 +403,16 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
   (use-package aggressive-indent
     :ensure t)
 #+END_SRC
+** ansi-color
+#+BEGIN_SRC emacs-lisp
+  (use-package ansi-color
+    :ensure t
+    :init
+    (defun my/ansi-colorize-buffer ()
+      (let ((buffer-read-only nil))
+        (ansi-color-apply-on-region (point-min) (point-max))))
+    (add-hook 'compilation-filter-hook 'my/ansi-colorize-buffer))
+#+END_SRC
 ** auto-complete
 #+BEGIN_SRC emacs-lisp
   (use-package auto-complete
