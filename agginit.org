@@ -420,6 +420,13 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
     :config
     (ac-config-default))
 #+END_SRC
+** auto-complete-nxml
+#+BEGIN_SRC emacs-lisp
+  (use-package auto-complete-nxml
+    :ensure t
+    :defer t
+    :after (auto-complete))
+#+END_SRC
 ** bar-cursor
 #+BEGIN_SRC emacs-lisp
   (use-package bar-cursor
