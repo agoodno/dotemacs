@@ -50,6 +50,94 @@ So logs act like a real-time tail -f
     (async-shell-command (format "java -Djava.library.path=/Users/agoodnough/opt/dynamodb_local/latest/DynamoDBLocal_lib -jar /Users/agoodnough/opt/dynamodb_local/latest/DynamoDBLocal.jar -dbPath /Users/agoodnough/opt/dynamodb_local/dbs/dev -port %d" port) buffer-name)
     (bury-buffer buffer-name))
 #+END_SRC
+* Development
+** Ruby
+#+BEGIN_SRC emacs-lisp
+;; My bundler is at: /Users/agoodnough/.gem/ruby/2.1.1/bin/bundle
+;; but the pacakge can't find it and expects it to on the path.
+;; It's probably missing this setup from my .bashrc
+;;  source '/usr/local/share/chruby/chruby.sh'
+;;  source '/usr/local/share/chruby/auto.sh'
+;; Otherwise, I could hack the bundler.el to set the path to bunlder
+;; or allow setting it with a variable
+;; (use-package bundler
+;;   :ensure t
+;;   :defer t)
+
+;; (use-package robe
+;;   :ensure t
+;;   :init
+;;   (progn (add-hook 'ruby-mode-hook 'robe-mode)
+;;          (eval-after-load 'company '(push 'company-robe company-backends))))
+
+;;(setq ruby-use-smie nil)
+;;(setq ruby-align-to-stmt-keywords t)
+
+
+;; (defun rails-console-in (dir name)
+;;   "Opens a rails console in the specified directory with name"
+;;                                         ;  (interactive "P")
+;;   (let ((default-directory dir))
+;;                                         ;        (buffer-name (if name name "Console")))
+;;     (chruby-use-corresponding)
+;;     (async-shell-command "bundle exec rails console" name)))
+
+;;                                         ;(rails-console-in "/Users/agoodnough/src/customerservice/" "repl-customerservice")
+;;                                         ;(rails-console-in "/Users/agoodnough/src/mar-api/" "repl-mar-api")
+
+;; (defun rails-console (name)
+;;   "Opens a rails console in the specified directory with name"
+;;   (chruby-use-corresponding)
+;;   (async-shell-command "bundle exec rails console" name))
+
+;;                                         ;(rails-console "repl-customerservice")
+
+;; (defun m-test-one-current-buffer ()
+;;   "Runs test"
+;;   (interactive)
+;;   (let ((default-directory "/Users/agoodnough/src/customerservice/"))
+;;     (chruby-use-corresponding)
+;;     (async-shell-command (format "bundle exec m %s" buffer-file-name))))
+
+;; (defun m-test-all-current-buffer ()
+;;   "Runs test"
+;;   (interactive)
+;;   (let ((default-directory "/Users/agoodnough/src/customerservice/"))
+;;     (chruby-use-corresponding)
+;;     (async-shell-command "bundle exec rake test")))
+
+;; (defun run-foreman ()
+;;   "Run foreman in an async buffer."
+;;   (interactive)
+;;   (let ((default-directory "/Users/agoodnough/src/customerservice/"))
+;;     (async-shell-command "foreman start" "*Foreman*")))
+
+;; (defun bundle-command (cmd)
+;;   "Run cmd in an async buffer."
+;;   (let ((default-directory (git-project-root)))
+;;     (chruby-use-corresponding)
+;;     (setenv "AWS_DEFAULT_REGION" "us-east-1")
+;;     (async-shell-command cmd "*Bundler*")))
+
+;; (defun show-dir (dir)
+;;   "Show the full path file name in the minibuffer."
+;;   (message dir))
+
+;; (defun git-project-root? (path)
+;;   "Finds the git project root starting in path"
+;;   (let ((git-dir (concat (file-name-as-directory path) ".git")))
+;;     (show-dir git-dir)
+;;     (f-exists? git-dir)))
+
+;; (defun git-project-root ()
+;;   (f-traverse-upwards 'git-project-root?))
+
+;; (eval-after-load "ruby-mode"
+;;   '(progn
+;;      (define-key ruby-mode-map (kbd "C-c C-t") 'm-test-one-current-buffer)
+;;      (define-key ruby-mode-map (kbd "C-c C-a") 'm-test-all-current-buffer)
+;;      (define-key ruby-mode-map (kbd "C-c C-f") 'run-foreman)))
+#+END_SRC
 * Packages
 ** auto-complete ideas
 #+BEGIN_SRC emacs-lisp
