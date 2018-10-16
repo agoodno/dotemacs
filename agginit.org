@@ -116,7 +116,6 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
 
 (setq split-width-threshold nil)
 #+END_SRC
-* Color Theme
 * Functions
 #+BEGIN_SRC emacs-lisp
   (defun untabify-buffer ()
@@ -1142,9 +1141,13 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
 #+END_SRC
 ** tidy
 #+BEGIN_SRC emacs-lisp
-  (use-package tidy
-    :ensure t
-    :defer t)
+    (use-package tidy
+      :ensure t
+      :defer t
+      :init
+      (setq tidy-shell-command "/usr/local/bin/tidy")
+      (setq tidy-config-file "~/.tidyrc")
+      (setq tidy-temp-directory "/tmp"))
 #+END_SRC
 ** tramp
 #+BEGIN_SRC emacs-lisp
