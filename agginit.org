@@ -535,6 +535,7 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
     (defun my-java-mode-hook ()
       (eclim-mode t))
     (add-hook 'java-mode-hook 'my-java-mode-hook)
+    (add-hook 'java-mode-hook 'progmodes-hooks)
     :config
     (help-at-pt-set-timer))
 #+END_SRC
@@ -963,6 +964,7 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
                                "xmllint -format -"
                                (current-buffer) t
                                "*Xmllint Error Buffer*" t))
+    (add-hook 'nxml-mode-hook 'progmodes-hooks)
     :bind (:map nxml-mode-map
                 ("C-c C-l" . agg/xml-format)))
 #+END_SRC
