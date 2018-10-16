@@ -943,6 +943,14 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
     :ensure t
     :defer t)
 #+END_SRC
+** neotree
+#+BEGIN_SRC emacs-lisp
+  (use-package neotree
+    :ensure t
+    :defer t
+    :init
+    (global-set-key [f8] 'neotree-toggle))
+#+END_SRC
 ** nxml-mode
 #+BEGIN_SRC emacs-lisp
   (use-package nxml-mode
