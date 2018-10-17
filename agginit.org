@@ -3,10 +3,15 @@
 See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Reference Manual]]
 
 * General
+** Env vars
+   #+BEGIN_SRC emacs-lisp
+     (setq at_work (and (equal (system-name) "MMEM7107.local") (equal user-login-name "agoodnough")))
+     (setq at_home (and (equal (system-name) "Andrews-MacBook-Pro.local") (equal user-login-name "andrew")))
+   #+END_SRC
 ** Changes backups to go to a backup directory
-#+BEGIN_SRC emacs-lisp
-(setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
-#+END_SRC
+   #+BEGIN_SRC emacs-lisp
+     (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
+   #+END_SRC
 ** Auto revert all files changed elsewhere
 #+BEGIN_SRC emacs-lisp
 (global-auto-revert-mode t)
@@ -900,38 +905,69 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
   (customize-set-variable 'json-reformat:indent-width 2)
 #+END_SRC
 ** magit
-#+BEGIN_SRC emacs-lisp
-  (use-package magit
-    :ensure t
-    :init
-    (setq magit-completing-read-function 'magit-ido-completing-read)
-    (customize-set-variable 'magit-display-buffer-function
-      (quote magit-display-buffer-fullframe-status-v1))
-    (customize-set-variable 'magit-status-sections-hook
-      '(magit-insert-status-headers
-        magit-insert-merge-log
-        magit-insert-rebase-sequence
-        magit-insert-am-sequence
-        magit-insert-sequencer-sequence
-        magit-insert-bisect-output
-        magit-insert-bisect-rest
-        magit-insert-unpulled-from-upstream
-        magit-insert-unpulled-from-pushremote
-        magit-insert-unpushed-to-upstream
-        magit-insert-unpushed-to-pushremote
-        magit-insert-staged-changes
-        magit-insert-unstaged-changes
-        magit-insert-untracked-files
-        magit-insert-stashes))
-    (customize-set-variable 'magit-repolist-columns
-      (quote
-        (("Name" 40 magit-repolist-column-ident nil)
-        ("Path" 99 magit-repolist-column-path))))
-    (customize-set-variable 'magit-repository-directories
-      magit-projects)
-    (global-set-key (kbd "C-c g") 'magit-status)
-    (global-set-key (kbd "C-c l") 'magit-list-repositories))
-#+END_SRC
+   #+BEGIN_SRC emacs-lisp
+     (use-package magit
+       :ensure t
+       :init
+       (cond (at_work
+              (setq magit-projects
+                    (quote (
+                            ("~/src/alma-invoice-to-wisdm-check-request" . 0)
+                            ("~/src/control-repo" . 0)
+                            ("~/src/dotemacs" . 0)
+                            ("~/src/dotfiles" . 0)
+                            ("~/src/gitlabci-maven" . 0)
+                            ("~/src/iaapatronextract" . 0)
+                            ("~/src/location-manager" . 0)
+                            ("~/src/lppi-manager" . 0)
+                            ("~/src/lppi-manager-client" . 0)
+                            ("~/src/lppi-updater" . 0)
+                            ("~/src/patron-bin" . 0)
+                            ("~/src/patron-client" . 0)
+                            ("~/src/patron-iaa-converter" . 0)
+                            ("~/src/patron-iaa-extract" . 0)
+                            ("~/src/patron-manager-api" . 0)
+                            ("~/src/patron-models" . 0)
+                            ("~/src/patron-postprocess" . 0)
+                            ("~/src/patron-view" . 0)
+                            ("~/src/patron-util" . 0)))))
+             (at_home
+              (setq magit-projects
+                    (quote (
+                            ("~/src/dotemacs" . 0)
+                            ("~/src/dotfiles" . 0)))))
+             (setq magit-projects
+                   (quote (
+                           ("~/src/dotemacs" . 0)
+                           ("~/src/dotfiles" . 0)))))
+       (setq magit-completing-read-function 'magit-ido-completing-read)
+       (customize-set-variable 'magit-display-buffer-function
+         (quote magit-display-buffer-fullframe-status-v1))
+       (customize-set-variable 'magit-status-sections-hook
+         '(magit-insert-status-headers
+           magit-insert-merge-log
+           magit-insert-rebase-sequence
+           magit-insert-am-sequence
+           magit-insert-sequencer-sequence
+           magit-insert-bisect-output
+           magit-insert-bisect-rest
+           magit-insert-unpulled-from-upstream
+           magit-insert-unpulled-from-pushremote
+           magit-insert-unpushed-to-upstream
+           magit-insert-unpushed-to-pushremote
+           magit-insert-staged-changes
+           magit-insert-unstaged-changes
+           magit-insert-untracked-files
+           magit-insert-stashes))
+       (customize-set-variable 'magit-repolist-columns
+         (quote
+           (("Name" 40 magit-repolist-column-ident nil)
+           ("Path" 99 magit-repolist-column-path))))
+       (customize-set-variable 'magit-repository-directories
+         magit-projects)
+       (global-set-key (kbd "C-c g") 'magit-status)
+       (global-set-key (kbd "C-c l") 'magit-list-repositories))
+   #+END_SRC
 ** markdown-mode
 #+BEGIN_SRC emacs-lisp
   (use-package markdown-mode
