@@ -1,3 +1,16 @@
-;; user-specific
+;; User-specific config
+
+;; Emacs config
 (setq user-full-name "Andy Goodnough"
       user-mail-address "andy.goodnough@wisc.edu")
+
+;; Erc config
+;; Use one or multiple
+;;(setq freenode-agoodno-pass "somepass")
+;;(setq othernode-agoodno-pass "someotherpass")
+
+;; Magit config
+(setq magit-projects
+  (quote (
+    ("~/.emacs.d" . 0)
+    ("~/src/rails" . 0))))

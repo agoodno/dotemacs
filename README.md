@@ -1,15 +1,5 @@
 # dotemacs #
 
-## setup ##
-
-Copy then modify erc credentials file:
-
-    cp -p ./ercpass.el.sample ~/.ercpass.el
-
-Copy the magit projects file then modify:
-
-    cp -p ./magit-projects.el.sample ~/.magit-projects.el
-
 ## environment-specific setup ##
 
 The system-specific file will load automatically because it can detect
