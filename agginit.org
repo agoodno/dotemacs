@@ -5,8 +5,20 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
 * General
 ** Env vars
    #+BEGIN_SRC emacs-lisp
-     (setq at_work (and (equal (system-name) "MMEM7107.local") (equal user-login-name "agoodnough")))
-     (setq at_home (and (equal (system-name) "Andrews-MacBook-Pro.local") (equal user-login-name "andrew")))
+     (defconst system-desc
+       (cond
+        ((string-equal system-type "darwin") "mac")
+        ((string-equal system-type "gnu/linux") "linux")
+        ((string-equal system-type "windows-nt") "windows")))
+
+     (setq on_work_laptop (equal (system-name) "MMEM7107.local"))
+     (setq on_home_laptop (equal (system-name) "Andrews-MacBook-Pro.local"))
+
+     (setq as_agoodnough (equal user-login-name "agoodnough"))
+     (setq as_andrew (equal (user-login-name) "andrew"))
+
+     (setq at_work (and on_work_laptop as_agoodnough))
+     (setq at_home (and on_home_laptop as_andrew))
    #+END_SRC
 ** User settings
    #+BEGIN_SRC emacs-lisp
@@ -1175,30 +1187,7 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
 #+END_SRC
 * Environment
 #+BEGIN_SRC emacs-lisp
-  ;; environment-specific config
-  (defconst system-desc
-    (cond
-     ((string-equal system-type "darwin") "mac")
-     ((string-equal system-type "gnu/linux") "linux")
-     ((string-equal system-type "windows-nt") "windows")))
-
-  ;; define locations here (user-specific, system-specific or host-specific)
-  (setq non-elpa-dir (concat lisp-dir (file-name-as-directory "non-elpa"))
-        system-file (expand-file-name (concat system-desc ".el") lisp-dir)
-        user-file (expand-file-name (concat "." user-login-name ".el") "~")
-        host-file (expand-file-name (concat "." system-name ".el") "~"))
-
-  (when (file-exists-p user-file)
-    (load user-file))
-
-  (when (file-exists-p system-file)
-    (load system-file))
-
-  (when (file-exists-p host-file)
-    (load host-file))
-
   (agg-toggle-background-color)
 
   (server-start)
-
 #+END_SRC
