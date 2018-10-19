@@ -8,6 +8,16 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
      (setq at_work (and (equal (system-name) "MMEM7107.local") (equal user-login-name "agoodnough")))
      (setq at_home (and (equal (system-name) "Andrews-MacBook-Pro.local") (equal user-login-name "andrew")))
    #+END_SRC
+** User settings
+   #+BEGIN_SRC emacs-lisp
+     (cond (at_work
+            (setq user-full-name "Andy Goodnough"
+                  user-mail-address "andy.goodnough@wisc.edu"))
+           (at_home
+            (setq user-full-name "Andrew Goodnough"
+                  user-mail-address "agoodno@gmail.com"))
+           nil)
+   #+END_SRC
 ** Changes backups to go to a backup directory
    #+BEGIN_SRC emacs-lisp
      (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
@@ -1186,4 +1196,9 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
 
   (when (file-exists-p host-file)
     (load host-file))
+
+  (agg-toggle-background-color)
+
+  (server-start)
+
 #+END_SRC
