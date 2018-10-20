@@ -9,17 +9,6 @@ the OS you're running on. To customize, edit:
     ./mac.el
     ./window.el
 
-You'll need to customize the host-specific and user-specific files
-yourself to match the actual name of your host and user.
-
-Copy the host example then modify:
-
-    cp -p ./host.el.sample ~/.Andrews-MacBook-Pro.local.el
-
-Copy the user example then modify:
-
-    cp -p ./user.el.sample ~/.agoodnough.el
-
 ### mac os note ###
 
 switch default key bindings

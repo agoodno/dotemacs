@@ -418,54 +418,163 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
 ;;      (define-key org-mode-map (kbd "C-c d") 'insdate-insert-current-date)
 #+END_SRC
 * Development
-** Ruby
-#+BEGIN_SRC emacs-lisp
-  (use-package ruby-mode
-    :init
-    (add-to-list 'auto-mode-alist '("\\.gemspec$" . ruby-mode))
-    (add-to-list 'auto-mode-alist '("\\.rake$" . ruby-mode))
-    (add-to-list 'auto-mode-alist '("\\.ru$" . ruby-mode))
-    (add-to-list 'auto-mode-alist '("Capfile$" . ruby-mode))
-    (add-to-list 'auto-mode-alist '("Gemfile$" . ruby-mode))
-    (add-to-list 'auto-mode-alist '("Rakefile$" . ruby-mode))
-    ;;(add-hook 'ruby-mode-hook #'aggressive-indent-mode)
-    (add-hook 'ruby-mode-hook 'progmodes-hooks))
+** General
+  #+BEGIN_SRC emacs-lisp
+    (use-package smartparens
+      :ensure t
+      :defer t
+      :init
+      (require 'smartparens-config))
+  #+END_SRC
+** Data Formats
+*** JSON
+    #+BEGIN_SRC emacs-lisp
+      (use-package json-mode
+        :ensure t
+        :defer t
+        :init (add-hook 'json-mode-hook '(lambda ()
+                                           (setq indent-tabs-mode nil)
+                                           (setq tab-width 2)
+                                           (setq indent-line-function (quote insert-tab))
+                                           (local-set-key (kbd "C-c C-f") 'json-pretty-print-buffer))))
 
-  (use-package inf-ruby
-    :ensure t)
+      (use-package json-reformat
+        :init
+        (customize-set-variable 'json-reformat:indent-width 2))
+    #+END_SRC
+*** XML
+    #+BEGIN_SRC emacs-lisp
+      (use-package nxml-mode
+        :mode "\\.xml\\'"
+        :init
+        (defun agg/xml-format ()
+          "Format an XML buffer with xmllint."
+          (interactive)
+          (shell-command-on-region (point-min) (point-max)
+                                   "xmllint -format -"
+                                   (current-buffer) t
+                                   "*Xmllint Error Buffer*" t))
+        (add-hook 'nxml-mode-hook 'progmodes-hooks)
+        :bind (:map nxml-mode-map
+                    ("C-c C-l" . agg/xml-format)))
 
-  (use-package robe
-    :ensure t
-    :after (ruby-mode auto-complete)
-    :init
-    (add-hook 'ruby-mode-hook 'robe-mode)
-    (add-hook 'robe-mode-hook 'ac-robe-setup))
+      (use-package auto-complete-nxml
+        :ensure t
+        :defer t
+        :after (auto-complete))
+    #+END_SRC
+** Languages
+*** Clojure
+    #+BEGIN_SRC emacs-lisp
+      (use-package clojure-mode
+        :ensure t
+        :defer t
+        :after (paredit)
+        :init
+        (add-hook 'clojure-mode-hook #'smartparens-mode))
 
-  (use-package rvm
-    :ensure t
-    :init
-    (add-hook 'ruby-mode-hook
-            (lambda () (rvm-activate-corresponding-ruby)))
-    :config
-    (rvm-use-default))
-#+END_SRC
+      ;; avoid clojure-mode-extra-font-locking if using CIDER
+
+      (use-package cider
+        :ensure t
+        :defer t
+        :init
+        (setq clojure-indent-style :always-indent)
+        (setq cider-repl-use-pretty-printing t)
+        (setq cider-repl-wrap-history t)
+        (setq cider-repl-history-size 1000)
+        (setq cider-repl-history-file "~/.cider-repl-history.txt"))
+    #+END_SRC
+*** Java
+    #+BEGIN_SRC emacs-lisp
+      (add-hook 'java-mode-hook (lambda ()
+                                  (setq c-basic-offset 4
+                                        tab-width 4)))
+
+      (use-package eclim
+        :ensure t
+        :defer t
+        :init
+        (setq eclimd-autostart nil)
+        (setq eclim-eclipse-dirs '("/Applications/SpringToolSuite4.app/Contents/Eclipse"))
+        (setq eclim-executable "/Applications/SpringToolSuite4.app/Contents/Eclipse/plugins/org.eclim_2.8.0/bin/eclim")
+        (setq eclim-auto-save t)
+        (setq eclim-use-yasnippet t)
+        ;; display compilation error messages in the echo area
+        (setq help-at-pt-display-when-idle t)
+        (setq help-at-pt-timer-delay 0.1)
+        (defun my-java-mode-hook ()
+          (eclim-mode t))
+        (add-hook 'java-mode-hook 'my-java-mode-hook)
+        (add-hook 'java-mode-hook 'progmodes-hooks)
+        :config
+        (help-at-pt-set-timer))
+
+      (use-package ac-emacs-eclim
+        :ensure t
+        :defer t
+        :after (auto-complete eclim)
+        :config
+        (ac-emacs-eclim-config))
+    #+END_SRC
+*** Javascript
+    #+BEGIN_SRC emacs-lisp
+      (use-package js2-mode
+        :ensure t
+        :defer t
+        :after (smartparens)
+        :init
+        (customize-set-variable 'js2-basic-offset 2)
+        (customize-set-variable 'js2-bounce-indent-p t)
+        ;; To install it as your major mode for JavaScript editing:
+        (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+        ;; You may also want to hook it in for shell scripts running via node.js:
+        ;; (add-to-list 'interpreter-mode-alist '("node" . js2-mode))
+        ;; Support for JSX is available via the derived mode `js2-jsx-mode'.  If you
+        ;; also want JSX support, use that mode instead:
+        (add-to-list 'auto-mode-alist '("\\.jsx?\\'" . js2-jsx-mode))
+        (add-to-list 'interpreter-mode-alist '("node" . js2-jsx-mode))
+        (add-hook 'js2-mode-hook #'smartparens-mode)
+        (add-hook 'js2-mode-hook (lambda () (setq js2-basic-offset 2))))
+
+      (use-package ac-js2
+        :ensure t
+        :defer t
+        :after (auto-complete js2-mode)
+        :init (add-hook 'js2-mode-hook 'ac-js2-mode))
+    #+END_SRC
+*** Ruby
+    #+BEGIN_SRC emacs-lisp
+   (use-package ruby-mode
+     :init
+     (add-to-list 'auto-mode-alist '("\\.gemspec$" . ruby-mode))
+     (add-to-list 'auto-mode-alist '("\\.rake$" . ruby-mode))
+     (add-to-list 'auto-mode-alist '("\\.ru$" . ruby-mode))
+     (add-to-list 'auto-mode-alist '("Capfile$" . ruby-mode))
+     (add-to-list 'auto-mode-alist '("Gemfile$" . ruby-mode))
+     (add-to-list 'auto-mode-alist '("Rakefile$" . ruby-mode))
+     ;;(add-hook 'ruby-mode-hook #'aggressive-indent-mode)
+     (add-hook 'ruby-mode-hook 'progmodes-hooks))
+
+   (use-package inf-ruby
+     :ensure t)
+
+   (use-package robe
+     :ensure t
+     :after (ruby-mode auto-complete)
+     :init
+     (add-hook 'ruby-mode-hook 'robe-mode)
+     (add-hook 'robe-mode-hook 'ac-robe-setup))
+
+   (use-package rvm
+     :ensure t
+     :init
+     (add-hook 'ruby-mode-hook (lambda ()
+                                 (rvm-activate-corresponding-ruby)))
+     :config
+     (rvm-use-default))
+    #+END_SRC
 * Packages
-** ac-emacs-eclim
-#+BEGIN_SRC emacs-lisp
-  (use-package ac-emacs-eclim
-    :ensure t
-    :defer t
-    :after (auto-complete eclim)
-    :config
-    (ac-emacs-eclim-config))
-#+END_SRC
-** ac-js2
-#+BEGIN_SRC emacs-lisp
-  (use-package ac-js2
-    :ensure t
-    :after (auto-complete js2-mode)
-    :init (add-hook 'js2-mode-hook 'ac-js2-mode))
-#+END_SRC
 ** aggressive-indent
 #+BEGIN_SRC emacs-lisp
   (use-package aggressive-indent
@@ -488,13 +597,6 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
     :config
     (ac-config-default))
 #+END_SRC
-** auto-complete-nxml
-#+BEGIN_SRC emacs-lisp
-  (use-package auto-complete-nxml
-    :ensure t
-    :defer t
-    :after (auto-complete))
-#+END_SRC
 ** bar-cursor
 #+BEGIN_SRC emacs-lisp
   (use-package bar-cursor
@@ -511,26 +613,6 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
   ;; Open links in Safari
   (setq browse-url-browser-function 'browse-url-generic
         browse-url-generic-program "open")
-#+END_SRC
-** cider
-#+BEGIN_SRC emacs-lisp
-  (use-package cider
-    :ensure t
-    :defer t)
-  ;; :init
-  ;;  (setq cider-repl-use-pretty-printing t)
-  ;;  (setq cider-repl-wrap-history t)
-  ;;  (setq cider-repl-history-size 1000)
-  ;;  (setq cider-repl-history-file "~/.cider-repl-history.txt"))
-
-  ;;.modify to use current day for file name cider-repl-history-2017-06-16.txt
-    ;;(customize-set-variable 'cider-repl-history-file "~/.cider-repl-history.txt")
-#+END_SRC
-** clojure-mode
-#+BEGIN_SRC emacs-lisp
-  (use-package clojure-mode
-    :ensure t
-    :defer t)
 #+END_SRC
 ** company
 ##+BEGIN_SRC emacs-lisp
@@ -563,27 +645,6 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
 ** css
 #+BEGIN_SRC emacs-lisp
   (customize-set-variable 'css-indent-offset 2)
-#+END_SRC
-** eclim
-#+BEGIN_SRC emacs-lisp
-  (use-package eclim
-    :ensure t
-    :defer t
-    :init
-    (setq eclimd-autostart nil)
-    (setq eclim-eclipse-dirs '("/Applications/SpringToolSuite4.app/Contents/Eclipse"))
-    (setq eclim-executable "/Applications/SpringToolSuite4.app/Contents/Eclipse/plugins/org.eclim_2.8.0/bin/eclim")
-    (setq eclim-auto-save t)
-    (setq eclim-use-yasnippet t)
-    ;; display compilation error messages in the echo area
-    (setq help-at-pt-display-when-idle t)
-    (setq help-at-pt-timer-delay 0.1)
-    (defun my-java-mode-hook ()
-      (eclim-mode t))
-    (add-hook 'java-mode-hook 'my-java-mode-hook)
-    (add-hook 'java-mode-hook 'progmodes-hooks)
-    :config
-    (help-at-pt-set-timer))
 #+END_SRC
 ** ensime
 ##+BEGIN_SRC emacs-lisp
@@ -881,51 +942,6 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
     :config
     (flx-ido-mode))
 #+END_SRC
-** java-mode
-#+BEGIN_SRC emacs-lisp
-  (add-hook 'java-mode-hook (lambda ()
-                              (setq c-basic-offset 4
-                                    tab-width 4)))
-#+END_SRC
-** js2-mode
-#+BEGIN_SRC emacs-lisp
-  (use-package js2-mode
-    :ensure t
-    :defer t)
-
-  ;; http://elpa.gnu.org/packages/js2-mode.html
-
-  ;; To install it as your major mode for JavaScript editing:
-  (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
-
-  ;; You may also want to hook it in for shell scripts running via node.js:
-  (add-to-list 'interpreter-mode-alist '("node" . js2-mode))
-
-  ;; Support for JSX is available via the derived mode `js2-jsx-mode'.  If you
-  ;; also want JSX support, use that mode instead:
-  (add-to-list 'auto-mode-alist '("\\.jsx?\\'" . js2-jsx-mode))
-  (add-to-list 'interpreter-mode-alist '("node" . js2-jsx-mode))
-
-  (customize-set-variable 'js2-basic-offset 2)
-  (customize-set-variable 'js2-bounce-indent-p t)
-
-  ;(add-hook 'js2-mode-hook (lambda () (setq js2-basic-offset 2)))
-#+END_SRC
-** json-mode
-#+BEGIN_SRC emacs-lisp
-  (use-package json-mode
-    :ensure t
-    :defer t
-    :init (add-hook 'json-mode-hook '(lambda ()
-            (setq indent-tabs-mode nil)
-            (setq tab-width 2)
-            (setq indent-line-function (quote insert-tab))
-            (local-set-key (kbd "C-c C-f") 'json-pretty-print-buffer))))
-#+END_SRC
-** json-reformat
-#+BEGIN_SRC emacs-lisp
-  (customize-set-variable 'json-reformat:indent-width 2)
-#+END_SRC
 ** magit
    #+BEGIN_SRC emacs-lisp
      (use-package magit
@@ -1025,22 +1041,6 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
     :defer t
     :init
     (global-set-key [f8] 'neotree-toggle))
-#+END_SRC
-** nxml-mode
-#+BEGIN_SRC emacs-lisp
-  (use-package nxml-mode
-    :mode "\\.xml\\'"
-    :init
-    (defun agg/xml-format ()
-      "Format an XML buffer with xmllint."
-      (interactive)
-      (shell-command-on-region (point-min) (point-max)
-                               "xmllint -format -"
-                               (current-buffer) t
-                               "*Xmllint Error Buffer*" t))
-    (add-hook 'nxml-mode-hook 'progmodes-hooks)
-    :bind (:map nxml-mode-map
-                ("C-c C-l" . agg/xml-format)))
 #+END_SRC
 ** org-mode
 #+BEGIN_SRC emacs-lisp
@@ -1186,8 +1186,7 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
     :init (define-key 'help-command "R" 'yari))
 #+END_SRC
 * Environment
-#+BEGIN_SRC emacs-lisp
-  (agg-toggle-background-color)
-
-  (server-start)
-#+END_SRC
+  #+BEGIN_SRC emacs-lisp
+    (agg-toggle-background-color)
+    (server-start)
+  #+END_SRC
