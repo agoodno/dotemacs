@@ -562,7 +562,7 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
       (use-package inf-ruby
         :ensure t
         :init
-        (add-hook 'ruby-mode-hook 'inf-ruby-minor-mode)))
+        (add-hook 'ruby-mode-hook 'inf-ruby-minor-mode))
 
       (use-package robe
         :ensure t
