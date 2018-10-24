@@ -419,13 +419,6 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
 ;;   "Bind <F5> to `recompile'."
 ;;   (local-set-key (kbd "<f5>") 'recompile))
 ;; (add-hook 'c-mode-common-hook 'my/bindkey-recompile)
-
-;; This is a general approach for binding a specific key binding for
-;; use in one mode. Should be used in the package-config/<mode>.el file.
-;; (eval-after-load "org-mode"
-;;   '(progn
-;;      (define-key org-mode-map (kbd "C-c t") 'ins-tommorrows-date)))
-;;      (define-key org-mode-map (kbd "C-c d") 'insdate-insert-current-date)
 #+END_SRC
 * Development
 ** General
@@ -1055,15 +1048,27 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
     (global-set-key [f8] 'neotree-toggle))
 #+END_SRC
 ** org-mode
-#+BEGIN_SRC emacs-lisp
-  (setq org-log-done 'time)
-  (setq org-log-done 'note)
-
-  ;; #+TODO: TODO(t) STARTED(s) WAITING(w) | DONE(d) CANCELED(c)
-  (setq org-todo-keywords
-         '((sequence "IDEA" "TODO" "PLANNING" "DESIGNING" "PROGRAMMING" "WAITING" "TESTING" "CHECKLIST" "MR" "APPROVED" "|" "MERGED" "DELEGATED" "DONE" "CANCELED")))
-  (setq org-log-done nil)
-#+END_SRC
+   #+BEGIN_SRC emacs-lisp
+     (use-package org
+       :init
+       (setq org-log-done 'time)
+       (setq org-log-done 'note)
+       (setq org-todo-keywords
+             '((sequence "IDEA" "TODO" "PLANNING" "DESIGNING" "PROGRAMMING" "WAITING" "TESTING" "CHECKLIST" "MR" "APPROVED" "|" "MERGED" "DELEGATED" "DONE" "CANCELED")))
+       (setq org-log-done nil)
+       :bind (("C-c l" . org-store-link)
+              ("C-c c" . org-capture)
+              ("C-c a" . org-agenda)
+              ("C-c t" . ins-tommorrows-date)
+              ("C-c d" . insdate-insert-current-date)
+              :map org-mode-map
+              ("C-c !" . org-time-stamp-inactive))
+       :mode ("\\.org$" . org-mode)
+       :config
+       (require 'org-id)
+       (require 'ob-sh)
+       (org-babel-do-load-languages 'org-babel-load-languages '((sh . t))))
+   #+END_SRC
 ** projectile
 #+BEGIN_SRC emacs-lisp
   (use-package projectile
