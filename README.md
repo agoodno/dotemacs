@@ -9,29 +9,22 @@ the OS you're running on. To customize, edit:
     ./mac.el
     ./window.el
 
-### mac os note ###
+## Clean test
 
-switch default key bindings
+Occasionally, I like to test my init files from a clean environment so
+I know I haven't messed something up along the way. To do this, I do
+the following:
 
-    (setq mac-right-option-modifier 'control)
+1. Close Emacs
+1. Checkout the git revision you think should work (start with master)
+1. Clean the existing ELPA compiled directory
 
-Above was my first attempt to get a control key on the right side
+        ~/src/dotemacs $ rm -rf elpa
+1. Start Emacs
 
-I ended up switching the modifier keys in the Keyboard control panel
-Command becomes Alt
-Alt becomes Command
-Doing it this way the command-line editing is identical to Emacs
+Repeat all steps until you get a clean launch. If you don't get a
+clean start, go back to a previous revision in the git log until
+you do.
 
-On the Keyboard tab, also set "Use all F1, F2, etc. as standard function keys..." = true
-
-And on the Shortcuts tab, unchecked almost all keyboard shortcuts
-
-This made it so the mac settings were not needed (as the keys were
-already flipped at the OS-level. Having them in the emacs config
-would have flipped them again.
-
-Using KeyRemap4MacBook to re-map Left Arrow to be my Right Cntl Key
-
-iTerm, set "Use option as meta key" = true
-
-Last issue is the function key. I often hit it when I want my Left Cntl Key so I'd like to swap Function and Left Cntl.
+It would be nice to have something like a build server that would
+perform a "clean build" on all new configuration changes.
