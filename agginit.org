@@ -555,34 +555,36 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
     #+END_SRC
 *** Ruby
     #+BEGIN_SRC emacs-lisp
-   (use-package ruby-mode
-     :init
-     (add-to-list 'auto-mode-alist '("\\.gemspec$" . ruby-mode))
-     (add-to-list 'auto-mode-alist '("\\.rake$" . ruby-mode))
-     (add-to-list 'auto-mode-alist '("\\.ru$" . ruby-mode))
-     (add-to-list 'auto-mode-alist '("Capfile$" . ruby-mode))
-     (add-to-list 'auto-mode-alist '("Gemfile$" . ruby-mode))
-     (add-to-list 'auto-mode-alist '("Rakefile$" . ruby-mode))
-     ;;(add-hook 'ruby-mode-hook #'aggressive-indent-mode)
-     (add-hook 'ruby-mode-hook 'progmodes-hooks))
+      (use-package ruby-mode
+        :init
+        (add-to-list 'auto-mode-alist '("\\.gemspec$" . ruby-mode))
+        (add-to-list 'auto-mode-alist '("\\.rake$" . ruby-mode))
+        (add-to-list 'auto-mode-alist '("\\.ru$" . ruby-mode))
+        (add-to-list 'auto-mode-alist '("Capfile$" . ruby-mode))
+        (add-to-list 'auto-mode-alist '("Gemfile$" . ruby-mode))
+        (add-to-list 'auto-mode-alist '("Rakefile$" . ruby-mode))
+        ;;(add-hook 'ruby-mode-hook #'aggressive-indent-mode)
+        (add-hook 'ruby-mode-hook 'progmodes-hooks))
 
-   (use-package inf-ruby
-     :ensure t)
+      (use-package inf-ruby
+        :ensure t
+        :init
+        (add-hook 'ruby-mode-hook 'inf-ruby-minor-mode)))
 
-   (use-package robe
-     :ensure t
-     :after (ruby-mode auto-complete)
-     :init
-     (add-hook 'ruby-mode-hook 'robe-mode)
-     (add-hook 'robe-mode-hook 'ac-robe-setup))
+      (use-package robe
+        :ensure t
+        :after (ruby-mode auto-complete)
+        :init
+        (add-hook 'ruby-mode-hook 'robe-mode)
+        (add-hook 'robe-mode-hook 'ac-robe-setup))
 
-   (use-package rvm
-     :ensure t
-     :init
-     (add-hook 'ruby-mode-hook (lambda ()
-                                 (rvm-activate-corresponding-ruby)))
-     :config
-     (rvm-use-default))
+      (use-package rvm
+        :ensure t
+        :init
+        (add-hook 'ruby-mode-hook (lambda ()
+                                    (rvm-activate-corresponding-ruby)))
+        :config
+        (rvm-use-default))
     #+END_SRC
 * Packages
 ** aggressive-indent
