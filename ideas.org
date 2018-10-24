@@ -9,35 +9,28 @@ So logs act like a real-time tail -f
 * Look & Feel
 ** Bell preference
 #+BEGIN_SRC emacs-lisp
-;; Use default audible bell
-;; (setq visible-bell nil)
+  ;; Use default audible bell
+  (setq visible-bell nil)
 
-;; Use a visible bell instead of audible bell
-;; (setq visible-bell t)
+  ;; Use a visible bell instead of audible bell
+  (setq visible-bell t)
 
-;; Ignore bell usingn 'ignore function
-;; (setq ring-bell-function 'ignore)
+  ;; Ignore bell usingn 'ignore function
+  (setq ring-bell-function 'ignore)
 
-;; Play a wav file on bell
-;; (setq ring-bell-function (lambda ()
-;;                            (call-process "afplay" nil 0 nil
-;;                                          "/Users/agoodnough/Dropbox/emacs-bell.mp3")))
+  ;; Play a wav file on bell
+  (setq ring-bell-function (lambda ()
+                             (call-process "afplay" nil 0 nil
+                                           "/Users/agoodnough/Dropbox/emacs-bell.mp3")))
 
-;; (setq ring-bell-function (lambda ()
-;;                            (call-process "afplay" nil 0 nil
-;;                                          "/Users/agoodnough/Dropbox/emacs-bell2.mp3")))
+  (setq ring-bell-function (lambda ()
+                             (call-process "afplay" nil 0 nil
+                                           "/Users/agoodnough/Dropbox/emacs-bell2.mp3")))
 
-(defun friendly-visible-bell ()
-  "A friendlier visual bell effect."
-  (invert-face 'mode-line)
-  (run-with-timer 0.1 nil 'invert-face 'mode-line))
-
-(setq visible-bell nil
-      ring-bell-function #'friendly-visible-bell)
-
-;; (setq ring-bell-function (lambda ()
-;;   (set-face-background 'default "DodgerBlue")
-;;   (set-face-foreground 'default "black")))
+  ;; Doesn't work - sets whole screen blue
+  (setq ring-bell-function (lambda ()
+                             (set-face-background 'default "DodgerBlue")
+                             (set-face-foreground 'default "black")))
 #+END_SRC
 * Functions
 #+BEGIN_SRC emacs-lisp

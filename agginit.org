@@ -143,6 +143,16 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
 
 (setq split-width-threshold nil)
 #+END_SRC
+** Ring bell
+   #+BEGIN_SRC emacs-lisp
+     (defun friendly-visible-bell ()
+       "A friendlier visual bell effect."
+       (invert-face 'mode-line)
+       (run-with-timer 0.1 nil 'invert-face 'mode-line))
+
+     (setq visible-bell nil
+           ring-bell-function #'friendly-visible-bell)
+   #+END_SRC
 * Functions
 #+BEGIN_SRC emacs-lisp
   (defun untabify-buffer ()
