@@ -466,6 +466,13 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
         :defer t
         :after (auto-complete))
     #+END_SRC
+** Templating
+*** Mustache
+    #+BEGIN_SRC emacs-lisp
+      (use-package mustache-mode
+        :ensure t
+        :defer t)
+    #+END_SRC
 ** Languages
 *** Clojure
     #+BEGIN_SRC emacs-lisp
@@ -1172,15 +1179,11 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
   ;;(define-key tern-mode-keymap (kbd "M-,") nil)
 #+END_SRC
 ** tidy
-#+BEGIN_SRC emacs-lisp
-    (use-package tidy
-      :ensure t
-      :defer t
-      :init
-      (setq tidy-shell-command "/usr/local/bin/tidy")
-      (setq tidy-config-file "~/.tidyrc")
-      (setq tidy-temp-directory "/tmp"))
-#+END_SRC
+   #+BEGIN_SRC emacs-lisp
+     (setq tidy-shell-command "/usr/local/bin/tidy")
+     (setq tidy-config-file "~/.tidyrc")
+     (setq tidy-temp-directory "/tmp")
+   #+END_SRC
 ** tramp
 #+BEGIN_SRC emacs-lisp
   (setq tramp-default-method "ssh")
