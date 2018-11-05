@@ -591,6 +591,18 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
         :config
         (rvm-use-default))
     #+END_SRC
+*** HTML
+    #+BEGIN_SRC emacs-lisp
+      ;;(use-package org-preview-html)
+    #+END_SRC
+*** Puppet
+    #+BEGIN_SRC emacs-lisp
+      (use-package puppet-mode
+        :ensure t
+        :defer t
+        :init
+        (add-to-list 'auto-mode-alist '("\\.pp$" . puppet-mode)))
+    #+END_SRC
 * Packages
 ** aggressive-indent
 #+BEGIN_SRC emacs-lisp
