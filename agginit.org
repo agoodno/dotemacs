@@ -1093,6 +1093,14 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
        (require 'ob-sh)
        (org-babel-do-load-languages 'org-babel-load-languages '((sh . t))))
    #+END_SRC
+** pdf-tools
+   #+BEGIN_SRC emacs-lisp
+     (use-package pdf-tools
+       :ensure t
+       :defer t
+       :init
+       (pdf-tools-install))
+   #+END_SRC
 ** projectile
 #+BEGIN_SRC emacs-lisp
   (use-package projectile
