@@ -11,13 +11,13 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
         ((string-equal system-type "gnu/linux") "linux")
         ((string-equal system-type "windows-nt") "windows")))
 
-     (setq on_work_laptop (equal (system-name) "MMEM7107.local"))
+     (setq on_work_laptop (equal (system-name) "Andys-MacBook-Pro.local"))
      (setq on_home_laptop (equal (system-name) "Andrews-MacBook-Pro.local"))
 
-     (setq as_agoodnough (equal user-login-name "agoodnough"))
+     (setq as_andy (equal user-login-name "andy"))
      (setq as_andrew (equal (user-login-name) "andrew"))
 
-     (setq at_work (and on_work_laptop as_agoodnough))
+     (setq at_work (and on_work_laptop as_andy))
      (setq at_home (and on_home_laptop as_andrew))
    #+END_SRC
 ** User settings
@@ -1090,8 +1090,8 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
        :mode ("\\.org$" . org-mode)
        :config
        (require 'org-id)
-       (require 'ob-sh)
-       (org-babel-do-load-languages 'org-babel-load-languages '((sh . t))))
+       ;; (require 'ob-sh)
+       (org-babel-do-load-languages 'org-babel-load-languages '((shell . t))))
    #+END_SRC
 ** pdf-tools
    #+BEGIN_SRC emacs-lisp
