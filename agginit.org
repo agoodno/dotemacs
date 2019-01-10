@@ -11,7 +11,7 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
         ((string-equal system-type "gnu/linux") "linux")
         ((string-equal system-type "windows-nt") "windows")))
 
-     (setq on_work_laptop (equal (system-name) "Andys-MacBook-Pro.local"))
+     (setq on_work_laptop (equal (system-name) "Andys-MBP"))
      (setq on_home_laptop (equal (system-name) "Andrews-MacBook-Pro.local"))
 
      (setq as_andy (equal user-login-name "andy"))
@@ -979,34 +979,18 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
        (cond (at_work
               (setq magit-projects
                     (quote (
-                            ("~/src/alma-invoice-to-wisdm-check-request" . 0)
-                            ("~/src/control-repo" . 0)
-                            ("~/src/dotemacs" . 0)
-                            ("~/src/dotfiles" . 0)
-                            ("~/src/gitlabci-maven" . 0)
-                            ("~/src/iaapatronextract" . 0)
-                            ("~/src/location-manager" . 0)
-                            ("~/src/lppi-manager" . 0)
-                            ("~/src/lppi-manager-client" . 0)
-                            ("~/src/lppi-updater" . 0)
-                            ("~/src/patron-bin" . 0)
-                            ("~/src/patron-client" . 0)
-                            ("~/src/patron-iaa-converter" . 0)
-                            ("~/src/patron-iaa-extract" . 0)
-                            ("~/src/patron-manager-api" . 0)
-                            ("~/src/patron-models" . 0)
-                            ("~/src/patron-postprocess" . 0)
-                            ("~/src/patron-view" . 0)
-                            ("~/src/patron-util" . 0)))))
+                            ("~/work/wastewitness" . 0)
+                            ("~/.emacs.d" . 0)
+                            ("~/stow" . 0)))))
              (at_home
               (setq magit-projects
                     (quote (
-                            ("~/src/dotemacs" . 0)
-                            ("~/src/dotfiles" . 0)))))
+                            ("~/.emacs.d" . 0)
+                            ("~/stow" . 0)))))
              (setq magit-projects
                    (quote (
-                           ("~/src/dotemacs" . 0)
-                           ("~/src/dotfiles" . 0)))))
+                            ("~/.emacs.d" . 0)
+                            ("~/stow" . 0)))))
        (setq magit-completing-read-function 'magit-ido-completing-read)
        (customize-set-variable 'magit-display-buffer-function
          (quote magit-display-buffer-fullframe-status-v1))
@@ -1033,7 +1017,7 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
        (customize-set-variable 'magit-repository-directories
          magit-projects)
        (global-set-key (kbd "C-c g") 'magit-status)
-       (global-set-key (kbd "C-c l") 'magit-list-repositories))
+       (global-set-key (kbd "C-c h") 'magit-list-repositories))
    #+END_SRC
 ** markdown-mode
 #+BEGIN_SRC emacs-lisp
