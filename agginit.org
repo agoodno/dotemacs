@@ -261,12 +261,12 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
       ;; Setting this on the frame-level allows for new frames opened to
       ;; automatically take on the same color scheme
       (add-to-list 'default-frame-alist '(foreground-color . "black"))
-      (add-to-list 'default-frame-alist '(background-color . "lightyellow"))
+      (add-to-list 'default-frame-alist '(background-color . "white"))
       (add-to-list 'default-frame-alist '(cursor-color . "black"))
 
       ;; Didn't work with multiple frames, but useful for ad-hoc switching
       (set-foreground-color "black")
-      (set-background-color "lightyellow")
+      (set-background-color "white")
 
       (set-face-attribute  'mode-line
                            nil
@@ -1078,9 +1078,9 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
               ("C-c !" . org-time-stamp-inactive))
        :mode ("\\.org$" . org-mode)
        :config
-       (require 'org-id)
+       (require 'org-id))
        ;; (require 'ob-sh)
-       (org-babel-do-load-languages 'org-babel-load-languages '((shell . t))))
+       ;; (org-babel-do-load-languages 'org-babel-load-languages '((shell . t)))
    #+END_SRC
 ** pdf-tools
    #+BEGIN_SRC emacs-lisp
@@ -1221,6 +1221,6 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
 #+END_SRC
 * Environment
   #+BEGIN_SRC emacs-lisp
-    (agg-toggle-background-color)
+    ;; (agg-toggle-background-color)
     (server-start)
   #+END_SRC
