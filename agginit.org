@@ -539,16 +539,10 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
         :defer t
         :after (smartparens)
         :init
-        (customize-set-variable 'js2-basic-offset 2)
-        (customize-set-variable 'js2-bounce-indent-p t)
-        ;; To install it as your major mode for JavaScript editing:
-        (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
-        ;; You may also want to hook it in for shell scripts running via node.js:
-        ;; (add-to-list 'interpreter-mode-alist '("node" . js2-mode))
-        ;; Support for JSX is available via the derived mode `js2-jsx-mode'.  If you
-        ;; also want JSX support, use that mode instead:
+        (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-jsx-mode))
         (add-to-list 'auto-mode-alist '("\\.jsx?\\'" . js2-jsx-mode))
         (add-to-list 'interpreter-mode-alist '("node" . js2-jsx-mode))
+        (add-hook 'js-mode-hook 'js2-minor-mode)
         (add-hook 'js2-mode-hook #'smartparens-mode)
         (add-hook 'js2-mode-hook (lambda () (setq js2-basic-offset 2))))
 
@@ -557,6 +551,15 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
         :defer t
         :after (auto-complete js2-mode)
         :init (add-hook 'js2-mode-hook 'ac-js2-mode))
+
+      (use-package js2-refactor
+        :ensure t
+        :defer t
+        :after (js2-mode)
+        :init
+        (setq js2-skip-preprocessor-directives t)
+        (js2r-add-keybindings-with-prefix "C-c C-m")
+        (add-hook 'js2-mode-hook #'js2-refactor-mode))
     #+END_SRC
 *** Ruby
     #+BEGIN_SRC emacs-lisp
