@@ -11,8 +11,8 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
         ((string-equal system-type "gnu/linux") "linux")
         ((string-equal system-type "windows-nt") "windows")))
 
-     (setq on_work_laptop (equal (system-name) "Andys-MBP"))
-     (setq on_home_laptop (equal (system-name) "Andrews-MacBook-Pro.local"))
+     (setq on_work_laptop (equal (system-name) "Andys-MacBook-Pro.local"))
+     (setq on_home_laptop (equal (system-name) "Andrews-MacBook-Pro.localp"))
 
      (setq as_andy (equal user-login-name "andy"))
      (setq as_andrew (equal (user-login-name) "andrew"))
@@ -24,7 +24,7 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
    #+BEGIN_SRC emacs-lisp
      (cond (at_work
             (setq user-full-name "Andy Goodnough"
-                  user-mail-address "andy.goodnough@wisc.edu"))
+                  user-mail-address "andy@pharmid.com"))
            (at_home
             (setq user-full-name "Andrew Goodnough"
                   user-mail-address "agoodno@gmail.com"))
