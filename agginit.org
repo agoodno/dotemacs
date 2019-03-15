@@ -557,8 +557,7 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
       (use-package tern-auto-complete
         :ensure t
         :defer t
-        :after (auto-complete js2-mode)
-        :init (add-hook 'js2-mode-hook 'ac-js2-mode)
+        :after (auto-complete tern)
         :config
         (tern-ac-setup))
 
