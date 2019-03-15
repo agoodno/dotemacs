@@ -422,13 +422,18 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
 #+END_SRC
 * Development
 ** General
-  #+BEGIN_SRC emacs-lisp
-    (use-package smartparens
-      :ensure t
-      :defer t
-      :init
-      (require 'smartparens-config))
-  #+END_SRC
+   #+BEGIN_SRC emacs-lisp
+     (use-package smartparens
+       :ensure t
+       :defer t
+       :init
+       (require 'smartparens-config))
+
+     (use-package deadgrep
+       :ensure t
+       :init
+       (global-set-key (kbd "<f10>") #'deadgrep))
+   #+END_SRC
 ** Data Formats
 *** JSON
     #+BEGIN_SRC emacs-lisp
