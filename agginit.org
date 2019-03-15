@@ -546,11 +546,21 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
         (add-hook 'js2-mode-hook #'smartparens-mode)
         (add-hook 'js2-mode-hook (lambda () (setq js2-basic-offset 2))))
 
-      (use-package ac-js2
+      (use-package tern
+        :ensure t
+        :defer t
+        :init
+        ;;  (define-key tern-mode-keymap (kbd "M-.") nil)
+        ;;  (define-key tern-mode-keymap (kbd "M-,") nil)
+        (add-hook 'js2-mode-hook (lambda () (tern-mode t))))
+
+      (use-package tern-auto-complete
         :ensure t
         :defer t
         :after (auto-complete js2-mode)
-        :init (add-hook 'js2-mode-hook 'ac-js2-mode))
+        :init (add-hook 'js2-mode-hook 'ac-js2-mode)
+        :config
+        (tern-ac-setup))
 
       (use-package js2-refactor
         :ensure t
@@ -665,19 +675,6 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
     :after (company eclim)
     :config
     (company-emacs-eclim-setup))
-##+END_SRC
-** company-tern
-##+BEGIN_SRC emacs-lisp
-  (use-package company-tern
-    :ensure t
-    :defer t
-    :after (company tern)
-    :init
-      (add-hook 'js2-mode-hook (lambda () (tern-mode) (company-mode)))
-      (eval-after-load 'company '(push 'company-tern company-backends)))
-
-  (define-key tern-mode-keymap (kbd "M-.") nil)
-  (define-key tern-mode-keymap (kbd "M-,") nil)
 ##+END_SRC
 ** css
 #+BEGIN_SRC emacs-lisp
@@ -1169,26 +1166,6 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
   (add-hook 'sql-mode-hook 'progmodes-hooks)
 
   (provide 'agg-sql-mode)
-#+END_SRC
-** tern
-#+BEGIN_SRC emacs-lisp
-  ;; (use-package tern
-  ;;   :ensure t
-  ;;   :defer t
-  ;;   :init
-
-  (add-to-list 'load-path "/home/agoodno/src/tern/emacs/")
-  (autoload 'tern-mode "tern.el" nil t)
-
-  (add-hook 'js2-mode-hook (lambda () (tern-mode t)))
-
-  (eval-after-load 'tern
-     '(progn
-        (require 'tern-auto-complete)
-        (tern-ac-setup)))
-
-  ;;(define-key tern-mode-keymap (kbd "M-.") nil)
-  ;;(define-key tern-mode-keymap (kbd "M-,") nil)
 #+END_SRC
 ** tidy
    #+BEGIN_SRC emacs-lisp
