@@ -11,7 +11,7 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
         ((string-equal system-type "gnu/linux") "linux")
         ((string-equal system-type "windows-nt") "windows")))
 
-     (setq on_work_laptop (equal (system-name) "Andys-MacBook-Pro.local"))
+     (setq on_work_laptop (equal (system-name) "Andys-MBP"))
      (setq on_home_laptop (equal (system-name) "Andrews-MBP"))
 
      (setq as_andy (equal user-login-name "andy"))
