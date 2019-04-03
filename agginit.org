@@ -12,7 +12,7 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
         ((string-equal system-type "windows-nt") "windows")))
 
      (setq on_work_laptop (equal (system-name) "Andys-MacBook-Pro.local"))
-     (setq on_home_laptop (equal (system-name) "Andrews-MacBook-Pro.local"))
+     (setq on_home_laptop (equal (system-name) "Andrews-MBP"))
 
      (setq as_andy (equal user-login-name "andy"))
      (setq as_andrew (equal (user-login-name) "andrew"))
@@ -539,9 +539,8 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
         :defer t
         :after (smartparens)
         :init
-        (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-jsx-mode))
-        (add-to-list 'auto-mode-alist '("\\.jsx?\\'" . js2-jsx-mode))
-        (add-to-list 'interpreter-mode-alist '("node" . js2-jsx-mode))
+        (setq js2-strict-missing-semi-warning nil)
+        (setq js2-missing-semi-one-line-override nil)
         (add-hook 'js-mode-hook 'js2-minor-mode)
         (add-hook 'js2-mode-hook #'smartparens-mode)
         (add-hook 'js2-mode-hook (lambda () (setq js2-basic-offset 2))))
@@ -549,15 +548,17 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
       (use-package tern
         :ensure t
         :defer t
-        :init
-        ;;  (define-key tern-mode-keymap (kbd "M-.") nil)
-        ;;  (define-key tern-mode-keymap (kbd "M-,") nil)
+        :config
+        (define-key tern-mode-keymap (kbd "M-.") nil)
+        (define-key tern-mode-keymap (kbd "M-,") nil)
         (add-hook 'js2-mode-hook (lambda () (tern-mode t))))
 
       (use-package tern-auto-complete
         :ensure t
         :defer t
         :after (auto-complete tern)
+        :init
+        (setq tern-command "/usr/local/bin/tern")
         :config
         (tern-ac-setup))
 
@@ -569,6 +570,16 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
         (setq js2-skip-preprocessor-directives t)
         (js2r-add-keybindings-with-prefix "C-c C-m")
         (add-hook 'js2-mode-hook #'js2-refactor-mode))
+
+      (use-package rjsx-mode
+        :ensure t
+        :defer t
+        :after (js2-mode)
+        :init
+        (add-to-list 'auto-mode-alist '("\\.js\\'" . rjsx-mode))
+        (add-to-list 'auto-mode-alist '("\\.jsx?\\'" . rjsx-mode))
+        (add-to-list 'interpreter-mode-alist '("node" . rjsx-mode)))
+
     #+END_SRC
 *** Ruby
     #+BEGIN_SRC emacs-lisp
@@ -610,7 +621,11 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
     #+END_SRC
 *** HTML
     #+BEGIN_SRC emacs-lisp
-      ;;(use-package org-preview-html)
+      ;; (use-package org-preview-html)
+
+      ;; (use-package web-mode
+      ;;   :ensure t
+      ;;   :defer t)
     #+END_SRC
 *** Puppet
     #+BEGIN_SRC emacs-lisp
@@ -620,6 +635,23 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
         :init
         (add-to-list 'auto-mode-alist '("\\.pp$" . puppet-mode)))
     #+END_SRC
+* Social
+  #+BEGIN_SRC emacs-lisp
+    (use-package slack
+      :ensure t
+      :commands (slack-start)
+      :init
+      (setq slack-buffer-emojify t)
+      (setq slack-prefer-current-team t)
+      :config
+      (slack-register-team
+       :name "elmlang"
+       :default t
+       :client-id "12617974597.593942839862"
+       :client-secret "d5a2dd0464899cd96ad321844fa643bb"
+       :token "xoxs-12617974597-106280355140-593574482007-4fe62fad37a38d092366d42310121a0a72a77f29a4eb563851e6d96398bc140b"
+       :full-and-display-names t))
+  #+END_SRC
 * Packages
 ** aggressive-indent
 #+BEGIN_SRC emacs-lisp
@@ -930,7 +962,8 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
   (use-package flycheck-clojure
     :ensure t
     :defer t
-    :init (eval-after-load 'flycheck '(flycheck-clojure-setup)))
+    :after (flycheck)
+    :config (flycheck-clojure-setup))
 #+END_SRC
 ** html-mode
 #+BEGIN_SRC emacs-lisp
