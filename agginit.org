@@ -440,7 +440,8 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
       (use-package json-mode
         :ensure t
         :defer t
-        :init (add-hook 'json-mode-hook '(lambda ()
+        :init
+        (add-hook 'json-mode-hook '(lambda ()
                                            (setq indent-tabs-mode nil)
                                            (setq tab-width 2)
                                            (setq indent-line-function (quote insert-tab))
@@ -580,6 +581,13 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
         (add-to-list 'auto-mode-alist '("\\.jsx?\\'" . rjsx-mode))
         (add-to-list 'interpreter-mode-alist '("node" . rjsx-mode)))
 
+      (use-package eslint-fix
+        :ensure t
+        :defer t)
+
+      (use-package eslintd-fix
+        :ensure t
+        :defer t)
     #+END_SRC
 *** Ruby
     #+BEGIN_SRC emacs-lisp
@@ -939,24 +947,34 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
       (erc-update-modules)))
 ##+END_SRC
 ** exec-path-from-shell
-#+BEGIN_SRC emacs-lisp
-  (use-package exec-path-from-shell
-    :ensure t
-    :config
-    (exec-path-from-shell-initialize))
-#+END_SRC
+   #+BEGIN_SRC emacs-lisp
+     (use-package exec-path-from-shell
+       :ensure t
+       :config
+       (exec-path-from-shell-initialize))
+   #+END_SRC
 ** f
 #+BEGIN_SRC emacs-lisp
   (use-package f
     :ensure t)
 #+END_SRC
 ** flycheck
-#+BEGIN_SRC emacs-lisp
-  (use-package flycheck
-    :ensure t
-    :init (global-flycheck-mode)
-    :config (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc)))
-#+END_SRC
+   #+BEGIN_SRC emacs-lisp
+     (use-package flycheck
+       :ensure t
+       :init
+       (setq flycheck-javascript-eslint-executable "~/work/wastewitness/node_modules/.bin/eslint")
+       (setq flycheck-javascript-standard-executable "~/work/wastewitness/node_modules/.bin/standard")
+       (setq-default flycheck-disabled-checkers
+         '(emacs-lisp-checkdoc))
+       (setq-default flycheck-disabled-checkers
+         (append flycheck-disabled-checkers
+         '(javascript-jshint)))
+       (setq-default flycheck-disabled-checkers
+         (append flycheck-disabled-checkers
+         '(json-jsonlist)))
+       (global-flycheck-mode))
+   #+END_SRC
 ** flycheck-clojure
 #+BEGIN_SRC emacs-lisp
   (use-package flycheck-clojure
