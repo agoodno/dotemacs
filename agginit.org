@@ -5,27 +5,21 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
 * General
 ** Env vars
    #+BEGIN_SRC emacs-lisp
-     (defconst system-desc
-       (cond
-        ((string-equal system-type "darwin") "mac")
-        ((string-equal system-type "gnu/linux") "linux")
-        ((string-equal system-type "windows-nt") "windows")))
-
-     (setq on_work_laptop (equal (system-name) "Andys-MBP"))
-     (setq on_home_laptop (equal (system-name) "Andrews-MBP"))
+     (setq on-work-laptop (equal (system-name) "Andys-MBP"))
+     (setq on-home-laptop (equal (system-name) "Andrews-MBP"))
 
      (setq as_andy (equal user-login-name "andy"))
      (setq as_andrew (equal (user-login-name) "andrew"))
 
-     (setq at_work (and on_work_laptop as_andy))
-     (setq at_home (and on_home_laptop as_andrew))
+     (setq at-work (and on-work-laptop as_andy))
+     (setq at-home (and on-home-laptop as_andrew))
    #+END_SRC
 ** User settings
    #+BEGIN_SRC emacs-lisp
-     (cond (at_work
+     (cond (at-work
             (setq user-full-name "Andy Goodnough"
                   user-mail-address "andy@pharmid.com"))
-           (at_home
+           (at-home
             (setq user-full-name "Andrew Goodnough"
                   user-mail-address "agoodno@gmail.com"))
            nil)
@@ -1033,13 +1027,13 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
      (use-package magit
        :ensure t
        :init
-       (cond (at_work
+       (cond (at-work
               (setq magit-projects
                     (quote (
                             ("~/work/wastewitness" . 0)
                             ("~/.emacs.d" . 0)
                             ("~/stow" . 0)))))
-             (at_home
+             (at-home
               (setq magit-projects
                     (quote (
                             ("~/.emacs.d" . 0)

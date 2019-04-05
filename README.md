@@ -1,14 +1,5 @@
 # dotemacs #
 
-## environment-specific setup ##
-
-The system-specific file will load automatically because it can detect
-the OS you're running on. To customize, edit:
-
-    ./linux.el
-    ./mac.el
-    ./window.el
-
 ## Clean test
 
 Occasionally, I like to test my init files from a clean environment so
