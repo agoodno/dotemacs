@@ -8,7 +8,7 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
      (setq on-work-laptop (equal (system-name) "Andys-MBP"))
      (setq on-home-laptop (equal (system-name) "Andrews-MBP"))
 
-     (setq as_andy (equal user-login-name "andy"))
+     (setq as_andy (equal user-login-name "andygoodnough"))
      (setq as_andrew (equal (user-login-name) "andrew"))
 
      (setq at-work (and on-work-laptop as_andy))
