@@ -624,6 +624,16 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
       (use-package haml-mode
         :ensure t
         :defer t)
+
+      (use-package coffee-mode
+        :ensure t
+        :defer t
+        :after (whitespace-mode)
+        :init
+        ;; automatically clean up bad whitespace
+        (setq whitespace-action '(auto-cleanup))
+        ;; only show bad whitespace
+        (setq whitespace-style '(trailing space-before-tab indentation empty space-after-tab)))
     #+END_SRC
 *** HTML
     #+BEGIN_SRC emacs-lisp
