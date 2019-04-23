@@ -620,6 +620,10 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
                                     (rvm-activate-corresponding-ruby)))
         :config
         (rvm-use-default))
+
+      (use-package haml-mode
+        :ensure t
+        :defer t)
     #+END_SRC
 *** HTML
     #+BEGIN_SRC emacs-lisp
