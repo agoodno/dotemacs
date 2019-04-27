@@ -999,43 +999,32 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
   (add-hook 'html-mode-hook 'progmodes-hooks)
 #+END_SRC
 ** ido
-#+BEGIN_SRC emacs-lisp
-  (use-package ido
-    :ensure t
-    :init
-    (setq ido-enable-flex-matching t)
+   #+BEGIN_SRC emacs-lisp
+     (use-package ido
+       :ensure t
+       :init
+       ;; File finding
+       (global-set-key (kbd "C-x M-f") 'ido-find-file-other-window)
+       (global-set-key (kbd "C-x f") 'recentf-ido-find-file)
+       :config
+       (ido-mode 1)
+       (ido-everywhere 1)
+       (icomplete-mode 1))
 
-    ;; Jump to a definition in the current file. (This is awesome.)
-    ;; (global-set-key (kbd "C-x C-i") 'ido-imenu)
+     (use-package ido-completing-read+
+       :ensure t
+       :after (ido)
+       :init
+       (ido-ubiquitous-mode 1))
 
-    ;; File finding
-    ;; (global-set-key (kbd "C-x M-f") 'ido-find-file-other-window)
-
-    (global-set-key (kbd "C-x f") 'recentf-ido-find-file)
-    :config
-    (ido-mode 1)
-    (ido-everywhere 1)
-    (icomplete-mode 1))
-
-  (use-package ido-completing-read+
-    :ensure t
-    :after (ido)
-    :init
-    (ido-ubiquitous-mode 1))
-
-  (use-package ido-vertical-mode
-    :ensure t
-    :after (ido)
-    :init
-    (setq ido-vertical-define-keys 'C-n-and-C-p-only)
-    :config
-    (ido-vertical-mode 1))
-
-  (use-package flx-ido
-    :ensure t
-    :config
-    (flx-ido-mode))
-#+END_SRC
+     (use-package ido-vertical-mode
+       :ensure t
+       :after (ido)
+       :init
+       (setq ido-vertical-define-keys 'C-n-and-C-p-only)
+       :config
+       (ido-vertical-mode 1))
+   #+END_SRC
 ** magit
    #+BEGIN_SRC emacs-lisp
      (use-package magit
