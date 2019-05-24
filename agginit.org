@@ -536,7 +536,7 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
         :init
         (setq js2-strict-missing-semi-warning nil)
         (setq js2-missing-semi-one-line-override nil)
-        (add-hook 'js-mode-hook 'js2-minor-mode)
+        (add-hook 'js2-mode-hook 'progmodes-hooks)
         (add-hook 'js2-mode-hook #'smartparens-mode)
         (add-hook 'js2-mode-hook (lambda () (setq js2-basic-offset 2))))
 
@@ -582,6 +582,20 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
       (use-package eslintd-fix
         :ensure t
         :defer t)
+    #+END_SRC
+*** Vue.js
+    #+BEGIN_SRC emacs-lisp
+      (setq js-indent-level 2)
+      (add-hook 'js-mode-hook 'progmodes-hooks)
+
+      (use-package vue-mode
+        :ensure t
+        :defer t
+        :init
+        (add-hook 'vue-mode-hook 'progmodes-hooks)
+        :config
+        ;; 0, 1, or 2, representing (respectively) none, low, and high coloring
+        (setq mmm-submode-decoration-level 0))
     #+END_SRC
 *** Ruby
     #+BEGIN_SRC emacs-lisp
@@ -1250,6 +1264,6 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
 #+END_SRC
 * Environment
   #+BEGIN_SRC emacs-lisp
-    ;; (agg-toggle-background-color)
+    (agg-toggle-background-color)
     (server-start)
   #+END_SRC
