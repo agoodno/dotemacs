@@ -975,7 +975,10 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
      (use-package exec-path-from-shell
        :ensure t
        :config
-       (exec-path-from-shell-initialize))
+       (exec-path-from-shell-initialize)
+       ;; Make ansi-term play nice with zsh prompt.
+       (defadvice ansi-term (after advise-ansi-term-coding-system)
+         (set-buffer-process-coding-system 'utf-8-unix 'utf-8-unix)))
    #+END_SRC
 ** f
 #+BEGIN_SRC emacs-lisp
