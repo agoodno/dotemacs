@@ -427,6 +427,10 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
        :ensure t
        :init
        (global-set-key (kbd "<f10>") #'deadgrep))
+
+     (use-package yasnippet
+       :ensure t
+       :defer t)
    #+END_SRC
 ** Data Formats
 *** JSON
@@ -582,6 +586,11 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
       (use-package eslintd-fix
         :ensure t
         :defer t)
+
+      (use-package react-snippets
+        :ensure t
+        :defer t
+        :after (yasnippet))
     #+END_SRC
 *** Vue.js
     #+BEGIN_SRC emacs-lisp
