@@ -147,6 +147,12 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
      (setq visible-bell nil
            ring-bell-function #'friendly-visible-bell)
    #+END_SRC
+** Highlight current line
+   #+BEGIN_SRC emacs-lisp
+     (global-hl-line-mode +1)
+     (set-face-background 'hl-line "#3e4446")
+     (set-face-foreground 'hl-line nil)
+   #+END_SRC
 * Functions
 #+BEGIN_SRC emacs-lisp
   (defun untabify-buffer ()
