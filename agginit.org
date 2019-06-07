@@ -29,114 +29,113 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
      (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
    #+END_SRC
 ** Auto revert all files changed elsewhere
-#+BEGIN_SRC emacs-lisp
-(global-auto-revert-mode t)
-#+END_SRC
+   #+BEGIN_SRC emacs-lisp
+     (global-auto-revert-mode t)
+   #+END_SRC
 ** Setup environment
 *** Set path variable
-#+BEGIN_SRC emacs-lisp
-(setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
-#+END_SRC
+    #+BEGIN_SRC emacs-lisp
+      (setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
+    #+END_SRC
 *** Set pager to cat for shell
-#+BEGIN_SRC emacs-lisp
-(setenv "PAGER" "/bin/cat")
-#+END_SRC
+    #+BEGIN_SRC emacs-lisp
+      (setenv "PAGER" "/bin/cat")
+    #+END_SRC
 ** Setup execution path
 *** Add user local binaries
-#+BEGIN_SRC emacs-lisp
-(setq exec-path (append exec-path '("/usr/local/bin")))
-#+END_SRC
+    #+BEGIN_SRC emacs-lisp
+      (setq exec-path (append exec-path '("/usr/local/bin")))
+    #+END_SRC
 *** Add home binaries
-#+BEGIN_SRC emacs-lisp
-(setq exec-path (append exec-path (list (concat (getenv "HOME") "/bin"))))
-#+END_SRC
+    #+BEGIN_SRC emacs-lisp
+      (setq exec-path (append exec-path (list (concat (getenv "HOME") "/bin"))))
+    #+END_SRC
 ** Compilation buffer
 *** Scroll with output automatically
-#+BEGIN_SRC emacs-lisp
-  (setq compilation-scroll-output t)
-  ;;(setq compilation-scroll-output 'first-error)
-#+END_SRC
+    #+BEGIN_SRC emacs-lisp
+      (setq compilation-scroll-output t)
+      ;;(setq compilation-scroll-output 'first-error)
+    #+END_SRC
 *** Show on top of current buffer instead of new buffer
-#+BEGIN_SRC emacs-lisp
-  (add-to-list 'same-window-buffer-names "*compilation*")
-#+END_SRC
+    #+BEGIN_SRC emacs-lisp
+      (add-to-list 'same-window-buffer-names "*compilation*")
+    #+END_SRC
 * Look & Feel
 ** Turn off startup splash
-/Note: *inhibit-startup-message* and *inhibit-splash-screen* are aliases for this variable./
-#+BEGIN_SRC emacs-lisp
-(setq inhibit-startup-screen t)
-#+END_SRC
+   /Note: *inhibit-startup-message* and *inhibit-splash-screen* are aliases for this variable./
+   #+BEGIN_SRC emacs-lisp
+     (setq inhibit-startup-screen t)
+   #+END_SRC
 ** Turn off menu
-#+BEGIN_SRC emacs-lisp
-(menu-bar-mode -1)
-#+END_SRC
+   #+BEGIN_SRC emacs-lisp
+     (menu-bar-mode -1)
+   #+END_SRC
 ** Turn off tool-bar
-#+BEGIN_SRC emacs-lisp
-(when (fboundp 'tool-bar-mode)
-  (tool-bar-mode -1))
-#+END_SRC
+   #+BEGIN_SRC emacs-lisp
+     (when (fboundp 'tool-bar-mode)
+       (tool-bar-mode -1))
+   #+END_SRC
 ** Turn off scroll-bar
-#+BEGIN_SRC emacs-lisp
-(when (fboundp 'scroll-bar-mode)
-  (scroll-bar-mode -1))
-#+END_SRC
+   #+BEGIN_SRC emacs-lisp
+     (when (fboundp 'scroll-bar-mode)
+       (scroll-bar-mode -1))
+   #+END_SRC
 ** Turn off initial scratch buffer text message
-#+BEGIN_SRC emacs-lisp
-(setq initial-scratch-message nil)
-#+END_SRC
+   #+BEGIN_SRC emacs-lisp
+     (setq initial-scratch-message nil)
+   #+END_SRC
 ** Disable line wrap
-#+BEGIN_SRC emacs-lisp
-(setq default-truncate-lines t)
-#+END_SRC
+   #+BEGIN_SRC emacs-lisp
+     (setq default-truncate-lines t)
+   #+END_SRC
 ** Highlight selected regions
-#+BEGIN_SRC emacs-lisp
-(setq transient-mark-mode t)
-#+END_SRC
+   #+BEGIN_SRC emacs-lisp
+     (setq transient-mark-mode t)
+   #+END_SRC
 ** Display line and column numbers
-#+BEGIN_SRC emacs-lisp
-(setq line-number-mode t)
-(setq column-number-mode t)
-#+END_SRC
+   #+BEGIN_SRC emacs-lisp
+     (setq line-number-mode t)
+     (setq column-number-mode t)
+   #+END_SRC
 ** Prompts
-#+BEGIN_SRC emacs-lisp
-;; "y or n" instead of "yes or no"
-(defalias 'yes-or-no-p 'y-or-n-p)
-#+END_SRC
+   #+BEGIN_SRC emacs-lisp
+     (defalias 'yes-or-no-p 'y-or-n-p)
+   #+END_SRC
 ** Indenting
-#+BEGIN_SRC emacs-lisp
-(show-paren-mode 1)
-(setq-default indent-tabs-mode nil)
+   #+BEGIN_SRC emacs-lisp
+     (show-paren-mode 1)
+     (setq-default indent-tabs-mode nil)
 
-;; Indent with spaces, never with TABs
-(setq-default indent-tabs-mode nil)
+     ;; Indent with spaces, never with TABs
+     (setq-default indent-tabs-mode nil)
 
-;; Sets basic offset
-(setq c-basic-offset 2)
+     ;; Sets basic offset
+     (setq c-basic-offset 2)
 
-;; Indent to 2 spaces
-(setq-default tab-width 2)
+     ;; Indent to 2 spaces
+     (setq-default tab-width 2)
 
-;; Tabs stop every 2 spaces
-(setq-default tab-stop-list (quote (2 4 6 8 10)))
-#+END_SRC
+     ;; Tabs stop every 2 spaces
+     (setq-default tab-stop-list (quote (2 4 6 8 10)))
+   #+END_SRC
 ** Selection
-#+BEGIN_SRC emacs-lisp
-(setq x-select-enable-clipboard t
-      ;; x-select-enable-primary t ;;causes problems with delete-selection-mode
-      save-interprogram-paste-before-kill nil
-      apropos-do-all t
-      mouse-yank-at-point nil)
+   #+BEGIN_SRC emacs-lisp
+     (setq x-select-enable-clipboard t
+           ;; x-select-enable-primary t ;;causes problems with delete-selection-mode
+           save-interprogram-paste-before-kill nil
+           apropos-do-all t
+           mouse-yank-at-point nil)
 
-;; Paste and backspace operations delete the selection and "pastes over" it
-(delete-selection-mode t)
-#+END_SRC
+     ;; Paste and backspace operations delete the selection and "pastes over" it
+     (delete-selection-mode t)
+   #+END_SRC
 ** Windowing
-#+BEGIN_SRC emacs-lisp
-;; Make side by side buffers function the same as the main window
-(setq truncate-partial-width-windows nil)
+   #+BEGIN_SRC emacs-lisp
+     ;; Make side by side buffers function the same as the main window
+     (setq truncate-partial-width-windows nil)
 
-(setq split-width-threshold nil)
-#+END_SRC
+     (setq split-width-threshold nil)
+   #+END_SRC
 ** Ring bell
    #+BEGIN_SRC emacs-lisp
      (defun friendly-visible-bell ()
@@ -154,272 +153,272 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
      (set-face-foreground 'hl-line nil)
    #+END_SRC
 * Functions
-#+BEGIN_SRC emacs-lisp
-  (defun untabify-buffer ()
-    "Untabify current buffer"
-    (interactive)
-    (untabify (point-min) (point-max)))
+  #+BEGIN_SRC emacs-lisp
+    (defun untabify-buffer ()
+      "Untabify current buffer"
+      (interactive)
+      (untabify (point-min) (point-max)))
 
-  (defun progmodes-before-save-hook ()
-    "Hooks which run on file write for programming modes"
-    (require 'whitespace)
+    (defun progmodes-before-save-hook ()
+      "Hooks which run on file write for programming modes"
+      (require 'whitespace)
 
-    (prog1 nil
-      (set-buffer-file-coding-system 'utf-8-unix)
-      (untabify-buffer)
-      (whitespace-cleanup)))
+      (prog1 nil
+        (set-buffer-file-coding-system 'utf-8-unix)
+        (untabify-buffer)
+        (whitespace-cleanup)))
 
-  (defun progmodes-hooks ()
-    "Hooks for programming modes"
-    (add-hook 'before-save-hook 'progmodes-before-save-hook))
+    (defun progmodes-hooks ()
+      "Hooks for programming modes"
+      (add-hook 'before-save-hook 'progmodes-before-save-hook))
 
-  (defun shell-dir (name dir)
-    "Opens a shell into the specified directory
-   ex. (shell-dir "cmd-rails" "/Users/agoodnough/src/rails/")"
-   (let ((default-directory dir))
-     (shell name)))
+    (defun shell-dir (name dir)
+      "Opens a shell into the specified directory
+     ex. (shell-dir "cmd-rails" "/Users/agoodnough/src/rails/")"
+     (let ((default-directory dir))
+       (shell name)))
 
-  (defun insert-current-date ()
-    (interactive)
-    (insert (shell-command-to-string "echo -n $(date %Y-%m-%d)")))
+    (defun insert-current-date ()
+      (interactive)
+      (insert (shell-command-to-string "echo -n $(date %Y-%m-%d)")))
 
-  (require 'calendar)
-  (defun insdate-insert-current-date (&optional omit-day-of-week-p)
-    "Insert today's date using the current locale.
-    With a prefix argument, the date is inserted without the day of
-    the week."
-    (interactive "P*")
-    (insert (calendar-date-string (calendar-current-date) nil
-                                  omit-day-of-week-p)))
+    (require 'calendar)
+    (defun insdate-insert-current-date (&optional omit-day-of-week-p)
+      "Insert today's date using the current locale.
+      With a prefix argument, the date is inserted without the day of
+      the week."
+      (interactive "P*")
+      (insert (calendar-date-string (calendar-current-date) nil
+                                    omit-day-of-week-p)))
 
-  (defun insert-date (prefix)
-    "Insert the current date. With prefix-argument, use ISO format. With
-     two prefix arguments, write out the day and month name."
-    (interactive "P")
-    (let ((format "%Y-%m-%d")
-          (system-time-locale "en_US"))
-      (insert (format-time-string format))))
+    (defun insert-date (prefix)
+      "Insert the current date. With prefix-argument, use ISO format. With
+       two prefix arguments, write out the day and month name."
+      (interactive "P")
+      (let ((format "%Y-%m-%d")
+            (system-time-locale "en_US"))
+        (insert (format-time-string format))))
 
-  (defun ins-tommorrows-date ()
-    (interactive)
-    (insert (format-time-string "%A, %B %e, %Y" (time-add (current-time) (seconds-to-time (* 60 (* 60 (* 24))))))))
+    (defun ins-tommorrows-date ()
+      (interactive)
+      (insert (format-time-string "%A, %B %e, %Y" (time-add (current-time) (seconds-to-time (* 60 (* 60 (* 24))))))))
 
-  ;; (float-time)
-  ;; (calendar-date-string (decode-time (seconds-to-time (+ (* 60 (* 60 (* 24))) (float-time (current-time))))))
+    ;; (float-time)
+    ;; (calendar-date-string (decode-time (seconds-to-time (+ (* 60 (* 60 (* 24))) (float-time (current-time))))))
 
-  ;; (format-time-string "%A, %B %e, %Y" (decode-time (time-add (current-time) (seconds-to-time (* 60 (* 60 (* 24)))))))
+    ;; (format-time-string "%A, %B %e, %Y" (decode-time (time-add (current-time) (seconds-to-time (* 60 (* 60 (* 24)))))))
 
-  ;; (seconds-to-time (* 60 (* 60 (* 24))))
+    ;; (seconds-to-time (* 60 (* 60 (* 24))))
 
-  ;; (format-time-string "%A, %B %e, %Y" (current-time))
-  ;; (format-time-string "%A, %B %e, %Y" (time-add (current-time) (seconds-to-time (* 60 (* 60 (* 24))))))
-  ;; (decode-time (seconds-to-time (+ (float-time (current-time)) (* 60 (* 60 (* 24))))))
+    ;; (format-time-string "%A, %B %e, %Y" (current-time))
+    ;; (format-time-string "%A, %B %e, %Y" (time-add (current-time) (seconds-to-time (* 60 (* 60 (* 24))))))
+    ;; (decode-time (seconds-to-time (+ (float-time (current-time)) (* 60 (* 60 (* 24))))))
 
-  (defun back-window ()
-    (interactive)
-    (other-window -1))
+    (defun back-window ()
+      (interactive)
+      (other-window -1))
 
-  (defun log-region (&optional arg)
-    "Keyboard macro."
-    (interactive "p")
-    (kmacro-exec-ring-item
-     (quote ([134217847 16 5 return 112 117 116 115 32 34 25 61 35 123 25 125 34] 0 "%d")) arg))
+    (defun log-region (&optional arg)
+      "Keyboard macro."
+      (interactive "p")
+      (kmacro-exec-ring-item
+       (quote ([134217847 16 5 return 112 117 116 115 32 34 25 61 35 123 25 125 34] 0 "%d")) arg))
 
-  (defun agg-set-background-color-dark ()
-    (progn
-      ;; (set-face-attribute 'default nil :family "Monaco" :height 106 :weight 'normal)
-
-      ;; reverse-video
-
-      ;; Setting this on the frame-level allows for new frames opened to
-      ;; automatically take on the same color scheme
-      (add-to-list 'default-frame-alist '(foreground-color . "white"))
-      (add-to-list 'default-frame-alist '(background-color . "black"))
-      (add-to-list 'default-frame-alist '(cursor-color . "white"))
-
-      ;; Didn't work with multiple frames, but useful for ad-hoc switching
-      (set-foreground-color "white")
-      (set-background-color "black")
-
-      (set-face-attribute  'mode-line-inactive
-                           nil
-                           :foreground "gray80"
-                           :background "gray25"
-                           :box '(:line-width 1 :style released-button))
-      (set-face-attribute  'mode-line
-                           nil
-                           :foreground "gray25"
-                           :background "gray80"
-                           :box '(:line-width 1 :style released-button))))
-
-  (defun agg-set-background-color-light ()
-    (progn
-      ;; (set-face-attribute 'default nil :family "Monaco" :height 106 :weight 'normal)
-
-      ;; regular video
-
-      ;; Setting this on the frame-level allows for new frames opened to
-      ;; automatically take on the same color scheme
-      (add-to-list 'default-frame-alist '(foreground-color . "black"))
-      (add-to-list 'default-frame-alist '(background-color . "white"))
-      (add-to-list 'default-frame-alist '(cursor-color . "black"))
-
-      ;; Didn't work with multiple frames, but useful for ad-hoc switching
-      (set-foreground-color "black")
-      (set-background-color "white")
-
-      (set-face-attribute  'mode-line
-                           nil
-                           :foreground "gray80"
-                           :background "gray25"
-                           :box '(:line-width 1 :style released-button))
-      (set-face-attribute  'mode-line-inactive
-                           nil
-                           :foreground "gray25"
-                           :background "gray80"
-                           :box '(:line-width 1 :style released-button))))
-
-  (defun agg-toggle-background-color ()
-    "Toggle background and foreground colors between light and dark."
-    (interactive)
-    ;; use a property “state”. Value is t or nil
-    (if (get 'agg-toggle-background-color 'state)
-        (progn
-          (agg-set-background-color-light)
-          (put 'agg-toggle-background-color 'state nil))
+    (defun agg-set-background-color-dark ()
       (progn
-        (agg-set-background-color-dark)
-        (put 'agg-toggle-background-color 'state t))))
-#+END_SRC
+        ;; (set-face-attribute 'default nil :family "Monaco" :height 106 :weight 'normal)
+
+        ;; reverse-video
+
+        ;; Setting this on the frame-level allows for new frames opened to
+        ;; automatically take on the same color scheme
+        (add-to-list 'default-frame-alist '(foreground-color . "white"))
+        (add-to-list 'default-frame-alist '(background-color . "black"))
+        (add-to-list 'default-frame-alist '(cursor-color . "white"))
+
+        ;; Didn't work with multiple frames, but useful for ad-hoc switching
+        (set-foreground-color "white")
+        (set-background-color "black")
+
+        (set-face-attribute  'mode-line-inactive
+                             nil
+                             :foreground "gray80"
+                             :background "gray25"
+                             :box '(:line-width 1 :style released-button))
+        (set-face-attribute  'mode-line
+                             nil
+                             :foreground "gray25"
+                             :background "gray80"
+                             :box '(:line-width 1 :style released-button))))
+
+    (defun agg-set-background-color-light ()
+      (progn
+        ;; (set-face-attribute 'default nil :family "Monaco" :height 106 :weight 'normal)
+
+        ;; regular video
+
+        ;; Setting this on the frame-level allows for new frames opened to
+        ;; automatically take on the same color scheme
+        (add-to-list 'default-frame-alist '(foreground-color . "black"))
+        (add-to-list 'default-frame-alist '(background-color . "white"))
+        (add-to-list 'default-frame-alist '(cursor-color . "black"))
+
+        ;; Didn't work with multiple frames, but useful for ad-hoc switching
+        (set-foreground-color "black")
+        (set-background-color "white")
+
+        (set-face-attribute  'mode-line
+                             nil
+                             :foreground "gray80"
+                             :background "gray25"
+                             :box '(:line-width 1 :style released-button))
+        (set-face-attribute  'mode-line-inactive
+                             nil
+                             :foreground "gray25"
+                             :background "gray80"
+                             :box '(:line-width 1 :style released-button))))
+
+    (defun agg-toggle-background-color ()
+      "Toggle background and foreground colors between light and dark."
+      (interactive)
+      ;; use a property “state”. Value is t or nil
+      (if (get 'agg-toggle-background-color 'state)
+          (progn
+            (agg-set-background-color-light)
+            (put 'agg-toggle-background-color 'state nil))
+        (progn
+          (agg-set-background-color-dark)
+          (put 'agg-toggle-background-color 'state t))))
+  #+END_SRC
 * Bindings
-#+BEGIN_SRC emacs-lisp
-;; Align your code in a pretty way.
-(global-set-key (kbd "C-x \\") 'align-regexp)
+  #+BEGIN_SRC emacs-lisp
+    ;; Align your code in a pretty way.
+    (global-set-key (kbd "C-x \\") 'align-regexp)
 
-;; Completion that uses many different methods to find options.
-(global-set-key (kbd "M-/") 'hippie-expand)
+    ;; Completion that uses many different methods to find options.
+    (global-set-key (kbd "M-/") 'hippie-expand)
 
-;; Perform general cleanup.
-(global-set-key (kbd "C-c n") 'cleanup-buffer)
+    ;; Perform general cleanup.
+    (global-set-key (kbd "C-c n") 'cleanup-buffer)
 
-;; Use regex searches by default.
-(global-set-key (kbd "C-s") 'isearch-forward-regexp)
-(global-set-key (kbd "C-r") 'isearch-backward-regexp)
-(global-set-key (kbd "C-M-s") 'isearch-forward)
-(global-set-key (kbd "C-M-r") 'isearch-backward)
+    ;; Use regex searches by default.
+    (global-set-key (kbd "C-s") 'isearch-forward-regexp)
+    (global-set-key (kbd "C-r") 'isearch-backward-regexp)
+    (global-set-key (kbd "C-M-s") 'isearch-forward)
+    (global-set-key (kbd "C-M-r") 'isearch-backward)
 
-;; Buffers
-(global-set-key (kbd "C-c y") 'bury-buffer)
-(global-set-key (kbd "C-c r") 'revert-buffer)
-(global-set-key (kbd "M-`") 'file-cache-minibuffer-complete)
-; Use ibuffer which is better than switch buffer
-(global-set-key (kbd "C-x C-b") 'ibuffer)
+    ;; Buffers
+    (global-set-key (kbd "C-c y") 'bury-buffer)
+    (global-set-key (kbd "C-c r") 'revert-buffer)
+    (global-set-key (kbd "M-`") 'file-cache-minibuffer-complete)
+    ; Use ibuffer which is better than switch buffer
+    (global-set-key (kbd "C-x C-b") 'ibuffer)
 
-;; Insert
-(global-set-key "\C-x\M-d" `insdate-insert-current-date)
+    ;; Insert
+    (global-set-key "\C-x\M-d" `insdate-insert-current-date)
 
-;; Window switching. (C-x o goes to the next window)
-(windmove-default-keybindings) ;; Shift+direction
-(global-set-key (kbd "C-x O") (lambda () (interactive) (other-window -1))) ;; back one
-(global-set-key (kbd "C-x C-o") (lambda () (interactive) (other-window 2))) ;; forward two
+    ;; Window switching. (C-x o goes to the next window)
+    (windmove-default-keybindings) ;; Shift+direction
+    (global-set-key (kbd "C-x O") (lambda () (interactive) (other-window -1))) ;; back one
+    (global-set-key (kbd "C-x C-o") (lambda () (interactive) (other-window 2))) ;; forward two
 
-;; Start eshell or switch to it if it's active.
-(global-set-key (kbd "C-x m") 'eshell)
+    ;; Start eshell or switch to it if it's active.
+    (global-set-key (kbd "C-x m") 'eshell)
 
-;; Start a new eshell even if one is active.
-(global-set-key (kbd "C-x M") (lambda () (interactive) (eshell t)))
+    ;; Start a new eshell even if one is active.
+    (global-set-key (kbd "C-x M") (lambda () (interactive) (eshell t)))
 
-;; Start a regular shell if you prefer that.
-(global-set-key (kbd "C-x M-m") 'shell)
+    ;; Start a regular shell if you prefer that.
+    (global-set-key (kbd "C-x M-m") 'shell)
 
-;; If you want to be able to M-x without meta (phones, etc)
-(global-set-key (kbd "C-x C-m") 'execute-extended-command)
+    ;; If you want to be able to M-x without meta (phones, etc)
+    (global-set-key (kbd "C-x C-m") 'execute-extended-command)
 
-;; Fetch the contents at a URL, display it raw.
-(global-set-key (kbd "C-x C-h") 'view-url)
+    ;; Fetch the contents at a URL, display it raw.
+    (global-set-key (kbd "C-x C-h") 'view-url)
 
-;; Help should search more than just commands
-(global-set-key (kbd "C-h a") 'apropos)
+    ;; Help should search more than just commands
+    (global-set-key (kbd "C-h a") 'apropos)
 
-;; Should be able to eval-and-replace anywhere.
-(global-set-key (kbd "C-c e") 'eval-and-replace)
+    ;; Should be able to eval-and-replace anywhere.
+    (global-set-key (kbd "C-c e") 'eval-and-replace)
 
-;; For debugging Emacs modes
-(global-set-key (kbd "C-c p") 'message-point)
+    ;; For debugging Emacs modes
+    (global-set-key (kbd "C-c p") 'message-point)
 
-;; Comment or uncomment region
-(global-set-key (kbd "C-c C-;") 'comment-or-uncomment-region)
+    ;; Comment or uncomment region
+    (global-set-key (kbd "C-c C-;") 'comment-or-uncomment-region)
 
-;; Activate occur easily inside isearch
-(define-key isearch-mode-map (kbd "C-o")
-  (lambda () (interactive)
-    (let ((case-fold-search isearch-case-fold-search))
-      (occur (if isearch-regexp isearch-string (regexp-quote isearch-string))))))
+    ;; Activate occur easily inside isearch
+    (define-key isearch-mode-map (kbd "C-o")
+      (lambda () (interactive)
+        (let ((case-fold-search isearch-case-fold-search))
+          (occur (if isearch-regexp isearch-string (regexp-quote isearch-string))))))
 
-;; Org
-(define-key global-map "\C-cl" 'org-store-link)
-(define-key global-map "\C-ca" 'org-agenda)
+    ;; Org
+    (define-key global-map "\C-cl" 'org-store-link)
+    (define-key global-map "\C-ca" 'org-agenda)
 
-(define-key global-map (kbd "C-M-+") 'text-scale-increase)
-(define-key global-map (kbd "C-M-_") 'text-scale-decrease)
+    (define-key global-map (kbd "C-M-+") 'text-scale-increase)
+    (define-key global-map (kbd "C-M-_") 'text-scale-decrease)
 
-                                        ;(global-set-key "\C-q" 'backward-kill-word)
+                                            ;(global-set-key "\C-q" 'backward-kill-word)
 
-;;Permanently, force TAB to insert just one TAB (in every mode):
-(global-set-key (kbd "TAB") 'tab-to-tab-stop)
+    ;;Permanently, force TAB to insert just one TAB (in every mode):
+    (global-set-key (kbd "TAB") 'tab-to-tab-stop)
 
-;;Opens browser to url
-(global-set-key (kbd "C-x C-u") 'browse-url)
-(global-set-key (kbd "C-c C-o") 'browse-url)
+    ;;Opens browser to url
+    (global-set-key (kbd "C-x C-u") 'browse-url)
+    (global-set-key (kbd "C-c C-o") 'browse-url)
 
-;;Toggles whitespace
-(global-set-key (kbd "C-c w") 'whitespace-mode)
+    ;;Toggles whitespace
+    (global-set-key (kbd "C-c w") 'whitespace-mode)
 
-;; Launch a new shell. Use "C-u" to be prompted for the shell's name
-(global-set-key [f2] 'shell)
+    ;; Launch a new shell. Use "C-u" to be prompted for the shell's name
+    (global-set-key [f2] 'shell)
 
-;; Refresh file from disk
-(global-set-key [f5] 'revert-buffer)
+    ;; Refresh file from disk
+    (global-set-key [f5] 'revert-buffer)
 
-;; Moves current buffer to last buffer
-(global-set-key [f6] 'bury-buffer)
+    ;; Moves current buffer to last buffer
+    (global-set-key [f6] 'bury-buffer)
 
-;; Moves last buffer to current buffer
-(global-set-key [f7] 'unbury-buffer)
+    ;; Moves last buffer to current buffer
+    (global-set-key [f7] 'unbury-buffer)
 
-;; In shell, moves the prompt to the line of previously executed command
-(global-set-key [f8] 'comint-previous-prompt)
+    ;; In shell, moves the prompt to the line of previously executed command
+    (global-set-key [f8] 'comint-previous-prompt)
 
-(global-set-key [f9] 'undo)
+    (global-set-key [f9] 'undo)
 
-(global-set-key [f11] 'whitespace-mode)
+    (global-set-key [f11] 'whitespace-mode)
 
-;; Unset F10 for tmux chicanery
-;; https://superuser.com/questions/1142577/bind-caps-lock-key-to-tmux-prefix-on-macos-sierra
-(global-unset-key [f10])
+    ;; Unset F10 for tmux chicanery
+    ;; https://superuser.com/questions/1142577/bind-caps-lock-key-to-tmux-prefix-on-macos-sierra
+    (global-unset-key [f10])
 
-(global-set-key [f12] 'toggle-truncate-lines)
+    (global-set-key [f12] 'toggle-truncate-lines)
 
-(global-set-key (kbd "C--") 'back-window)
+    (global-set-key (kbd "C--") 'back-window)
 
-(global-set-key (kbd "C-=") 'other-window)
+    (global-set-key (kbd "C-=") 'other-window)
 
-(global-set-key (kbd "s-p") 'previous-buffer)
+    (global-set-key (kbd "s-p") 'previous-buffer)
 
-(global-set-key (kbd "s-n") 'next-buffer)
+    (global-set-key (kbd "s-n") 'next-buffer)
 
-(global-set-key (kbd "C-x C-l") 'log-region)
+    (global-set-key (kbd "C-x C-l") 'log-region)
 
-;; Two approaches are discussed here for local key bindings
-;; http://stackoverflow.com/questions/9818307/emacs-mode-specific-custom-key-bindings-local-set-key-vs-define-key
+    ;; Two approaches are discussed here for local key bindings
+    ;; http://stackoverflow.com/questions/9818307/emacs-mode-specific-custom-key-bindings-local-set-key-vs-define-key
 
-;; This is a general approach to binding a specific key binding to one
-;; or more modes. Should be used in this file.
-;; (defun my/bindkey-recompile ()
-;;   "Bind <F5> to `recompile'."
-;;   (local-set-key (kbd "<f5>") 'recompile))
-;; (add-hook 'c-mode-common-hook 'my/bindkey-recompile)
-#+END_SRC
+    ;; This is a general approach to binding a specific key binding to one
+    ;; or more modes. Should be used in this file.
+    ;; (defun my/bindkey-recompile ()
+    ;;   "Bind <F5> to `recompile'."
+    ;;   (local-set-key (kbd "<f5>") 'recompile))
+    ;; (add-hook 'c-mode-common-hook 'my/bindkey-recompile)
+  #+END_SRC
 * Development
 ** General
    #+BEGIN_SRC emacs-lisp
@@ -513,6 +512,14 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
         (setq cider-repl-wrap-history t)
         (setq cider-repl-history-size 1000)
         (setq cider-repl-history-file "~/.cider-repl-history.txt"))
+    #+END_SRC
+*** HTML
+    #+BEGIN_SRC emacs-lisp
+      ;; (use-package org-preview-html)
+
+      ;; (use-package web-mode
+      ;;   :ensure t
+      ;;   :defer t)
     #+END_SRC
 *** Java
     #+BEGIN_SRC emacs-lisp
@@ -614,19 +621,13 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
         :defer t
         :after (yasnippet))
     #+END_SRC
-*** Vue.js
+*** Puppet
     #+BEGIN_SRC emacs-lisp
-      (setq js-indent-level 2)
-      (add-hook 'js-mode-hook 'progmodes-hooks)
-
-      (use-package vue-mode
+      (use-package puppet-mode
         :ensure t
         :defer t
         :init
-        (add-hook 'vue-mode-hook 'progmodes-hooks)
-        :config
-        ;; 0, 1, or 2, representing (respectively) none, low, and high coloring
-        (setq mmm-submode-decoration-level 0))
+        (add-to-list 'auto-mode-alist '("\\.pp$" . puppet-mode)))
     #+END_SRC
 *** Ruby
     #+BEGIN_SRC emacs-lisp
@@ -686,21 +687,20 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
         ;; only show bad whitespace
         (setq whitespace-style '(trailing space-before-tab indentation empty space-after-tab)))
     #+END_SRC
-*** HTML
+*** Scala
+*** Vue.js
     #+BEGIN_SRC emacs-lisp
-      ;; (use-package org-preview-html)
+      (setq js-indent-level 2)
+      (add-hook 'js-mode-hook 'progmodes-hooks)
 
-      ;; (use-package web-mode
-      ;;   :ensure t
-      ;;   :defer t)
-    #+END_SRC
-*** Puppet
-    #+BEGIN_SRC emacs-lisp
-      (use-package puppet-mode
+      (use-package vue-mode
         :ensure t
         :defer t
         :init
-        (add-to-list 'auto-mode-alist '("\\.pp$" . puppet-mode)))
+        (add-hook 'vue-mode-hook 'progmodes-hooks)
+        :config
+        ;; 0, 1, or 2, representing (respectively) none, low, and high coloring
+        (setq mmm-submode-decoration-level 0))
     #+END_SRC
 * Social
   #+BEGIN_SRC emacs-lisp
