@@ -423,16 +423,25 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
 * Development
 ** General
    #+BEGIN_SRC emacs-lisp
-     (use-package smartparens
+     (use-package auto-complete
        :ensure t
-       :defer t
        :init
-       (require 'smartparens-config))
+       (setq ac-ignore-case nil)
+       :config
+       (add-to-list 'ac-dictionary-directories
+         "~/.emacs.d/auto-complete-config/dict")
+       (ac-config-default))
 
      (use-package deadgrep
        :ensure t
        :init
        (global-set-key (kbd "<f10>") #'deadgrep))
+
+     (use-package smartparens
+       :ensure t
+       :defer t
+       :init
+       (require 'smartparens-config))
 
      (use-package yasnippet
        :ensure t
@@ -542,10 +551,11 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
       (use-package js2-mode
         :ensure t
         :defer t
-        :after (smartparens)
+        :after (auto-complete smartparens)
         :init
         (setq js2-strict-missing-semi-warning nil)
         (setq js2-missing-semi-one-line-override nil)
+        (add-to-list 'ac-modes 'js2-mode)
         (add-hook 'js2-mode-hook 'progmodes-hooks)
         (add-hook 'js2-mode-hook #'smartparens-mode)
         (add-hook 'js2-mode-hook (lambda () (setq js2-basic-offset 2))))
@@ -579,11 +589,17 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
       (use-package rjsx-mode
         :ensure t
         :defer t
-        :after (js2-mode)
+        :after (auto-complete smartparens)
         :init
+        (setq js2-strict-missing-semi-warning nil)
+        (setq js2-missing-semi-one-line-override nil)
+        (add-to-list 'ac-modes 'rjsx-mode)
         (add-to-list 'auto-mode-alist '("\\.js\\'" . rjsx-mode))
         (add-to-list 'auto-mode-alist '("\\.jsx?\\'" . rjsx-mode))
-        (add-to-list 'interpreter-mode-alist '("node" . rjsx-mode)))
+        (add-to-list 'interpreter-mode-alist '("node" . rjsx-mode))
+        (add-hook 'rjsx-mode 'progmodes-hooks)
+        (add-hook 'rjsx-mode #'smartparens-mode)
+        (add-hook 'rjsx-mode (lambda () (setq js2-basic-offset 2))))
 
       (use-package eslint-fix
         :ensure t
@@ -617,8 +633,9 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
       (use-package enh-ruby-mode
         :ensure t
         :defer t
-        :after (smartparens)
+        :after (auto-complete smartparens)
         :init
+        (add-to-list 'ac-modes 'enh-ruby-mode)
         (add-to-list 'auto-mode-alist '("\\.rb$" . enh-ruby-mode))
         (add-to-list 'auto-mode-alist '("\\.gemspec$" . enh-ruby-mode))
         (add-to-list 'auto-mode-alist '("\\.rake$" . enh-ruby-mode))
@@ -719,13 +736,6 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
       (let ((buffer-read-only nil))
         (ansi-color-apply-on-region (point-min) (point-max))))
     (add-hook 'compilation-filter-hook 'my/ansi-colorize-buffer))
-#+END_SRC
-** auto-complete
-#+BEGIN_SRC emacs-lisp
-  (use-package auto-complete
-    :ensure t
-    :config
-    (ac-config-default))
 #+END_SRC
 ** bar-cursor
 #+BEGIN_SRC emacs-lisp
