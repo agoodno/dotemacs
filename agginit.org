@@ -61,6 +61,9 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
      ;; Auto revert all files changed elsewhere
      (global-auto-revert-mode t)
 
+     ;; Set pager to cat for shell
+     (setenv "PAGER" "/bin/cat")
+
      ;; Compilation buffer
 
      ;; Scroll with output automatically
@@ -72,15 +75,16 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
    #+END_SRC
 ** Environment
    #+BEGIN_SRC emacs-lisp
-     ;; Set path variable
-     (setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
-
-     ;; Set pager to cat for shell
-     (setenv "PAGER" "/bin/cat")
-
-     ;; Setup execution path
-     (setq exec-path (append exec-path '("/usr/local/bin")))
-     (setq exec-path (append exec-path (list (concat (getenv "HOME") "/bin"))))
+     (use-package exec-path-from-shell
+       :ensure t
+       :init
+       ;;(setq shell-file-name "/usr/local/bin/zsh")
+       (setq exec-path-from-shell-variables '("PATH" "MANPATH")) ;; "PKG_CONFIG_PATH" "LDFLAGS"
+       :config
+       (exec-path-from-shell-initialize)
+       ;; Make ansi-term play nice with zsh prompt.
+       (defadvice ansi-term (after advise-ansi-term-coding-system)
+         (set-buffer-process-coding-system 'utf-8-unix 'utf-8-unix)))
     #+END_SRC
 * Look & Feel
 ** Bell
