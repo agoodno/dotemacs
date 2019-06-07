@@ -1001,6 +1001,7 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
     ;; (defvar slack-token "")
 
     (use-package slack
+      :disabled
       :ensure t
       :commands (slack-start)
       :init
@@ -1014,6 +1015,15 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
        :client-secret "d5a2dd0464899cd96ad321844fa643bb"
        :token slack-token
        :full-and-display-names t))
+
+    (use-package mu4e
+      :init
+      (setq mu4e-mu-binary "/usr/local/bin/mu"
+            mu4e-get-mail-command "mbsync gmail"
+            mu4e-maildir (expand-file-name "~/mbsync")
+            mu4e-change-filenames-when-moving t
+            mu4e-update-interval 300)
+      (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu/mu4e"))
   #+END_SRC
 * Packages
 ** browse-url
