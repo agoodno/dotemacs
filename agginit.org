@@ -1185,6 +1185,7 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
 ** pdf-tools
    #+BEGIN_SRC emacs-lisp
      (use-package pdf-tools
+       :disabled
        :ensure t
        :defer t
        :init
