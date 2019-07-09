@@ -686,6 +686,7 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
         (add-to-list 'auto-mode-alist '("Capfile$" . enh-ruby-mode))
         (add-to-list 'auto-mode-alist '("Gemfile$" . enh-ruby-mode))
         (add-to-list 'auto-mode-alist '("Rakefile$" . enh-ruby-mode))
+        (add-hook 'enh-ruby-mode-hook #'rubocop-mode)
         (add-hook 'enh-ruby-mode-hook #'smartparens-mode)
         (add-hook 'enh-ruby-mode-hook 'progmodes-hooks))
 
@@ -701,6 +702,10 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
         ;; C-h R
         :init (define-key 'help-command "R" 'yari))
 
+      (use-package rubocop
+        :ensure t
+        :defer t)
+
       (use-package robe
         :ensure t
         :defer t
@@ -713,6 +718,7 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
           (rvm-activate-corresponding-ruby)))
 
       (use-package rvm
+        :disabled
         :ensure t
         :defer t
         :init
@@ -1017,6 +1023,7 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
        :full-and-display-names t))
 
     (use-package mu4e
+      :disabled
       :init
       (setq mu4e-mu-binary "/usr/local/bin/mu"
             mu4e-get-mail-command "mbsync gmail"
