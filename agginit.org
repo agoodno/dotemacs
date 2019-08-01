@@ -130,8 +130,6 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
 ** Line and cursor
    #+BEGIN_SRC emacs-lisp
      (global-hl-line-mode +1)
-     (set-face-background 'hl-line "#3e4446")
-     (set-face-foreground 'hl-line nil)
 
      (use-package bar-cursor
        :ensure t
@@ -252,7 +250,10 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
                              nil
                              :foreground "gray25"
                              :background "gray80"
-                             :box '(:line-width 1 :style released-button))))
+                             :box '(:line-width 1 :style released-button))
+
+       (set-face-background 'hl-line "#3e4446")
+       (set-face-foreground 'hl-line nil)))
 
     (defun agg-set-background-color-light ()
       (progn
@@ -279,7 +280,10 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
                              nil
                              :foreground "gray25"
                              :background "gray80"
-                             :box '(:line-width 1 :style released-button))))
+                             :box '(:line-width 1 :style released-button)))
+
+       (set-face-background 'hl-line "#fff7cb")
+       (set-face-foreground 'hl-line nil))
 
     (defun agg-toggle-background-color ()
       "Toggle background and foreground colors between light and dark."
