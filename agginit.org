@@ -191,6 +191,18 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
        (setq dired-sidebar-use-term-integration t)
        (setq dired-sidebar-use-custom-font t))
    #+END_SRC
+** Modeline
+   #+BEGIN_SRC emacs-lisp
+     (use-package spaceline
+       :ensure t
+       :defer t
+       :demand t
+       :init
+       (setq powerline-default-separator 'arrow-fade)
+       :config
+       (require 'spaceline-config)
+       (spaceline-spacemacs-theme))
+   #+END_SRC
 * Functions
   #+BEGIN_SRC emacs-lisp
     (defun untabify-buffer ()
