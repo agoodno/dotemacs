@@ -690,7 +690,6 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
       (use-package enh-ruby-mode
         :ensure t
         :defer t
-        :after (auto-complete smartparens)
         :init
         (add-to-list 'ac-modes 'enh-ruby-mode)
         (add-to-list 'auto-mode-alist '("\\.rb$" . enh-ruby-mode))
@@ -701,7 +700,6 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
         (add-to-list 'auto-mode-alist '("Gemfile$" . enh-ruby-mode))
         (add-to-list 'auto-mode-alist '("Rakefile$" . enh-ruby-mode))
         (add-hook 'enh-ruby-mode-hook #'rubocop-mode)
-        (add-hook 'enh-ruby-mode-hook #'smartparens-mode)
         (add-hook 'enh-ruby-mode-hook 'progmodes-hooks))
 
       (use-package inf-ruby
