@@ -107,6 +107,24 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
            (ansi-color-apply-on-region (point-min) (point-max))))
        (add-hook 'compilation-filter-hook 'my/ansi-colorize-buffer))
    #+END_SRC
+** Color Themes
+   #+BEGIN_SRC emacs-lisp
+     (use-package dracula-theme
+       :ensure t
+       :defer t)
+
+     (use-package gruvbox-theme
+       :ensure t
+       :defer t)
+
+     (use-package spacemacs-theme
+       :ensure t
+       :defer t
+       :init
+       (setq spacemacs-theme-org-agenda-height nil)
+       (setq spacemacs-theme-org-height nil)
+       (load-theme 'spacemacs-dark t))
+   #+END_SRC
 ** Indenting
    #+BEGIN_SRC emacs-lisp
      (show-paren-mode 1)
@@ -153,7 +171,7 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
 
      (setq split-width-threshold nil)
    #+END_SRC
-** MenuTree
+** Menu Tree
    #+BEGIN_SRC emacs-lisp
      (use-package dired-sidebar
        :bind (("C-x C-n" . dired-sidebar-toggle-sidebar))
@@ -1294,6 +1312,5 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
 #+END_SRC
 * Startup
   #+BEGIN_SRC emacs-lisp
-    (agg-toggle-background-color)
     (server-start)
   #+END_SRC
