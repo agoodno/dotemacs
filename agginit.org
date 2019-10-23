@@ -153,6 +153,26 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
 
      (setq split-width-threshold nil)
    #+END_SRC
+** MenuTree
+   #+BEGIN_SRC emacs-lisp
+     (use-package dired-sidebar
+       :bind (("C-x C-n" . dired-sidebar-toggle-sidebar))
+       :ensure t
+       :commands (dired-sidebar-toggle-sidebar)
+       :init
+       (add-hook 'dired-sidebar-mode-hook
+                 (lambda ()
+                   (unless (file-remote-p default-directory)
+                     (auto-revert-mode))))
+       :config
+       (push 'toggle-window-split dired-sidebar-toggle-hidden-commands)
+       (push 'rotate-windows dired-sidebar-toggle-hidden-commands)
+
+       (setq dired-sidebar-subtree-line-prefix "__")
+       ;; (setq dired-sidebar-theme 'vscode)
+       (setq dired-sidebar-use-term-integration t)
+       (setq dired-sidebar-use-custom-font t))
+   #+END_SRC
 * Functions
   #+BEGIN_SRC emacs-lisp
     (defun untabify-buffer ()
@@ -1171,14 +1191,6 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
        (global-set-key (kbd "C-c g") 'magit-status)
        (global-set-key (kbd "C-c h") 'magit-list-repositories))
    #+END_SRC
-** neotree
-#+BEGIN_SRC emacs-lisp
-  (use-package neotree
-    :ensure t
-    :defer t
-    :init
-    (global-set-key [f8] 'neotree-toggle))
-#+END_SRC
 ** org-mode
    #+BEGIN_SRC emacs-lisp
      (use-package org
