@@ -806,26 +806,23 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
 *** Scala
     #+BEGIN_SRC emacs-lisp
       (use-package scala-mode
-        :disabled
         :ensure t
         :defer t
-        :init (add-to-list 'auto-mode-alist '("\\.sbt$" . scala-mode))
+        :init
+        (add-to-list 'auto-mode-alist '("\\.sbt$" . scala-mode))
         (add-hook 'scala-mode-hook 'progmodes-hooks)
         :interpreter ("scala" . scala-mode)) ;;  :pin melpa-stable
 
       (use-package sbt-mode
-        :disabled
         :ensure t
-        :defer t
-        ) ;;:pin melpa-stable
+        :defer t) ;;:pin melpa-stable
 
       (use-package ensime
         :disabled
         :ensure t
         :defer t
         :init
-        (add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
-        ) ;;:pin melpa-stable
+        (add-hook 'scala-mode-hook 'ensime-scala-mode-hook)) ;;:pin melpa-stable
 
       ;; (setq
       ;;  ensime-sbt-command "/home/agoodno/src/ccap3/sbt"
