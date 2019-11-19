@@ -1321,5 +1321,15 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
 #+END_SRC
 * Startup
   #+BEGIN_SRC emacs-lisp
+    (set-face-attribute  'mode-line-inactive
+                         nil
+                         :foreground "gray80"
+                         :background "gray25"
+                         :box '(:line-width 1 :style released-button))
+    (set-face-attribute  'mode-line
+                         nil
+                         :foreground "gray25"
+                         :background "gray80"
+                         :box '(:line-width 1 :style released-button))
     (server-start)
   #+END_SRC
