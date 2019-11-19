@@ -737,11 +737,20 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
     #+END_SRC
 *** Ruby
     #+BEGIN_SRC emacs-lisp
+      (defun enh-ruby-mode-before-save-hook ()
+          (when (eq major-mode 'enh-ruby-mode)
+            (message (current-buffer))
+            (rubocop-autocorrect-current-file)))
+
+      (defun enh-ruby-mode-hooks ()
+        "Hooks for ruby programming"
+        (add-hook 'before-save-hook 'enh-ruby-mode-before-save-hook))
+
       (use-package enh-ruby-mode
         :ensure t
         :defer t
         :init
-        (add-to-list 'ac-modes 'enh-ruby-mode)
+        ;; (add-to-list 'ac-modes 'enh-ruby-mode)
         (add-to-list 'auto-mode-alist '("\\.rb$" . enh-ruby-mode))
         (add-to-list 'auto-mode-alist '("\\.gemspec$" . enh-ruby-mode))
         (add-to-list 'auto-mode-alist '("\\.rake$" . enh-ruby-mode))
@@ -750,6 +759,7 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
         (add-to-list 'auto-mode-alist '("Gemfile$" . enh-ruby-mode))
         (add-to-list 'auto-mode-alist '("Rakefile$" . enh-ruby-mode))
         (add-hook 'enh-ruby-mode-hook #'rubocop-mode)
+        (add-hook 'enh-ruby-mode-hook 'enh-ruby-mode-hooks)
         (add-hook 'enh-ruby-mode-hook 'progmodes-hooks))
 
       (use-package inf-ruby
