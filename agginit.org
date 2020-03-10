@@ -1260,11 +1260,14 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
        (pdf-tools-install))
    #+END_SRC
 ** projectile
-#+BEGIN_SRC emacs-lisp
-  (use-package projectile
-    :ensure t
-    :defer t)
-#+END_SRC
+   #+BEGIN_SRC emacs-lisp
+     (use-package projectile
+       :ensure t
+       :config
+       (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
+       (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+       (projectile-mode +1))
+   #+END_SRC
 ** restclient
 #+BEGIN_SRC emacs-lisp
 (use-package restclient
