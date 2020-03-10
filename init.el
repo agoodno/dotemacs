@@ -5,14 +5,15 @@
 
 (require 'package)
 (setq package-enable-at-startup nil)
-(add-to-list 'package-archives
-             '("melpa" . "https://melpa.org/packages/"))
+(add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 ;; (add-to-list 'package-archives
 ;;              '("melpa2" . "http://www.mirrorservice.org/sites/melpa.org/packages/"))
 ;; (add-to-list 'package-archives
 ;;              '("melpa3" . "http://www.mirrorservice.org/sites/stable.melpa.org/packages/"))
 ;; (add-to-list 'package-archives
 ;;              '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
 (package-initialize)
 
 (when (not package-archive-contents)
@@ -34,7 +35,7 @@
  '(org-return-follows-link t)
  '(package-selected-packages
    (quote
-    (sbt-mode scala-mode spaceline spacemacs-theme dired-sidebar docker dockerfile-mode rubocop yasnippet mu4e react-snippets ssass-mode js-mode vue-mode coffee-mode haml-mode eslint-fix eslintd-fix rjsx-mode slack tern-auto-complete tern js2-refactor deadgrep pdf-tools flymake-puppet org-preview-html mustache-mode inf-ruby smartparens neotree flx-ido rvm robe exec-path-from-shell auto-complete-nxml fuzzy ac-cider ac-html ac-inf-ruby ac-js2 ac-emacs-eclim eclim markdown-preview-eww auto-complete unfill yaml-mode restclient markdown-mode chruby puppet-mode magit-filenotify magit-find-file tidy smex projectile ido-completing-read+ flycheck-clojure flycheck cider yaml clojure-mode f erc-hipchatify js2-mode ido-vertical-mode ido-mode bundler yari magit aggressive-indent html-mode json-mode enh-ruby-mode bar-cursor auto-compile)))
+    (rubocop mu4e react-snippets js-mode vue-mode coffee-mode haml-mode eslint-fix tern-auto-complete tern flymake-puppet org-preview-html mustache-mode flx-ido rvm auto-complete-nxml fuzzy ac-cider ac-html ac-inf-ruby ac-js2 ac-emacs-eclim markdown-preview-eww auto-complete unfill chruby puppet-mode magit-filenotify magit-find-file tidy smex yaml erc-hipchatify ido-vertical-mode ido-mode yari aggressive-indent html-mode bar-cursor)))
  '(safe-local-variable-values
    (quote
     ((scala-indent:use-javadoc-style . t)
