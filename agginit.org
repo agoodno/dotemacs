@@ -122,8 +122,7 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
        :defer t
        :init
        (setq spacemacs-theme-org-agenda-height nil)
-       (setq spacemacs-theme-org-height nil)
-       (load-theme 'spacemacs-dark t))
+       (setq spacemacs-theme-org-height nil))
    #+END_SRC
 ** Indenting
    #+BEGIN_SRC emacs-lisp
@@ -226,8 +225,8 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
     (defun shell-dir (name dir)
       "Opens a shell into the specified directory
      ex. (shell-dir "cmd-rails" "/Users/agoodnough/src/rails/")"
-     (let ((default-directory dir))
-       (shell name)))
+      (let ((default-directory dir))
+        (shell name)))
 
     (defun insert-current-date ()
       (interactive)
@@ -277,19 +276,7 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
 
     (defun agg-set-background-color-dark ()
       (progn
-        ;; (set-face-attribute 'default nil :family "Monaco" :height 106 :weight 'normal)
-
-        ;; reverse-video
-
-        ;; Setting this on the frame-level allows for new frames opened to
-        ;; automatically take on the same color scheme
-        (add-to-list 'default-frame-alist '(foreground-color . "white"))
-        (add-to-list 'default-frame-alist '(background-color . "black"))
-        (add-to-list 'default-frame-alist '(cursor-color . "white"))
-
-        ;; Didn't work with multiple frames, but useful for ad-hoc switching
-        (set-foreground-color "white")
-        (set-background-color "black")
+        (load-theme 'spacemacs-dark t)
 
         (set-face-attribute  'mode-line-inactive
                              nil
@@ -302,24 +289,12 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
                              :background "gray80"
                              :box '(:line-width 1 :style released-button))
 
-       (set-face-background 'hl-line "#3e4446")
-       (set-face-foreground 'hl-line nil)))
+        (set-face-background 'hl-line "#3e4446")
+        (set-face-foreground 'hl-line nil)))
 
     (defun agg-set-background-color-light ()
       (progn
-        ;; (set-face-attribute 'default nil :family "Monaco" :height 106 :weight 'normal)
-
-        ;; regular video
-
-        ;; Setting this on the frame-level allows for new frames opened to
-        ;; automatically take on the same color scheme
-        (add-to-list 'default-frame-alist '(foreground-color . "black"))
-        (add-to-list 'default-frame-alist '(background-color . "white"))
-        (add-to-list 'default-frame-alist '(cursor-color . "black"))
-
-        ;; Didn't work with multiple frames, but useful for ad-hoc switching
-        (set-foreground-color "black")
-        (set-background-color "white")
+        (load-theme 'spacemacs-light t)
 
         (set-face-attribute  'mode-line
                              nil
@@ -330,10 +305,10 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
                              nil
                              :foreground "gray25"
                              :background "gray80"
-                             :box '(:line-width 1 :style released-button)))
+                             :box '(:line-width 1 :style released-button))
 
-       (set-face-background 'hl-line "#fff7cb")
-       (set-face-foreground 'hl-line nil))
+        (set-face-background 'hl-line "#fff7cb")
+        (set-face-foreground 'hl-line nil)))
 
     (defun agg-toggle-background-color ()
       "Toggle background and foreground colors between light and dark."
@@ -1334,15 +1309,8 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
 #+END_SRC
 * Startup
   #+BEGIN_SRC emacs-lisp
-    (set-face-attribute  'mode-line-inactive
-                         nil
-                         :foreground "gray80"
-                         :background "gray25"
-                         :box '(:line-width 1 :style released-button))
-    (set-face-attribute  'mode-line
-                         nil
-                         :foreground "gray25"
-                         :background "gray80"
-                         :box '(:line-width 1 :style released-button))
+    (agg-set-background-color-light)
+    ;; uncomment this for dark mode
+    ;; (agg-toggle-background-color) 
     (server-start)
   #+END_SRC
