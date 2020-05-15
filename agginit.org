@@ -730,7 +730,7 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
         (add-to-list 'auto-mode-alist '("Gemfile$" . enh-ruby-mode))
         (add-to-list 'auto-mode-alist '("Rakefile$" . enh-ruby-mode))
         (add-hook 'enh-ruby-mode-hook #'rubocop-mode)
-        (add-hook 'enh-ruby-mode-hook 'enh-ruby-mode-hooks)
+        ;; (add-hook 'enh-ruby-mode-hook 'enh-ruby-mode-hooks) ;; Auto-formatting for rubocop broke whitespace-cleanup
         (add-hook 'enh-ruby-mode-hook 'progmodes-hooks))
 
       (use-package inf-ruby
@@ -1307,6 +1307,6 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
   #+BEGIN_SRC emacs-lisp
     (agg-set-background-color-light)
     ;; uncomment this for dark mode
-    ;; (agg-toggle-background-color) 
+    ;; (agg-toggle-background-color)
     (server-start)
   #+END_SRC
