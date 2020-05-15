@@ -298,16 +298,12 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
 
         (set-face-attribute  'mode-line
                              nil
-                             :foreground "gray80"
-                             :background "gray25"
                              :box '(:line-width 1 :style released-button))
         (set-face-attribute  'mode-line-inactive
                              nil
-                             :foreground "gray25"
-                             :background "gray80"
                              :box '(:line-width 1 :style released-button))
 
-        (set-face-background 'hl-line "#fff7cb")
+        (set-face-background 'hl-line "#e6e600")
         (set-face-foreground 'hl-line nil)))
 
     (defun agg-toggle-background-color ()
