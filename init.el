@@ -50,7 +50,7 @@
  '(org-return-follows-link t)
  '(package-selected-packages
    (quote
-    (rubocop mu4e react-snippets js-mode vue-mode haml-mode eslint-fix tern-auto-complete tern flymake-puppet org-preview-html mustache-mode flx-ido rvm auto-complete-nxml fuzzy ac-cider ac-html ac-inf-ruby ac-js2 ac-emacs-eclim markdown-preview-eww auto-complete unfill chruby puppet-mode magit-filenotify magit-find-file tidy smex yaml erc-hipchatify ido-vertical-mode ido-mode yari html-mode bar-cursor)))
+    (feature-mode rubocop mu4e react-snippets js-mode vue-mode coffee-mode haml-mode eslint-fix tern-auto-complete tern flymake-puppet org-preview-html mustache-mode flx-ido rvm auto-complete-nxml fuzzy ac-cider ac-html ac-inf-ruby ac-js2 ac-emacs-eclim markdown-preview-eww auto-complete unfill chruby puppet-mode magit-filenotify magit-find-file tidy smex yaml erc-hipchatify ido-vertical-mode ido-mode yari aggressive-indent html-mode bar-cursor)))
  '(safe-local-variable-values
    (quote
     ((scala-indent:use-javadoc-style . t)

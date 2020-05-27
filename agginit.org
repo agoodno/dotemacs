@@ -475,6 +475,12 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
        :defer t)
    #+END_SRC
 ** Data Formats
+*** Cucumber
+    #+BEGIN_SRC emacs-lisp
+      (use-package feature-mode
+        :ensure t
+        :defer t)
+    #+END_SRC
 *** Docker
     #+BEGIN_SRC emacs-lisp
       (use-package docker
