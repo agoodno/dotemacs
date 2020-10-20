@@ -1,6 +1,49 @@
 #+STARTUP: overview
 
+"Emacs outshines all other editing software in approximately the
+same way that the noonday sun does the stars. It is not just bigger
+and brighter; it simply makes everything else vanish."
+    -Neal Stephenson, "In the Beginning was the Command Line"
+
 See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Reference Manual]]
+
+* Bootstrap
+  #+BEGIN_SRC emacs-lisp :tangle no
+    emacs --eval '(org-babel-load-file (concat user-emacs-directory "init.org"))'
+  #+END_SRC
+* Package initialization
+  #+BEGIN_SRC emacs-lisp
+    ;;; -*- lexical-binding: t -*-
+
+    (require 'package)
+    (setq package-enable-at-startup nil)
+    (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
+    (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+    ;; (add-to-list 'package-archives
+    ;;              '("melpa2" . "http://www.mirrorservice.org/sites/melpa.org/packages/"))
+    ;; (add-to-list 'package-archives
+    ;;              '("melpa3" . "http://www.mirrorservice.org/sites/stable.melpa.org/packages/"))
+    ;; (add-to-list 'package-archives
+    ;;              '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+    (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
+    (package-initialize)
+
+    (when (not package-archive-contents)
+      (package-refresh-contents))
+
+    (unless (package-installed-p 'use-package)
+      (package-install 'use-package))
+
+    (eval-when-compile
+      (require 'use-package))
+
+    (setq load-prefer-newer t)
+
+    ;; set custom file location
+    (setq custom-file (concat user-emacs-directory "custom.el"))
+    (load custom-file :noerror)
+
+  #+END_SRC
 
 * General config
 ** Machine and user
