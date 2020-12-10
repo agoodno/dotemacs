@@ -1020,7 +1020,7 @@
    :name "elmlang"
    :default t
    :client-id "12617974597.593942839862"
-   :client-secret "d5a2dd0464899cd96ad321844fa643bb"
+   :client-secret ""
    :token slack-token
    :full-and-display-names t))
 
