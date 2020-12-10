@@ -593,6 +593,12 @@ Last issue is the function key. I often hit it when I want my Left Cntl Key so I
         :init
         (customize-set-variable 'json-reformat:indent-width 2))
     #+END_SRC
+*** Terrform
+    #+BEGIN_SRC emacs-lisp
+      (use-package terraform-mode
+        :ensure
+        :defer)
+    #+END_SRC
 *** XML
     #+BEGIN_SRC emacs-lisp
       (use-package nxml-mode
