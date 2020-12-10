@@ -9,7 +9,7 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
 
 * Bootstrap
   #+BEGIN_SRC emacs-lisp :tangle no
-    emacs --eval '(org-babel-load-file (concat user-emacs-directory "init.org"))'
+  ;; emacs --eval '(org-babel-load-file (concat user-emacs-directory "init.org"))'
   #+END_SRC
 ** Clean test
 Occasionally, I like to test my init files from a clean environment so
@@ -1257,7 +1257,6 @@ Last issue is the function key. I often hit it when I want my Left Cntl Key so I
        (cond (at-work
               (setq magit-projects
                     (quote (
-                            ("~/work/wastewitness" . 0)
                             ("~/.emacs.d" . 0)
                             ("~/stow" . 0)))))
              (at-home
@@ -1410,6 +1409,6 @@ Last issue is the function key. I often hit it when I want my Left Cntl Key so I
   #+BEGIN_SRC emacs-lisp
     (agg-set-background-color-light)
     ;; uncomment this for dark mode
-    ;; (agg-toggle-background-color)
+    (agg-toggle-background-color)
     (server-start)
   #+END_SRC
