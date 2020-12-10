@@ -5,11 +5,12 @@ on: push
 jobs:
   check:
     runs-on: ubuntu-latest
+    continue-on-error: true
     strategy:
       fail-fast: false
       matrix:
         emacs_version:
-          - 27.1
+          - 26.3
         ignore_warnings:
           - true
         include:
