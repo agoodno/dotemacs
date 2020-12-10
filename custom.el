@@ -1,5 +1,9 @@
 (custom-set-variables
- '(css-indent-offset 2 t)
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(css-indent-offset 2)
  '(json-reformat:indent-width 2)
  '(magit-display-buffer-function (quote magit-display-buffer-fullframe-status-v1))
  '(magit-repolist-columns
@@ -29,4 +33,9 @@
      (js-indent-level . 2))))
  '(send-mail-function (quote smtpmail-send-it)))
 
-(custom-set-faces)
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
