@@ -1391,6 +1391,11 @@ Last issue is the function key. I often hit it when I want my Left Cntl Key so I
     (interactive)
     (dired "/lcbuser@patproc-test-host.library.wisc.edu:/opt/patproc-test/"))
 #+END_SRC
+** unfill
+   #+BEGIN_SRC emacs-lisp
+     (use-package unfill
+       :ensure t)
+   #+END_SRC
 ** uniquify
 #+BEGIN_SRC emacs-lisp
   (setq uniquify-buffer-name-style 'forward)
