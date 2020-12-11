@@ -1004,11 +1004,11 @@
   (setq slack-prefer-current-team t)
   :config
   (slack-register-team
-   :name "elmlang"
+   :name slack-elmlang-team
    :default t
-   :client-id "12617974597.593942839862"
-   :client-secret ""
-   :token slack-token
+   :client-id slack-elmlang-client-id
+   :client-secret slack-elmlang-client-secret
+   :token slack-elmlang-token
    :full-and-display-names t))
 
 (use-package mu4e
