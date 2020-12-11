@@ -993,11 +993,15 @@
 ;;     (add-to-list 'erc-modules 'hipchatify)
 ;;     (erc-update-modules)))
 
-;; (defvar slack-token "")
+;; How to get a token
+;; https://github.com/yuya373/emacs-slack#how-to-get-token
 
+;; Works by issuing command (slack-start), then enter Team: and Token:
+;; but doesn't work with the token in team config below for some reason
 (use-package slack
   :disabled
   :ensure t
+  :defer t
   :commands (slack-start)
   :init
   (setq slack-buffer-emojify t)
@@ -1005,11 +1009,18 @@
   :config
   (slack-register-team
    :name slack-elmlang-team
-   :default t
    :client-id slack-elmlang-client-id
    :client-secret slack-elmlang-client-secret
    :token slack-elmlang-token
-   :full-and-display-names t))
+   :full-and-display-names t)
+  (slack-register-team
+   :name slack-cucumberbdd-team
+   :default t
+   :client-id slack-cucumberbdd-client-id
+   :client-secret slack-cucumberbdd-client-secret
+   :token slack-cucumberbdd-token
+   :full-and-display-names t
+   :subscribed-channels '(announcements events help intros podcasts-and-webinars recommended_media school)))
 
 (use-package mu4e
   :disabled
