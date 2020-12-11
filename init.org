@@ -92,25 +92,6 @@ Last issue is the function key. I often hit it when I want my Left Cntl Key so I
   #+END_SRC
 
 * General config
-** Machine and user
-   #+BEGIN_SRC emacs-lisp
-     (setq on-work-laptop (equal (system-name) "Andys-MBP"))
-     (setq on-home-laptop (equal (system-name) "Andrews-MBP"))
-
-     (setq as_andy (equal user-login-name "agoodnough"))
-     (setq as_andrew (equal (user-login-name) "andrew"))
-
-     (setq at-work (and on-work-laptop as_andy))
-     (setq at-home (and on-home-laptop as_andrew))
-
-     (cond (at-work
-            (setq user-full-name "Andy Goodnough"
-                  user-mail-address "andy@pharmid.com"))
-           (at-home
-            (setq user-full-name "Andrew Goodnough"
-                  user-mail-address "agoodno@gmail.com"))
-           nil)
-   #+END_SRC
 ** Editor
    #+BEGIN_SRC emacs-lisp
      ;; Note: *inhibit-startup-message* and *inhibit-splash-screen* are aliases for this variable

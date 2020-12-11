@@ -30,23 +30,6 @@
 (setq custom-file (concat user-emacs-directory "custom.el"))
 (load custom-file :noerror)
 
-(setq on-work-laptop (equal (system-name) "Andys-MBP"))
-(setq on-home-laptop (equal (system-name) "Andrews-MBP"))
-
-(setq as_andy (equal user-login-name "agoodnough"))
-(setq as_andrew (equal (user-login-name) "andrew"))
-
-(setq at-work (and on-work-laptop as_andy))
-(setq at-home (and on-home-laptop as_andrew))
-
-(cond (at-work
-       (setq user-full-name "Andy Goodnough"
-             user-mail-address "andy@pharmid.com"))
-      (at-home
-       (setq user-full-name "Andrew Goodnough"
-             user-mail-address "agoodno@gmail.com"))
-      nil)
-
 ;; Note: *inhibit-startup-message* and *inhibit-splash-screen* are aliases for this variable
 ;; Turn off startup splash
 (setq inhibit-startup-screen t)
