@@ -22,6 +22,10 @@
 
 (setq load-prefer-newer t)
 
+;; load secrets
+(setq secrets-file (concat user-emacs-directory "secrets.el"))
+(load secrets-file :noerror)
+
 ;; set custom file location
 (setq custom-file (concat user-emacs-directory "custom.el"))
 (load custom-file :noerror)
@@ -1103,20 +1107,6 @@
 (use-package magit
   :ensure t
   :init
-  (cond (at-work
-         (setq magit-projects
-               (quote (
-                       ("~/.emacs.d" . 0)
-                       ("~/stow" . 0)))))
-        (at-home
-         (setq magit-projects
-               (quote (
-                       ("~/.emacs.d" . 0)
-                       ("~/stow" . 0)))))
-        (setq magit-projects
-              (quote (
-                       ("~/.emacs.d" . 0)
-                       ("~/stow" . 0)))))
   (setq magit-completing-read-function 'magit-ido-completing-read)
   (customize-set-variable 'magit-display-buffer-function
     (quote magit-display-buffer-fullframe-status-v1))
