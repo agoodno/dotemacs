@@ -264,12 +264,9 @@ Last issue is the function key. I often hit it when I want my Left Cntl Key so I
    #+BEGIN_SRC emacs-lisp
      (use-package spaceline
        :ensure t
-       :defer t
-       :demand t
        :init
        (setq powerline-default-separator 'arrow-fade)
        :config
-       (require 'spaceline-config)
        (spaceline-spacemacs-theme))
    #+END_SRC
 * Functions

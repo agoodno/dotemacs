@@ -179,12 +179,9 @@
 
 (use-package spaceline
   :ensure t
-  :defer t
-  :demand t
   :init
   (setq powerline-default-separator 'arrow-fade)
   :config
-  (require 'spaceline-config)
   (spaceline-spacemacs-theme))
 
 (defun untabify-buffer ()
