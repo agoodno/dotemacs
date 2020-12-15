@@ -258,6 +258,10 @@
   (progn
     (load-theme 'spacemacs-dark t)
 
+    (set-face-attribute 'region
+                         nil
+                         :background "white")
+
     (set-face-attribute  'mode-line-inactive
                          nil
                          :foreground "gray80"
@@ -275,6 +279,10 @@
 (defun agg-set-background-color-light ()
   (progn
     (load-theme 'spacemacs-light t)
+
+    (set-face-attribute 'region
+                         nil
+                         :background "#ffcc80")
 
     (set-face-attribute  'mode-line
                          nil
