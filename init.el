@@ -323,7 +323,6 @@
 
 ;; Buffers
 (global-set-key (kbd "C-c y") 'bury-buffer)
-(global-set-key (kbd "C-c r") 'revert-buffer)
 (global-set-key (kbd "M-`") 'file-cache-minibuffer-complete)
 ; Use ibuffer which is better than switch buffer
 (global-set-key (kbd "C-x C-b") 'ibuffer)
@@ -681,7 +680,6 @@
 
 (use-package enh-ruby-mode
   :ensure t
-  :defer t
   :init
   ;; (add-to-list 'ac-modes 'enh-ruby-mode)
   (add-to-list 'auto-mode-alist '("\\.rb$" . enh-ruby-mode))
@@ -691,13 +689,13 @@
   (add-to-list 'auto-mode-alist '("Capfile$" . enh-ruby-mode))
   (add-to-list 'auto-mode-alist '("Gemfile$" . enh-ruby-mode))
   (add-to-list 'auto-mode-alist '("Rakefile$" . enh-ruby-mode))
+  (add-hook 'enh-ruby-mode-hook 'rbenv-use-corresponding)
   (add-hook 'enh-ruby-mode-hook #'rubocop-mode)
-  ;; (add-hook 'enh-ruby-mode-hook 'enh-ruby-mode-hooks) ;; Auto-formatting for rubocop broke whitespace-cleanup
   (add-hook 'enh-ruby-mode-hook 'progmodes-hooks))
+  ;; (add-hook 'enh-ruby-mode-hook 'enh-ruby-mode-hooks)) ;; Auto-formatting for rubocop broke whitespace-cleanup
 
 (use-package inf-ruby
   :ensure t
-  :defer t
   :init
   (add-hook 'enh-ruby-mode-hook 'inf-ruby-minor-mode))
 
@@ -713,24 +711,10 @@
 
 (use-package robe
   :ensure t
-  :defer t
   :after (enh-ruby-mode auto-complete)
   :init
   (add-hook 'enh-ruby-mode-hook 'robe-mode)
-  (add-hook 'enh-robe-mode-hook 'ac-robe-setup)
-  :config
-  (defadvice inf-ruby-console-auto (before activate-rvm-for-robe activate)
-    (rvm-activate-corresponding-ruby)))
-
-(use-package rvm
-  :disabled
-  :ensure t
-  :defer t
-  :init
-  (add-hook 'enh-ruby-mode-hook (lambda ()
-                                  (rvm-activate-corresponding-ruby)))
-  :config
-  (rvm-use-default))
+  (add-hook 'enh-robe-mode-hook 'ac-robe-setup))
 
 (use-package haml-mode
   :ensure t
@@ -745,6 +729,17 @@
   (setq whitespace-action '(auto-cleanup))
   ;; only show bad whitespace
   (setq whitespace-style '(trailing space-before-tab indentation empty space-after-tab)))
+
+(use-package rbenv
+  :ensure t
+  :init
+  (global-rbenv-mode))
+
+(use-package projectile-rails
+  :ensure t
+  :config
+  (define-key projectile-rails-mode-map (kbd "C-c r") 'projectile-rails-command-map)
+  (projectile-rails-global-mode))
 
 (use-package scala-mode
   :ensure t
