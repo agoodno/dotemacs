@@ -20,3 +20,4 @@ projectile-bookmarks.eld
 /transient
 secrets.el
 *.cache
+custom.el
