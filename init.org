@@ -378,7 +378,7 @@ Last issue is the function key. I often hit it when I want my Left Cntl Key so I
                              nil
                              :box '(:line-width 1 :style released-button))
 
-        (set-face-background 'hl-line "#e6e600")
+        (set-face-background 'hl-line "#f4ee49")
         (set-face-foreground 'hl-line nil)))
 
     (defun agg-toggle-background-color ()
