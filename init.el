@@ -291,7 +291,7 @@
                          nil
                          :box '(:line-width 1 :style released-button))
 
-    (set-face-background 'hl-line "#e6e600")
+    (set-face-background 'hl-line "#f4ee49")
     (set-face-foreground 'hl-line nil)))
 
 (defun agg-toggle-background-color ()
@@ -448,7 +448,6 @@
 
 (use-package smartparens
   :ensure t
-  :defer t
   :init
   (require 'smartparens-config))
 
@@ -670,9 +669,9 @@
   (add-to-list 'auto-mode-alist '("\\.pp$" . puppet-mode)))
 
 (defun enh-ruby-mode-before-save-hook ()
-    (when (eq major-mode 'enh-ruby-mode)
-      (message (current-buffer))
-      (rubocop-autocorrect-current-file)))
+  (when (eq major-mode 'enh-ruby-mode)
+    (message (current-buffer))
+    (rubocop-autocorrect-current-file)))
 
 (defun enh-ruby-mode-hooks ()
   "Hooks for ruby programming"
@@ -689,10 +688,9 @@
   (add-to-list 'auto-mode-alist '("Capfile$" . enh-ruby-mode))
   (add-to-list 'auto-mode-alist '("Gemfile$" . enh-ruby-mode))
   (add-to-list 'auto-mode-alist '("Rakefile$" . enh-ruby-mode))
-  (add-hook 'enh-ruby-mode-hook 'rbenv-use-corresponding)
-  (add-hook 'enh-ruby-mode-hook #'rubocop-mode)
-  (add-hook 'enh-ruby-mode-hook 'progmodes-hooks))
-  ;; (add-hook 'enh-ruby-mode-hook 'enh-ruby-mode-hooks)) ;; Auto-formatting for rubocop broke whitespace-cleanup
+  (add-hook 'enh-ruby-mode-hook 'progmodes-hooks)
+  (add-hook 'enh-ruby-mode-hook 'smartparens-strict-mode))
+;; (add-hook 'enh-ruby-mode-hook 'enh-ruby-mode-hooks)) ;; Auto-formatting for rubocop broke whitespace-cleanup
 
 (use-package inf-ruby
   :ensure t
@@ -707,7 +705,8 @@
 
 (use-package rubocop
   :ensure t
-  :defer t)
+  :init
+  (add-hook 'enh-ruby-mode-hook 'rubocop-mode))
 
 (use-package robe
   :ensure t
@@ -730,9 +729,16 @@
   ;; only show bad whitespace
   (setq whitespace-style '(trailing space-before-tab indentation empty space-after-tab)))
 
+(use-package ruby-tools
+  :ensure t
+  :init
+  (add-hook 'enh-ruby-mode-hook 'ruby-tools-mode)
+  :diminish ruby-tools-mode)
+
 (use-package rbenv
   :ensure t
   :init
+  (add-hook 'enh-ruby-mode-hook 'rbenv-use-corresponding)
   (global-rbenv-mode))
 
 (use-package projectile-rails
