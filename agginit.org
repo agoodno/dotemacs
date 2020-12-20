@@ -3,7 +3,7 @@
 "Emacs outshines all other editing software in approximately the
 same way that the noonday sun does the stars. It is not just bigger
 and brighter; it simply makes everything else vanish."
-    -Neal Stephenson, "In the Beginning was the Command Line"
+-Neal Stephenson, "In the Beginning was the Command Line"
 
 See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Reference Manual]]
 
@@ -106,7 +106,7 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
        ;; Make ansi-term play nice with zsh prompt.
        (defadvice ansi-term (after advise-ansi-term-coding-system)
          (set-buffer-process-coding-system 'utf-8-unix 'utf-8-unix)))
-    #+END_SRC
+   #+END_SRC
 * Look & Feel
 ** Bell
    #+BEGIN_SRC emacs-lisp
@@ -594,9 +594,9 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
         (setq cider-repl-history-file "~/.cider-repl-history.txt"))
     #+END_SRC
 *** CSS
-   #+BEGIN_SRC emacs-lisp
+    #+BEGIN_SRC emacs-lisp
      (customize-set-variable 'css-indent-offset 2)
-   #+END_SRC
+    #+END_SRC
 *** HTML
     #+BEGIN_SRC emacs-lisp
       (add-hook 'html-mode-hook 'turn-off-auto-fill)
@@ -1124,7 +1124,7 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
   #+END_SRC
 * Packages
 ** browse-url
-#+BEGIN_SRC emacs-lisp
+   #+BEGIN_SRC emacs-lisp
   ;; Open links in Chrome on macOS
   ;; (setq gnus-button-url 'browse-url-generic
   ;;       browse-url-generic-program "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
@@ -1133,7 +1133,7 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
   ;; Open links in Safari
   (setq browse-url-browser-function 'browse-url-generic
         browse-url-generic-program "open")
-#+END_SRC
+   #+END_SRC
 ** exec-path-from-shell
    #+BEGIN_SRC emacs-lisp
      (use-package exec-path-from-shell
@@ -1145,10 +1145,10 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
          (set-buffer-process-coding-system 'utf-8-unix 'utf-8-unix)))
    #+END_SRC
 ** f
-#+BEGIN_SRC emacs-lisp
+   #+BEGIN_SRC emacs-lisp
   (use-package f
     :ensure t)
-#+END_SRC
+   #+END_SRC
 ** flycheck
    #+BEGIN_SRC emacs-lisp
      (use-package flycheck
@@ -1157,23 +1157,23 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
        (setq flycheck-javascript-eslint-executable "~/work/wastewitness/node_modules/.bin/eslint")
        (setq flycheck-javascript-standard-executable "~/work/wastewitness/node_modules/.bin/standard")
        (setq-default flycheck-disabled-checkers
-         '(emacs-lisp-checkdoc))
+                     '(emacs-lisp-checkdoc))
        (setq-default flycheck-disabled-checkers
-         (append flycheck-disabled-checkers
-         '(javascript-jshint)))
+                     (append flycheck-disabled-checkers
+                             '(javascript-jshint)))
        (setq-default flycheck-disabled-checkers
-         (append flycheck-disabled-checkers
-         '(json-jsonlist)))
+                     (append flycheck-disabled-checkers
+                             '(json-jsonlist)))
        (global-flycheck-mode))
    #+END_SRC
 ** flycheck-clojure
-#+BEGIN_SRC emacs-lisp
+   #+BEGIN_SRC emacs-lisp
   (use-package flycheck-clojure
     :ensure t
     :defer t
     :after (flycheck)
     :config (flycheck-clojure-setup))
-#+END_SRC
+   #+END_SRC
 ** ido
    #+BEGIN_SRC emacs-lisp
      (use-package ido
@@ -1275,19 +1275,19 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
        (projectile-mode +1))
    #+END_SRC
 ** restclient
-#+BEGIN_SRC emacs-lisp
+   #+BEGIN_SRC emacs-lisp
 (use-package restclient
   :ensure t
   :defer t)
-#+END_SRC
+   #+END_SRC
 ** saveplace
-#+BEGIN_SRC emacs-lisp
+   #+BEGIN_SRC emacs-lisp
   (setq save-place-file (locate-user-emacs-file "places" ".emacs-places"))
 
   (save-place-mode 1)
-#+END_SRC
+   #+END_SRC
 ** shell-mode
-#+BEGIN_SRC emacs-lisp
+   #+BEGIN_SRC emacs-lisp
   ;; Some ideas from: https://www.reddit.com/r/emacs/comments/9x2st8/disable_all_colours_in_shell_mode/
 
   ;; maybe turn off colors altogether
@@ -1312,16 +1312,16 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
     ;; Makes the prompt read-only running in emacs 'M-x shell'
     (setq comint-prompt-read-only t))
   (add-hook 'comint-mode-hook 'agg/my-comint-init)
-#+END_SRC
+   #+END_SRC
 ** smex
-#+BEGIN_SRC emacs-lisp
+   #+BEGIN_SRC emacs-lisp
   (use-package smex
     :ensure t
     :init (smex-initialize)
     (global-set-key (kbd "M-x") 'smex)
     (global-set-key (kbd "M-X") 'smex-major-mode-commands)
     (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command))
-#+END_SRC
+   #+END_SRC
 ** tidy
    #+BEGIN_SRC emacs-lisp
      (setq tidy-shell-command "/usr/local/bin/tidy")
@@ -1329,22 +1329,22 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
      (setq tidy-temp-directory "/tmp")
    #+END_SRC
 ** tramp
-#+BEGIN_SRC emacs-lisp
+   #+BEGIN_SRC emacs-lisp
   (setq tramp-default-method "ssh")
 
   (defun connect-patproc-test ()
     (interactive)
     (dired "/lcbuser@patproc-test-host.library.wisc.edu:/opt/patproc-test/"))
-#+END_SRC
+   #+END_SRC
 ** unfill
    #+BEGIN_SRC emacs-lisp
      (use-package unfill
        :ensure t)
    #+END_SRC
 ** uniquify
-#+BEGIN_SRC emacs-lisp
+   #+BEGIN_SRC emacs-lisp
   (setq uniquify-buffer-name-style 'forward)
-#+END_SRC
+   #+END_SRC
 * Startup
   #+BEGIN_SRC emacs-lisp
     (agg-set-background-color-light)
@@ -1354,46 +1354,46 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
   #+END_SRC
 * Notes
 ** Clean test
-Occasionally, I like to test my init files from a clean environment so
-I know I haven't messed something up along the way. To do this, I do
-the following:
+   Occasionally, I like to test my init files from a clean environment so
+   I know I haven't messed something up along the way. To do this, I do
+   the following:
 
-1. Close Emacs
-1. Checkout the git revision you think should work (start with master)
-1. Clean the existing ELPA compiled directory
+   1. Close Emacs
+   1. Checkout the git revision you think should work (start with master)
+   1. Clean the existing ELPA compiled directory
 
-        ~/src/dotemacs $ rm -rf elpa
-1. Start Emacs
+      ~/src/dotemacs $ rm -rf elpa
+   1. Start Emacs
 
-Repeat all steps until you get a clean launch. If you don't get a
-clean start, go back to a previous revision in the git log until
-you do.
+   Repeat all steps until you get a clean launch. If you don't get a
+   clean start, go back to a previous revision in the git log until
+   you do.
 
-It would be nice to have something like a build server that would
-perform a "clean build" on all new configuration changes.
+   It would be nice to have something like a build server that would
+   perform a "clean build" on all new configuration changes.
 ** Mac OS Notes
 
-switch default key bindings
+   switch default key bindings
 
-    (setq mac-right-option-modifier 'control)
+   (setq mac-right-option-modifier 'control)
 
-Above was my first attempt to get a control key on the right side
+   Above was my first attempt to get a control key on the right side
 
-I ended up switching the modifier keys in the Keyboard control panel
-Command becomes Alt
-Alt becomes Command
-Doing it this way the command-line editing is identical to Emacs
+   I ended up switching the modifier keys in the Keyboard control panel
+   Command becomes Alt
+   Alt becomes Command
+   Doing it this way the command-line editing is identical to Emacs
 
-On the Keyboard tab, also set "Use all F1, F2, etc. as standard function keys..." = true
+   On the Keyboard tab, also set "Use all F1, F2, etc. as standard function keys..." = true
 
-And on the Shortcuts tab, unchecked almost all keyboard shortcuts
+   And on the Shortcuts tab, unchecked almost all keyboard shortcuts
 
-This made it so the mac settings were not needed (as the keys were
-already flipped at the OS-level. Having them in the emacs config
-would have flipped them again.
+   This made it so the mac settings were not needed (as the keys were
+   already flipped at the OS-level. Having them in the emacs config
+   would have flipped them again.
 
-Using KeyRemap4MacBook to re-map Left Arrow to be my Right Cntl Key
+   Using KeyRemap4MacBook to re-map Left Arrow to be my Right Cntl Key
 
-iTerm, set "Use option as meta key" = true
+   iTerm, set "Use option as meta key" = true
 
-Last issue is the function key. I often hit it when I want my Left Cntl Key so I'd like to swap Function and Left Cntl.
+   Last issue is the function key. I often hit it when I want my Left Cntl Key so I'd like to swap Function and Left Cntl.
