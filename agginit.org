@@ -642,6 +642,10 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
     #+END_SRC
 *** Javascript
     #+BEGIN_SRC emacs-lisp
+      (use-package add-node-modules-path
+        :ensure t
+        :defer t)
+
       (use-package js2-mode
         :ensure t
         :defer t
@@ -652,7 +656,8 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
         (add-to-list 'ac-modes 'js2-mode)
         (add-hook 'js2-mode-hook 'progmodes-hooks)
         (add-hook 'js2-mode-hook #'smartparens-mode)
-        (add-hook 'js2-mode-hook (lambda () (setq js2-basic-offset 2))))
+        (add-hook 'js2-mode-hook (lambda () (setq js2-basic-offset 2)))
+        (add-hook 'js-mode-hook #'add-node-modules-path))
 
       (use-package tern
         :ensure t
