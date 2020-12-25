@@ -878,266 +878,271 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
         (setq mmm-submode-decoration-level 0))
     #+END_SRC
 * Social
-  #+BEGIN_SRC emacs-lisp
-    ;; (defvar freenode-password "")
-    ;; (defvar bitlbee-password "")
+** IRC
+   #+BEGIN_SRC emacs-lisp
+     ;; (defvar freenode-password "")
+     ;; (defvar bitlbee-password "")
 
-    (setq
-     erc-server "irc.wicourts.gov"
-     ;; erc-server "chat.freenode.net"
-     erc-nick "agoodno"
-     erc-prompt (lambda () (concat "[" (buffer-name) "]"))
-     ;; erc-prompt-for-nickserv-password nil
-     ;; erc-nickserv-passwords `((freenode ("agoodno" . ,freenode-password)))
-     erc-email-userid "andrew.goodnough@wicourts.gov"
-     ;; erc-email-userid "agoodno@gmail.com"
-     erc-user-full-name "Andrew Goodnough"
-     ;; erc-autojoin-channels-alist '(("irc.wicourts.gov" "#ccap3" "#cc"))
-     erc-autojoin-channels-alist
-     '(("freenode.net" "#emacs" "#elasticsearch")
-       ("wicourts.gov" "#ccap3" "#cc"))
-     ;; erc-join-buffer 'bury
-     erc-hide-list '("QUIT" "JOIN" "KICK" "NICK" "MODE")
-     erc-echo-notices-in-minibuffer-flag t
-     erc-auto-query 'buffer
-     erc-save-buffer-on-part nil
-     erc-save-queries-on-quit nil
-     erc-log-write-after-send t
-     erc-log-write-after-insert t
-     erc-fill-column 75
-     erc-header-line-format nil
-     erc-track-exclude-types '("324" "329" "332" "333" "353" "477" "MODE"
-                               "JOIN" "PART" "QUIT" "NICK")
-     ;; erc-lurker-threshold-time 3600
-     ;; erc-track-priority-faces-only t
-     ;; erc-autojoin-timing :ident
-     ;; erc-flood-protect nil
-     ;; erc-server-send-ping-interval 45
-     ;; erc-server-send-ping-timeout 180
-     ;; erc-server-reconnect-timeout 60
-     ;; erc-server-flood-penalty 1000000
-     ;; erc-accidental-paste-threshold-seconds 0.5
-     erc-fill-function 'erc-fill-static
-     erc-fill-static-center 14)
+     (setq
+      erc-server "irc.wicourts.gov"
+      ;; erc-server "chat.freenode.net"
+      erc-nick "agoodno"
+      erc-prompt (lambda () (concat "[" (buffer-name) "]"))
+      ;; erc-prompt-for-nickserv-password nil
+      ;; erc-nickserv-passwords `((freenode ("agoodno" . ,freenode-password)))
+      erc-email-userid "andrew.goodnough@wicourts.gov"
+      ;; erc-email-userid "agoodno@gmail.com"
+      erc-user-full-name "Andrew Goodnough"
+      ;; erc-autojoin-channels-alist '(("irc.wicourts.gov" "#ccap3" "#cc"))
+      erc-autojoin-channels-alist
+      '(("freenode.net" "#emacs" "#elasticsearch")
+        ("wicourts.gov" "#ccap3" "#cc"))
+      ;; erc-join-buffer 'bury
+      erc-hide-list '("QUIT" "JOIN" "KICK" "NICK" "MODE")
+      erc-echo-notices-in-minibuffer-flag t
+      erc-auto-query 'buffer
+      erc-save-buffer-on-part nil
+      erc-save-queries-on-quit nil
+      erc-log-write-after-send t
+      erc-log-write-after-insert t
+      erc-fill-column 75
+      erc-header-line-format nil
+      erc-track-exclude-types '("324" "329" "332" "333" "353" "477" "MODE"
+                                "JOIN" "PART" "QUIT" "NICK")
+      ;; erc-lurker-threshold-time 3600
+      ;; erc-track-priority-faces-only t
+      ;; erc-autojoin-timing :ident
+      ;; erc-flood-protect nil
+      ;; erc-server-send-ping-interval 45
+      ;; erc-server-send-ping-timeout 180
+      ;; erc-server-reconnect-timeout 60
+      p     ;; erc-server-flood-penalty 1000000
+      ;; erc-accidental-paste-threshold-seconds 0.5
+      erc-fill-function 'erc-fill-static
+      erc-fill-static-center 14)
 
-    (defun freenode-connect ()
-      "Connect to freenode."
-      (interactive)
-      (erc :server "irc.freenode.net" :port 6667 :nick "agoodno"))
+     (defun freenode-connect ()
+       "Connect to freenode."
+       (interactive)
+       (erc :server "irc.freenode.net" :port 6667 :nick "agoodno"))
 
-    (defun bitlbee-connect ()
-      "Connect to bitlbee."
-      (interactive)
-      (erc :server "127.0.0.1" :port 6667))
+     (defun bitlbee-connect ()
+       "Connect to bitlbee."
+       (interactive)
+       (erc :server "127.0.0.1" :port 6667))
 
-    (defun wicourts-connect ()
-      "Connect to wicourts."
-      (interactive)
-      (erc :server "irc.wicourts.gov" :port 6667 :nick "agoodno"))
+     (defun wicourts-connect ()
+       "Connect to wicourts."
+       (interactive)
+       (erc :server "irc.wicourts.gov" :port 6667 :nick "agoodno"))
 
-    ;;(add-hook 'erc-join-hook 'bitlbee-identify)
+     ;;(add-hook 'erc-join-hook 'bitlbee-identify)
 
-    (defun bitlbee-identify ()
-      "If we're on the bitlbee server, send the identify command to the &bitlbee channel."
-      (when (and (string= "127.0.0.1" erc-session-server)
-                 (string= "&bitlbee" (buffer-name)))
-        (erc-message "PRIVMSG" (format "%s identify %s"
-                                       (erc-default-target)
-                                       bitlbee-password))))
+     (defun bitlbee-identify ()
+       "If we're on the bitlbee server, send the identify command to the &bitlbee channel."
+       (when (and (string= "127.0.0.1" erc-session-server)
+                  (string= "&bitlbee" (buffer-name)))
+         (erc-message "PRIVMSG" (format "%s identify %s"
+                                        (erc-default-target)
+                                        bitlbee-password))))
 
-    ;; (delete 'erc-fool-face 'erc-track-faces-priority-list)
-    ;; (delete '(erc-nick-default-face erc-fool-face) 'erc-track-faces-priority-list)
+     ;; (delete 'erc-fool-face 'erc-track-faces-priority-list)
+     ;; (delete '(erc-nick-default-face erc-fool-face) 'erc-track-faces-priority-list)
 
-    ;; (eval-after-load 'erc
-    ;;   '(progn
-    ;;      ;; (when (not (package-installed-p 'erc-hl-nicks))
-    ;;      ;;   (package-install 'erc-hl-nicks))
-    ;;      (require 'erc-spelling)
-    ;;      (require 'erc-services)
-    ;;      (require 'erc-truncate)
-    ;;      ;; (require 'erc-hl-nicks)
-    ;;      (require 'notifications)
-    ;;      (erc-services-mode 1)
-    ;;      (erc-truncate-mode 1)
-    ;;      (setq erc-complete-functions '(erc-pcomplete erc-button-next))
-    ;;      ;; (add-to-list 'erc-modules 'hl-nicks)
-    ;;      (add-to-list 'erc-modules 'spelling)
-    ;;      (set-face-foreground 'erc-input-face "dim gray")
-    ;;      (set-face-foreground 'erc-my-nick-face "blue")
-    ;;      (define-key erc-mode-map (kbd "C-c r") 'pnh-reset-erc-track-mode)
-    ;;      (define-key erc-mode-map (kbd "C-c C-M-SPC") 'erc-track-clear)
-    ;;      (define-key erc-mode-map (kbd "C-u RET") 'browse-last-url-in-brower)))
+     ;; (eval-after-load 'erc
+     ;;   '(progn
+     ;;      ;; (when (not (package-installed-p 'erc-hl-nicks))
+     ;;      ;;   (package-install 'erc-hl-nicks))
+     ;;      (require 'erc-spelling)
+     ;;      (require 'erc-services)
+     ;;      (require 'erc-truncate)
+     ;;      ;; (require 'erc-hl-nicks)
+     ;;      (require 'notifications)
+     ;;      (erc-services-mode 1)
+     ;;      (erc-truncate-mode 1)
+     ;;      (setq erc-complete-functions '(erc-pcomplete erc-button-next))
+     ;;      ;; (add-to-list 'erc-modules 'hl-nicks)
+     ;;      (add-to-list 'erc-modules 'spelling)
+     ;;      (set-face-foreground 'erc-input-face "dim gray")
+     ;;      (set-face-foreground 'erc-my-nick-face "blue")
+     ;;      (define-key erc-mode-map (kbd "C-c r") 'pnh-reset-erc-track-mode)
+     ;;      (define-key erc-mode-map (kbd "C-c C-M-SPC") 'erc-track-clear)
+     ;;      (define-key erc-mode-map (kbd "C-u RET") 'browse-last-url-in-brower)))
 
-    ;; (defun erc-track-clear ()
-    ;;   (interactive)
-    ;;   (setq erc-modified-channels-alist nil))
+     ;; (defun erc-track-clear ()
+     ;;   (interactive)
+     ;;   (setq erc-modified-channels-alist nil))
 
-    ;; (defun browse-last-url-in-brower ()
-    ;;   (interactive)
-    ;;   (require 'ffap)
-    ;;   (save-excursion
-    ;;     (let ((ffap-url-regexp "\\(https?://\\)."))
-    ;;       (ffap-next-url t t))))
+     ;; (defun browse-last-url-in-brower ()
+     ;;   (interactive)
+     ;;   (require 'ffap)
+     ;;   (save-excursion
+     ;;     (let ((ffap-url-regexp "\\(https?://\\)."))
+     ;;       (ffap-next-url t t))))
 
-    ;; (defun pnh-reset-erc-track-mode ()
-    ;;   (interactive)
-    ;;   (setq erc-modified-channels-alist nil)
-    ;;   (erc-modified-channels-update)
-    ;;   (erc-modified-channels-display))
+     ;; (defun pnh-reset-erc-track-mode ()
+     ;;   (interactive)
+     ;;   (setq erc-modified-channels-alist nil)
+     ;;   (erc-modified-channels-update)
+     ;;   (erc-modified-channels-display))
 
-    ;; (require 'erc-services)
-    ;; (erc-services-mode 1)
+     ;; (require 'erc-services)
+     ;; (erc-services-mode 1)
 
-    ;; ;;; Notify me when a keyword is matched (someone wants to reach me)
+     ;; ;;; Notify me when a keyword is matched (someone wants to reach me)
 
-    ;; (defvar my-erc-page-message "%s says %s"
-    ;;   "Format of message to display in dialog box")
+     ;; (defvar my-erc-page-message "%s says %s"
+     ;;   "Format of message to display in dialog box")
 
-    ;; (defvar my-erc-page-nick-alist nil
-    ;;   "Alist of nicks and the last time they tried to trigger a notification")
+     ;; (defvar my-erc-page-nick-alist nil
+     ;;   "Alist of nicks and the last time they tried to trigger a notification")
 
-    ;; (defvar my-erc-page-timeout 60
-    ;;   "Number of seconds that must elapse between notifications from the same person.")
+     ;; (defvar my-erc-page-timeout 60
+     ;;   "Number of seconds that must elapse between notifications from the same person.")
 
-    ;; (defun my-erc-page-popup-notification (message)
-    ;;   (when window-system
-    ;;     ;; must set default directory, otherwise start-process is unhappy
-    ;;     ;; when this is something remote or nonexistent
-    ;;     (let ((default-directory "~/"))
-    ;;       ;; 8640000 milliseconds = 1 day
-    ;;       (start-process "page-me" nil "notify-send"
-    ;;                      "-u" "normal" "-t" "8640000" "ERC"
-    ;;                      (format my-erc-page-message (car (split-string nick "!")) message)))))
+     ;; (defun my-erc-page-popup-notification (message)
+     ;;   (when window-system
+     ;;     ;; must set default directory, otherwise start-process is unhappy
+     ;;     ;; when this is something remote or nonexistent
+     ;;     (let ((default-directory "~/"))
+     ;;       ;; 8640000 milliseconds = 1 day
+     ;;       (start-process "page-me" nil "notify-send"
+     ;;                      "-u" "normal" "-t" "8640000" "ERC"
+     ;;                      (format my-erc-page-message (car (split-string nick "!")) message)))))
 
-    ;; (defun my-erc-page-allowed (nick &optional delay)
-    ;;   "Return non-nil if a notification should be made for NICK.
-    ;; If DELAY is specified, it will be the minimum time in seconds
-    ;; that can occur between two notifications.  The default is
-    ;; `my-erc-page-timeout'."
-    ;;   (unless delay (setq delay my-erc-page-timeout))
-    ;;   (let ((cur-time (time-to-seconds (current-time)))
-    ;;         (cur-assoc (assoc nick my-erc-page-nick-alist))
-    ;;         (last-time))
-    ;;     (if cur-assoc
-    ;;         (progn
-    ;;           (setq last-time (cdr cur-assoc))
-    ;;           (setcdr cur-assoc cur-time)
-    ;;           (> (abs (- cur-time last-time)) delay))
-    ;;       (push (cons nick cur-time) my-erc-page-nick-alist)
-    ;;       t)))
+     ;; (defun my-erc-page-allowed (nick &optional delay)
+     ;;   "Return non-nil if a notification should be made for NICK.
+     ;; If DELAY is specified, it will be the minimum time in seconds
+     ;; that can occur between two notifications.  The default is
+     ;; `my-erc-page-timeout'."
+     ;;   (unless delay (setq delay my-erc-page-timeout))
+     ;;   (let ((cur-time (time-to-seconds (current-time)))
+     ;;         (cur-assoc (assoc nick my-erc-page-nick-alist))
+     ;;         (last-time))
+     ;;     (if cur-assoc
+     ;;         (progn
+     ;;           (setq last-time (cdr cur-assoc))
+     ;;           (setcdr cur-assoc cur-time)
+     ;;           (> (abs (- cur-time last-time)) delay))
+     ;;       (push (cons nick cur-time) my-erc-page-nick-alist)
+     ;;       t)))
 
-    ;; (defun my-erc-page-me (match-type nick message)
-    ;;   "Notify the current user when someone sends a message that
-    ;; matches a regexp in `erc-keywords'."
-    ;;   (interactive)
-    ;;   (when (and (eq match-type 'keyword)
-    ;;              ;; I don't want to see anything from the erc server
-    ;;              (null (string-match "\\`\\([sS]erver\\|localhost\\)" nick))
-    ;;              ;; or bots
-    ;;              (null (string-match "\\(bot\\|serv\\)!" nick))
-    ;;              ;; or from those who abuse the system
-    ;;              (my-erc-page-allowed nick))
-    ;;     (my-erc-page-popup-notification message)))
-    ;; (add-hook 'erc-text-matched-hook 'my-erc-page-me)
+     ;; (defun my-erc-page-me (match-type nick message)
+     ;;   "Notify the current user when someone sends a message that
+     ;; matches a regexp in `erc-keywords'."
+     ;;   (interactive)
+     ;;   (when (and (eq match-type 'keyword)
+     ;;              ;; I don't want to see anything from the erc server
+     ;;              (null (string-match "\\`\\([sS]erver\\|localhost\\)" nick))
+     ;;              ;; or bots
+     ;;              (null (string-match "\\(bot\\|serv\\)!" nick))
+     ;;              ;; or from those who abuse the system
+     ;;              (my-erc-page-allowed nick))
+     ;;     (my-erc-page-popup-notification message)))
+     ;; (add-hook 'erc-text-matched-hook 'my-erc-page-me)
 
-    ;; (defun my-erc-page-me-PRIVMSG (proc parsed)
-    ;;   (let ((nick (car (erc-parse-user (erc-response.sender parsed))))
-    ;;         (target (car (erc-response.command-args parsed)))
-    ;;         (msg (erc-response.contents parsed)))
-    ;;     (when (and (erc-current-nick-p target)
-    ;;                (not (erc-is-message-ctcp-and-not-action-p msg))
-    ;;                (my-erc-page-allowed nick))
-    ;;       (my-erc-page-popup-notification msg)
-    ;;       nil)))
-    ;; (add-hook 'erc-server-PRIVMSG-functions 'my-erc-page-me-PRIVMSG)
+     ;; (defun my-erc-page-me-PRIVMSG (proc parsed)
+     ;;   (let ((nick (car (erc-parse-user (erc-response.sender parsed))))
+     ;;         (target (car (erc-response.command-args parsed)))
+     ;;         (msg (erc-response.contents parsed)))
+     ;;     (when (and (erc-current-nick-p target)
+     ;;                (not (erc-is-message-ctcp-and-not-action-p msg))
+     ;;                (my-erc-page-allowed nick))
+     ;;       (my-erc-page-popup-notification msg)
+     ;;       nil)))
+     ;; (add-hook 'erc-server-PRIVMSG-functions 'my-erc-page-me-PRIVMSG)
 
-    ;; (eval-after-init
-    ;;  '(and
-    ;;                                         ; (add-to-list 'erc-modules 'autoaway)
-    ;;    (add-to-list 'erc-modules 'autojoin)
-    ;;    (add-to-list 'erc-modules 'button)
-    ;;    (add-to-list 'erc-modules 'completion)
-    ;;    (add-to-list 'erc-modules 'fill)
-    ;;    (add-to-list 'erc-modules 'irccontrols)
-    ;;    (add-to-list 'erc-modules 'list)
-    ;;    (add-to-list 'erc-modules 'log)
-    ;;    (add-to-list 'erc-modules 'match)
-    ;;    (add-to-list 'erc-modules 'menu)
-    ;;    (add-to-list 'erc-modules 'move-to-prompt)
-    ;;    (add-to-list 'erc-modules 'netsplit)
-    ;;    (add-to-list 'erc-modules 'networks)
-    ;;    (add-to-list 'erc-modules 'noncommands)
-    ;;    (add-to-list 'erc-modules 'notify)
-    ;;    (add-to-list 'erc-modules 'readonly)
-    ;;    (add-to-list 'erc-modules 'ring)
-    ;;    (add-to-list 'erc-modules 'stamp)
-    ;;    (add-to-list 'erc-modules 'track )
-    ;;    (erc-update-modules)))
+     ;; (eval-after-init
+     ;;  '(and
+     ;;                                         ; (add-to-list 'erc-modules 'autoaway)
+     ;;    (add-to-list 'erc-modules 'autojoin)
+     ;;    (add-to-list 'erc-modules 'button)
+     ;;    (add-to-list 'erc-modules 'completion)
+     ;;    (add-to-list 'erc-modules 'fill)
+     ;;    (add-to-list 'erc-modules 'irccontrols)
+     ;;    (add-to-list 'erc-modules 'list)
+     ;;    (add-to-list 'erc-modules 'log)
+     ;;    (add-to-list 'erc-modules 'match)
+     ;;    (add-to-list 'erc-modules 'menu)
+     ;;    (add-to-list 'erc-modules 'move-to-prompt)
+     ;;    (add-to-list 'erc-modules 'netsplit)
+     ;;    (add-to-list 'erc-modules 'networks)
+     ;;    (add-to-list 'erc-modules 'noncommands)
+     ;;    (add-to-list 'erc-modules 'notify)
+     ;;    (add-to-list 'erc-modules 'readonly)
+     ;;    (add-to-list 'erc-modules 'ring)
+     ;;    (add-to-list 'erc-modules 'stamp)
+     ;;    (add-to-list 'erc-modules 'track )
+     ;;    (erc-update-modules)))
 
-    ;; (customize-set-variable 'erc-server "irc.freenode.net")
-    ;; (customize-set-variable 'erc-port 6667)
-    ;; (customize-set-variable 'erc-nick "agoodno")
+     ;; (customize-set-variable 'erc-server "irc.freenode.net")
+     ;; (customize-set-variable 'erc-port 6667)
+     ;; (customize-set-variable 'erc-nick "agoodno")
 
-    ;; (use-package erc-hipchatify
-    ;;   :ensure t
-    ;;   :defer t
-    ;;   :init
-    ;;   (progn
-    ;;     ;; (customize-set-variable 'shr-use-fonts f)
-    ;;     ;; (customize-set-variable 'shr-external-browser "")
-    ;;     (add-to-list 'erc-modules 'hipchatify)
-    ;;     (erc-update-modules)))
+     ;; (use-package erc-hipchatify
+     ;;   :ensure t
+     ;;   :defer t
+     ;;   :init
+     ;;   (progn
+     ;;     ;; (customize-set-variable 'shr-use-fonts f)
+     ;;     ;; (customize-set-variable 'shr-external-browser "")
+     ;;     (add-to-list 'erc-modules 'hipchatify)
+     ;;     (erc-update-modules)))
+   #+END_SRC
+** Slack
+   #+BEGIN_SRC emacs-lisp
+     ;; How to get a token
+     ;; https://github.com/yuya373/emacs-slack#how-to-get-token
 
-    ;; How to get a token
-    ;; https://github.com/yuya373/emacs-slack#how-to-get-token
-
-    ;; Works by issuing command (slack-start), then enter Team: and Token:
-    ;; but doesn't work with the token in team config below for some reason
-    (use-package slack
-      :disabled
-      :ensure t
-      :defer t
-      :commands (slack-start)
-      :init
-      (setq slack-buffer-emojify t)
-      (setq slack-prefer-current-team t)
-      :config
-      (slack-register-team
-       :name slack-elmlang-team
-       :client-id slack-elmlang-client-id
-       :client-secret slack-elmlang-client-secret
-       :token slack-elmlang-token
-       :full-and-display-names t)
-      (slack-register-team
-       :name slack-cucumberbdd-team
-       :default t
-       :client-id slack-cucumberbdd-client-id
-       :client-secret slack-cucumberbdd-client-secret
-       :token slack-cucumberbdd-token
-       :full-and-display-names t
-       :subscribed-channels '(announcements events help intros podcasts-and-webinars recommended_media school)))
-
-    ;; This [[https://jherrlin.github.io/posts/emacs-mu4e/][link]] was helpful for this setup
-    (use-package mu4e
-      :init
-      (require 'smtpmail)
-      (setq mu4e-mu-binary "/usr/local/bin/mu"
-            mu4e-get-mail-command "mbsync -a"
-            mu4e-maildir (expand-file-name "~/Mail")
-            mu4e-change-filenames-when-moving t
-            mu4e-update-interval 300
-            user-mail-address "agoodno@gmail.com"
-            user-full-name "Andrew Goodnough"
-            message-send-mail-function 'smtpmail-send-it
-            ;; starttls-use-gnutls t
-            ;; smtpmail-starttls-credentials '(("smtp.gmail.com" 587 nil nil))
-            ;; smtpmail-auth-credentials '(("smtp.gmail.com" 587 "agoodno" <mbsyncpass>))
-            smtpmail-default-smtp-server "smtp.gmail.com"
-            smtpmail-smtp-server "smtp.gmail.com"
-            ;; smtpmail-stream-type  'starttls
-            smtpmail-smtp-service 25)
-      (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu/mu4e"))
-  #+END_SRC
+     ;; Works by issuing command (slack-start), then enter Team: and Token:
+     ;; but doesn't work with the token in team config below for some reason
+     (use-package slack
+       :disabled
+       :ensure t
+       :defer t
+       :commands (slack-start)
+       :init
+       (setq slack-buffer-emojify t)
+       (setq slack-prefer-current-team t)
+       :config
+       (slack-register-team
+        :name slack-elmlang-team
+        :client-id slack-elmlang-client-id
+        :client-secret slack-elmlang-client-secret
+        :token slack-elmlang-token
+        :full-and-display-names t)
+       (slack-register-team
+        :name slack-cucumberbdd-team
+        :default t
+        :client-id slack-cucumberbdd-client-id
+        :client-secret slack-cucumberbdd-client-secret
+        :token slack-cucumberbdd-token
+        :full-and-display-names t
+        :subscribed-channels '(announcements events help intros podcasts-and-webinars recommended_media school)))
+   #+END_SRC
+** Email
+   #+BEGIN_SRC emacs-lisp
+     ;; This [[https://jherrlin.github.io/posts/emacs-mu4e/][link]] was helpful for this setup
+     (use-package mu4e
+       :init
+       (require 'smtpmail)
+       (setq mu4e-mu-binary "/usr/local/bin/mu"
+             mu4e-get-mail-command "mbsync -a"
+             mu4e-maildir (expand-file-name "~/Mail")
+             mu4e-change-filenames-when-moving t
+             mu4e-update-interval 300
+             user-mail-address "agoodno@gmail.com"
+             user-full-name "Andrew Goodnough"
+             message-send-mail-function 'smtpmail-send-it
+             ;; starttls-use-gnutls t
+             ;; smtpmail-starttls-credentials '(("smtp.gmail.com" 587 nil nil))
+             ;; smtpmail-auth-credentials '(("smtp.gmail.com" 587 "agoodno" <mbsyncpass>))
+             smtpmail-default-smtp-server "smtp.gmail.com"
+             smtpmail-smtp-server "smtp.gmail.com"
+             ;; smtpmail-stream-type  'starttls
+             smtpmail-smtp-service 25)
+       (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu/mu4e"))
+   #+END_SRC
 * Packages
 ** browse-url
    #+BEGIN_SRC emacs-lisp
