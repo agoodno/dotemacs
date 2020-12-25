@@ -1132,6 +1132,11 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
              mu4e-maildir (expand-file-name "~/Mail")
              mu4e-change-filenames-when-moving t
              mu4e-update-interval 300
+             mu4e-view-html-plaintext-ratio-heuristic most-positive-fixnum
+             smtpmail-debug-info t
+             smtpmail-stream-type 'starttls
+             starttls-use-gnutls nil
+             message-kill-buffer-on-exit t
              message-send-mail-function 'smtpmail-send-it)
        :config
        (setq mu4e-contexts
@@ -1142,11 +1147,12 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
                   :match-func (lambda (msg)
                                 (when msg
                                   (mu4e-message-contact-field-matches msg
-                                                                      :to "agoodno@gmail.com")))
-                  :vars '((smtpmail-smtp-server . "smtp.gmail.com")
-                          (smtpmail-smtp-service . 25)
+                                                                      :from "agoodno@gmail.com")))
+                  :vars '((user-full-name . "Andrew Goodnough")
                           (user-mail-address . "agoodno@gmail.com")
-                          (user-full-name . "Andrew Goodnough")))
+                          (smtpmail-smtp-server . "smtp.gmail.com")
+                          (smtpmail-smtp-service . 587)
+                          (smtpmail-smtp-user . "agoodno")))
                 ,(make-mu4e-context
                   :name "iCloud"
                   :enter-func (lambda () (mu4e-message "Entering iCloud context"))
@@ -1154,11 +1160,12 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
                   :match-func (lambda (msg)
                                 (when msg
                                   (mu4e-message-contact-field-matches msg
-                                                                      :to "andrew.goodnough@icloud.com")))
-                  :vars '((smtpmail-smtp-server . "imap.mail.me.com")
-                          (smtpmail-smtp-service . 25)
+                                                                      :from "andrew.goodnough@icloud.com")))
+                  :vars '((user-full-name . "Andrew Goodnough")
                           (user-mail-address . "andrew.goodnough@icloud.com")
-                          (user-full-name . "Andrew Goodnough"))))))
+                          (smtpmail-smtp-server . "smtp.mail.me.com")
+                          (smtpmail-smtp-service . 587)
+                          (smtpmail-smtp-user . "andrew.goodnough"))))))
    #+END_SRC
 * Packages
 ** browse-url
