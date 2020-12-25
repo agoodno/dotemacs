@@ -916,7 +916,7 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
       ;; erc-server-send-ping-interval 45
       ;; erc-server-send-ping-timeout 180
       ;; erc-server-reconnect-timeout 60
-      p     ;; erc-server-flood-penalty 1000000
+      ;; erc-server-flood-penalty 1000000
       ;; erc-accidental-paste-threshold-seconds 0.5
       erc-fill-function 'erc-fill-static
       erc-fill-static-center 14)
