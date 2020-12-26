@@ -1132,7 +1132,9 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
              mu4e-maildir (expand-file-name "~/Mail")
              mu4e-change-filenames-when-moving t
              mu4e-update-interval 300
+             mu4e-index-update-in-background t
              mu4e-view-html-plaintext-ratio-heuristic most-positive-fixnum
+             mu4e-sent-messages-behavior 'delete
              smtpmail-debug-info t
              smtpmail-stream-type 'starttls
              starttls-use-gnutls nil
@@ -1156,7 +1158,11 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
                           (user-mail-address . "agoodno@gmail.com")
                           (smtpmail-smtp-server . "smtp.gmail.com")
                           (smtpmail-smtp-service . 587)
-                          (smtpmail-smtp-user . "agoodno")))
+                          (smtpmail-smtp-user . "agoodno")
+                          (mu4e-drafts-folder . "/gmail/drafts")
+                          (mu4e-sent-folder . "/gmail/sent")
+                          (mu4e-trash-folder . "/gmail/trash")
+                          (mu4e-refile-folder . "/gmail/all")))
                 ,(make-mu4e-context
                   :name "iCloud"
                   :enter-func (lambda () (mu4e-message "Entering iCloud context"))
@@ -1169,7 +1175,11 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
                           (user-mail-address . "andrew.goodnough@icloud.com")
                           (smtpmail-smtp-server . "smtp.mail.me.com")
                           (smtpmail-smtp-service . 587)
-                          (smtpmail-smtp-user . "andrew.goodnough")))))
+                          (smtpmail-smtp-user . "andrew.goodnough")
+                          (mu4e-drafts-folder . "/icloud/drafts")
+                          (mu4e-sent-folder . "/icloud/sent")
+                          (mu4e-trash-folder . "/icloud/trash")
+                          (mu4e-refile-folder . "/icloud/archive")))))
          (add-hook 'mu4e-view-mode-hook (lambda () (setq truncate-lines t))))
    #+END_SRC
 * Packages
