@@ -1137,6 +1137,10 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
              smtpmail-stream-type 'starttls
              starttls-use-gnutls nil
              message-kill-buffer-on-exit t
+             mu4e-attachment-dir "~/Downloads"
+             mu4e-view-show-addresses t
+             mu4e-html2text-command "textutil -stdin -format html -convert txt -stdout"
+             shr-color-visible-luminance-min 5
              message-send-mail-function 'smtpmail-send-it)
        :config
        (setq mu4e-contexts
@@ -1165,7 +1169,8 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
                           (user-mail-address . "andrew.goodnough@icloud.com")
                           (smtpmail-smtp-server . "smtp.mail.me.com")
                           (smtpmail-smtp-service . 587)
-                          (smtpmail-smtp-user . "andrew.goodnough"))))))
+                          (smtpmail-smtp-user . "andrew.goodnough")))))
+         (add-hook 'mu4e-view-mode-hook (lambda () (setq truncate-lines t))))
    #+END_SRC
 * Packages
 ** browse-url
