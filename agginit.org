@@ -1143,6 +1143,8 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
              mu4e-view-show-addresses t
              mu4e-html2text-command "textutil -stdin -format html -convert txt -stdout"
              shr-color-visible-luminance-min 5
+             mu4e-split-view 'horizontal  ; 'vertical ; 'single-window
+             mu4e-headers-visible-lines 16
              message-send-mail-function 'smtpmail-send-it)
        :config
        (setq mu4e-contexts
