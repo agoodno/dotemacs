@@ -1122,6 +1122,11 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
    #+END_SRC
 ** Email
    #+BEGIN_SRC emacs-lisp
+     (defun search-for-sender (msg)
+       "Search for messages sent by the sender of the message at point."
+       (mu4e-headers-search
+        (concat "from:" (cdar (mu4e-message-field msg :from)))))
+
      ;; This [[https://jherrlin.github.io/posts/emacs-mu4e/][link]] was helpful for this setup
      (use-package mu4e
        :init
@@ -1146,6 +1151,10 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
              mu4e-split-view 'horizontal  ; 'vertical ; 'single-window
              mu4e-headers-visible-lines 16
              message-send-mail-function 'smtpmail-send-it)
+
+       ;; define 'x' as the shortcut
+       (add-to-list 'mu4e-view-actions
+                    '("xsearch for sender" . search-for-sender) t)
        :config
        (setq mu4e-contexts
              `( ,(make-mu4e-context
