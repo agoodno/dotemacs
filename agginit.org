@@ -1191,7 +1191,7 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
                           (mu4e-sent-folder . "/icloud/sent")
                           (mu4e-trash-folder . "/icloud/trash")
                           (mu4e-refile-folder . "/icloud/archive")))))
-         (add-hook 'mu4e-view-mode-hook (lambda () (setq truncate-lines t))))
+       (add-hook 'mu4e-view-mode-hook (lambda () (setq truncate-lines t))))
    #+END_SRC
 * Packages
 ** browse-url
