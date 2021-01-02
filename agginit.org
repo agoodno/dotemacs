@@ -242,7 +242,7 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
 
     (defun shell-dir (name dir)
       "Opens a shell into the specified directory
-     ex. (shell-dir "cmd-rails" "/Users/agoodnough/src/rails/")"
+             ex. (shell-dir "cmd-rails" "/Users/agoodnough/src/rails/")"
       (let ((default-directory dir))
         (shell name)))
 
@@ -253,15 +253,15 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
     (require 'calendar)
     (defun insdate-insert-current-date (&optional omit-day-of-week-p)
       "Insert today's date using the current locale.
-      With a prefix argument, the date is inserted without the day of
-      the week."
+              With a prefix argument, the date is inserted without the day of
+              the week."
       (interactive "P*")
       (insert (calendar-date-string (calendar-current-date) nil
                                     omit-day-of-week-p)))
 
     (defun insert-date (prefix)
       "Insert the current date. With prefix-argument, use ISO format. With
-       two prefix arguments, write out the day and month name."
+               two prefix arguments, write out the day and month name."
       (interactive "P")
       (let ((format "%Y-%m-%d")
             (system-time-locale "en_US"))
@@ -297,8 +297,8 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
         (load-theme 'spacemacs-dark t)
 
         (set-face-attribute 'region
-                             nil
-                             :background "white")
+                            nil
+                            :background "white")
 
         (set-face-attribute  'mode-line-inactive
                              nil
@@ -319,8 +319,8 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
         (load-theme 'spacemacs-light t)
 
         (set-face-attribute 'region
-                             nil
-                             :background "#ffcc80")
+                            nil
+                            :background "#ffcc80")
 
         (set-face-attribute  'mode-line
                              nil
@@ -343,6 +343,30 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
         (progn
           (agg-set-background-color-dark)
           (put 'agg-toggle-background-color 'state t))))
+
+    (defun turn-off-mouse (&optional frame)
+      (interactive)
+      (shell-command "xinput --disable \"SynPS/2 Synaptics TouchPad\""))
+
+    (defun turn-on-mouse (&optional frame)
+      (interactive)
+      (shell-command "xinput --enable \"SynPS/2 Synaptics TouchPad\""))
+
+    (defun register-mouse-hooks ()
+      (progn
+        (add-hook 'focus-in-hook #'turn-off-mouse)
+        (add-hook 'focus-out-hook #'turn-on-mouse)
+        (add-hook 'delete-frame-functions #'turn-on-mouse)))
+
+    ;; new style for 27.1 (doesn't quite work yet)
+    ;; (defun register-new-mouse-hooks ()
+    ;;   (progn
+    ;;    (add-function :after after-focus-change-function #'turn-off-mouse)
+    ;;    (add-function :after after-focus-change-function #'turn-on-mouse)
+    ;;    (add-function :after delete-frame-functions #'turn-on-mouse)))
+
+    (if (string-equal system-type "gnu/linux")
+        (register-mouse-hooks))
   #+END_SRC
 * Bindings
   #+BEGIN_SRC emacs-lisp
