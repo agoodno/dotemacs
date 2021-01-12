@@ -356,7 +356,8 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
       (progn
         (add-hook 'focus-in-hook #'turn-off-mouse)
         (add-hook 'focus-out-hook #'turn-on-mouse)
-        (add-hook 'delete-frame-functions #'turn-on-mouse)))
+        (add-hook 'delete-frame-functions #'turn-on-mouse)
+        (add-hook 'kill-emacs-hook #'turn-on-mouse)))
 
     ;; new style for 27.1 (doesn't quite work yet)
     ;; (defun register-new-mouse-hooks ()
