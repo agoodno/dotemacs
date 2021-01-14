@@ -41,7 +41,6 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
     (setq custom-file (concat user-emacs-directory "custom.el"))
     (load custom-file :noerror)
   #+END_SRC
-
 * General config
 ** Editor
    #+BEGIN_SRC emacs-lisp
@@ -1154,6 +1153,7 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
 
      ;; This [[https://jherrlin.github.io/posts/emacs-mu4e/][link]] was helpful for this setup
      (use-package mu4e
+       :disabled mu4e-enabled
        :init
        (require 'smtpmail)
        (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu/mu4e")
