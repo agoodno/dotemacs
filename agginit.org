@@ -795,7 +795,7 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
         (add-to-list 'auto-mode-alist '("Gemfile$" . enh-ruby-mode))
         (add-to-list 'auto-mode-alist '("Rakefile$" . enh-ruby-mode))
         (add-hook 'enh-ruby-mode-hook 'progmodes-hooks)
-        (add-hook 'enh-ruby-mode-hook 'smartparens-strict-mode))
+        (add-hook 'enh-ruby-mode-hook #'smartparens-mode))
       ;; (add-hook 'enh-ruby-mode-hook 'enh-ruby-mode-hooks)) ;; Auto-formatting for rubocop broke whitespace-cleanup
 
       (use-package inf-ruby
