@@ -775,8 +775,7 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
     #+BEGIN_SRC emacs-lisp
       (defun enh-ruby-mode-before-save-hook ()
         (when (eq major-mode 'enh-ruby-mode)
-          (message (current-buffer))
-          (rubocop-autocorrect-current-file)))
+          (message (current-buffer))))
 
       (defun enh-ruby-mode-hooks ()
         "Hooks for ruby programming"
@@ -786,6 +785,8 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
         :ensure t
         :init
         ;; (add-to-list 'ac-modes 'enh-ruby-mode)
+        (setq rubocop-autocorrect-on-save t)
+        (setq rubocop-check-command "rubocop --format emacs")
         (add-to-list 'auto-mode-alist '("\\.rb$" . enh-ruby-mode))
         (add-to-list 'auto-mode-alist '("\\.gemspec$" . enh-ruby-mode))
         (add-to-list 'auto-mode-alist '("\\.rake$" . enh-ruby-mode))
