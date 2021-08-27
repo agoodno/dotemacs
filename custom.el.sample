@@ -1,0 +1,24 @@
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(css-indent-offset 2)
+ '(json-reformat:indent-width 2)
+ '(magit-display-buffer-function 'magit-display-buffer-fullframe-status-v1)
+ '(magit-repolist-columns
+   '(("Name" 40 magit-repolist-column-ident nil)
+     ("Path" 99 magit-repolist-column-path)))
+ '(magit-repository-directories
+   '(("~/.emacs.d" . 0)
+     ("~/stow" . 0)))
+ '(magit-status-sections-hook
+   '(magit-insert-status-headers magit-insert-merge-log magit-insert-rebase-sequence magit-insert-am-sequence magit-insert-sequencer-sequence magit-insert-bisect-output magit-insert-bisect-rest magit-insert-unpulled-from-upstream magit-insert-unpulled-from-pushremote magit-insert-unpushed-to-upstream magit-insert-unpushed-to-pushremote magit-insert-staged-changes magit-insert-unstaged-changes magit-insert-untracked-files magit-insert-stashes))
+ '(package-selected-packages
+   '(flycheck-yamllint bundler add-node-modules-path projectile-rails rbenv yari yaml-mode vue-mode use-package unfill terraform-mode tern-auto-complete spacemacs-theme spaceline smex smartparens slack scala-mode sbt-mode rvm rubocop robe rjsx-mode restclient react-snippets puppet-mode projectile mustache-mode markdown-preview-eww markdown-mode magit js2-refactor ido-vertical-mode ido-completing-read+ haml-mode gruvbox-theme flycheck-clojure feature-mode f exec-path-from-shell eslintd-fix eslint-fix enh-ruby-mode dracula-theme dockerfile-mode docker dired-sidebar deadgrep coffee-mode bar-cursor auto-complete-nxml aggressive-indent ac-emacs-eclim)))
+(custom-set-faces
+;; custom-set-faces was added by Custom.
+;; If you edit it by hand, you could mess it up, so be careful.
+;; Your init file should contain only one such instance.
+;; If there is more than one, they won't work right.
+'(default ((t (:family "Monaco" :foundry "ADBO" :slant normal :weight normal :height 140 :width normal)))))
