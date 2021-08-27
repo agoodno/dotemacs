@@ -712,7 +712,6 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
       (use-package rjsx-mode
         :ensure t
         :defer t
-        :after (auto-complete smartparens)
         :init
         (setq js2-strict-missing-semi-warning nil)
         (setq js2-missing-semi-one-line-override nil)
@@ -721,7 +720,6 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
         (add-to-list 'auto-mode-alist '("\\.jsx?\\'" . rjsx-mode))
         (add-to-list 'interpreter-mode-alist '("node" . rjsx-mode))
         (add-hook 'rjsx-mode 'progmodes-hooks)
-        (add-hook 'rjsx-mode #'smartparens-mode)
         (add-hook 'rjsx-mode (lambda () (setq js2-basic-offset 2))))
 
       (use-package eslint-fix
@@ -786,7 +784,7 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
         :init
         ;; (add-to-list 'ac-modes 'enh-ruby-mode)
         (setq rubocop-autocorrect-on-save t)
-        (setq rubocop-check-command "rubocop --format emacs")
+        (setq rubocop-check-command "rubocop --format emacs --auto-correct")
         (add-to-list 'auto-mode-alist '("\\.rb$" . enh-ruby-mode))
         (add-to-list 'auto-mode-alist '("\\.gemspec$" . enh-ruby-mode))
         (add-to-list 'auto-mode-alist '("\\.rake$" . enh-ruby-mode))
@@ -794,8 +792,7 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
         (add-to-list 'auto-mode-alist '("Capfile$" . enh-ruby-mode))
         (add-to-list 'auto-mode-alist '("Gemfile$" . enh-ruby-mode))
         (add-to-list 'auto-mode-alist '("Rakefile$" . enh-ruby-mode))
-        (add-hook 'enh-ruby-mode-hook 'progmodes-hooks)
-        (add-hook 'enh-ruby-mode-hook #'smartparens-mode))
+        (add-hook 'enh-ruby-mode-hook 'progmodes-hooks))
       ;; (add-hook 'enh-ruby-mode-hook 'enh-ruby-mode-hooks)) ;; Auto-formatting for rubocop broke whitespace-cleanup
 
       (use-package inf-ruby
