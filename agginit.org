@@ -476,9 +476,9 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
 
     (global-set-key [f12] 'toggle-truncate-lines)
 
-    (global-set-key (kbd "C--") 'back-window)
+    (global-set-key (kbd "C-,") 'back-window)
 
-    (global-set-key (kbd "C-=") 'other-window)
+    (global-set-key (kbd "C-.") 'other-window)
 
     (global-set-key (kbd "s-p") 'previous-buffer)
 
