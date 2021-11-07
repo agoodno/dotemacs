@@ -9,29 +9,26 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
 
 * Package initialization
   #+BEGIN_SRC emacs-lisp
-    (require 'package)
-    (setq package-enable-at-startup nil)
-    (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
-    (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
-    ;; (add-to-list 'package-archives
-    ;;              '("melpa2" . "http://www.mirrorservice.org/sites/melpa.org/packages/"))
-    ;; (add-to-list 'package-archives
-    ;;              '("melpa3" . "http://www.mirrorservice.org/sites/stable.melpa.org/packages/"))
-    ;; (add-to-list 'package-archives
-    ;;              '("melpa-stable" . "https://stable.melpa.org/packages/") t)
-    (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
-    (package-initialize)
+    ;; Install straight.el
+    (defvar bootstrap-version)
+    (let ((bootstrap-file
+           (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+          (bootstrap-version 5))
+      (unless (file-exists-p bootstrap-file)
+        (with-current-buffer
+            (url-retrieve-synchronously
+             "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+             'silent 'inhibit-cookies)
+          (goto-char (point-max))
+          (eval-print-last-sexp)))
+      (load bootstrap-file nil 'nomessage))
 
-    (when (not package-archive-contents)
-      (package-refresh-contents))
+    ;; Install use-package
+    (straight-use-package 'use-package)
 
-    (unless (package-installed-p 'use-package)
-      (package-install 'use-package))
-
-    (eval-when-compile
-      (require 'use-package))
-
-    (setq load-prefer-newer t)
+    ;; Configure use-package to use straight.el by default
+    (use-package straight
+                 :custom (straight-use-package-by-default t))
 
     ;; load secrets
     (setq secrets-file (concat user-emacs-directory "secrets.el"))
@@ -563,24 +560,24 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
     #+END_SRC
 *** XML
     #+BEGIN_SRC emacs-lisp
-      (use-package nxml-mode
-        :mode "\\.xml\\'"
-        :init
-        (defun agg/xml-format ()
-          "Format an XML buffer with xmllint."
-          (interactive)
-          (shell-command-on-region (point-min) (point-max)
-                                   "xmllint -format -"
-                                   (current-buffer) t
-                                   "*Xmllint Error Buffer*" t))
-        (add-hook 'nxml-mode-hook 'progmodes-hooks)
-        :bind (:map nxml-mode-map
-                    ("C-c C-l" . agg/xml-format)))
+      ;; (use-package nxml-mode
+      ;;   :mode "\\.xml\\'"
+      ;;   :init
+      ;;   (defun agg/xml-format ()
+      ;;     "Format an XML buffer with xmllint."
+      ;;     (interactive)
+      ;;     (shell-command-on-region (point-min) (point-max)
+      ;;                              "xmllint -format -"
+      ;;                              (current-buffer) t
+      ;;                              "*Xmllint Error Buffer*" t))
+      ;;   (add-hook 'nxml-mode-hook 'progmodes-hooks)
+      ;;   :bind (:map nxml-mode-map
+      ;;               ("C-c C-l" . agg/xml-format)))
 
-      (use-package auto-complete-nxml
-        :ensure t
-        :defer t
-        :after (auto-complete))
+      ;; (use-package auto-complete-nxml
+      ;;   :ensure t
+      ;;   :defer t
+      ;;   :after (auto-complete))
     #+END_SRC
 *** YAML
     #+BEGIN_SRC emacs-lisp
