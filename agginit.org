@@ -1295,6 +1295,14 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
        :config
        (ido-vertical-mode 1))
    #+END_SRC
+** ledger
+   #+BEGIN_SRC emacs-lisp
+     (use-package ledger-mode
+       :defer t
+       :ensure t
+       :init
+       (add-to-list 'auto-mode-alist '("\\.dat$" . ledger-mode)))
+   #+END_SRC
 ** magit
    #+BEGIN_SRC emacs-lisp
      (use-package magit
