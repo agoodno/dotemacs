@@ -503,10 +503,10 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
        :ensure t
        :init
        (setq ac-ignore-case nil)
+       (add-to-list 'ac-dictionary-directories "~/.emacs.d/auto-complete-config/dict")
        :config
-       (add-to-list 'ac-dictionary-directories
-         "~/.emacs.d/auto-complete-config/dict")
-       (ac-config-default))
+       (ac-config-default)
+       (global-auto-complete-mode))
 
      (use-package deadgrep
        :ensure t
