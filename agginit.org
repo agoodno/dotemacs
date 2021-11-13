@@ -501,9 +501,13 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
        :init
        (setq ac-ignore-case nil)
        :config
-       (add-to-list 'ac-dictionary-directories
-         "~/.emacs.d/auto-complete-config/dict")
-       (ac-config-default))
+       (add-to-list 'ac-modes 'enh-ruby-mode)
+       (add-to-list 'ac-modes 'inf-ruby-mode)
+       (add-to-list 'ac-modes 'js2-mode)
+       (add-to-list 'ac-modes 'rjsx-mode)
+       (ac-config-default)
+       (add-to-list 'ac-dictionary-directories "~/.emacs.d/auto-complete-config/dict")
+       (global-auto-complete-mode t))
 
      (use-package deadgrep
        :ensure t
@@ -663,6 +667,8 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
     #+END_SRC
 *** Javascript
     #+BEGIN_SRC emacs-lisp
+      (setq js-indent-level 2)
+
       (use-package add-node-modules-path
         :ensure t
         :defer t)
@@ -674,11 +680,11 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
         :init
         (setq js2-strict-missing-semi-warning nil)
         (setq js2-missing-semi-one-line-override nil)
-        (add-to-list 'ac-modes 'js2-mode)
         (add-hook 'js2-mode-hook 'progmodes-hooks)
         (add-hook 'js2-mode-hook #'smartparens-mode)
         (add-hook 'js2-mode-hook (lambda () (setq js2-basic-offset 2)))
-        (add-hook 'js-mode-hook #'add-node-modules-path))
+        (add-hook 'js2-mode-hook #'add-node-modules-path)
+        (add-hook 'js2-mode-hook 'ac-js2-mode))
 
       (use-package tern
         :ensure t
@@ -712,7 +718,6 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
         :init
         (setq js2-strict-missing-semi-warning nil)
         (setq js2-missing-semi-one-line-override nil)
-        (add-to-list 'ac-modes 'rjsx-mode)
         (add-to-list 'auto-mode-alist '("\\.js\\'" . rjsx-mode))
         (add-to-list 'auto-mode-alist '("\\.jsx?\\'" . rjsx-mode))
         (add-to-list 'interpreter-mode-alist '("node" . rjsx-mode))
@@ -779,7 +784,6 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
       (use-package enh-ruby-mode
         :ensure t
         :init
-        ;; (add-to-list 'ac-modes 'enh-ruby-mode)
         (setq rubocop-autocorrect-on-save t)
         (setq rubocop-check-command "rubocop --format emacs --auto-correct")
         (add-to-list 'auto-mode-alist '("\\.rb$" . enh-ruby-mode))
@@ -794,8 +798,16 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
 
       (use-package inf-ruby
         :ensure t
+        :bind-keymap
+        ("TAB" . inf-ruby-mode-map)
         :init
         (add-hook 'enh-ruby-mode-hook 'inf-ruby-minor-mode))
+
+      (use-package ac-inf-ruby
+        :after (inf-ruby enh-ruby-mode auto-complete)
+        :ensure t
+        :init
+        (add-hook 'inf-ruby-mode-hook 'ac-inf-ruby-enable))
 
       (use-package yari
         :ensure t
@@ -884,9 +896,6 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
     #+END_SRC
 *** Vue.js
     #+BEGIN_SRC emacs-lisp
-      (setq js-indent-level 2)
-      (add-hook 'js-mode-hook 'progmodes-hooks)
-
       (use-package vue-mode
         :ensure t
         :defer t
