@@ -679,6 +679,9 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
       (use-package js2-mode
         :ensure t
         :defer t
+        :mode
+        "\\.js\\'"
+        "\\.ts\\'"
         :after (auto-complete smartparens)
         :init
         (setq js2-strict-missing-semi-warning nil)
@@ -718,11 +721,12 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
       (use-package rjsx-mode
         :ensure t
         :defer t
+        :mode
+        "\\.jsx\\'"
+        "\\.tsx\\'"
         :init
         (setq js2-strict-missing-semi-warning nil)
         (setq js2-missing-semi-one-line-override nil)
-        (add-to-list 'auto-mode-alist '("\\.js\\'" . rjsx-mode))
-        (add-to-list 'auto-mode-alist '("\\.jsx?\\'" . rjsx-mode))
         (add-to-list 'interpreter-mode-alist '("node" . rjsx-mode))
         (add-hook 'rjsx-mode 'progmodes-hooks)
         (add-hook 'rjsx-mode (lambda () (setq js2-basic-offset 2))))
