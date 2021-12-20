@@ -864,7 +864,7 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
         :ensure t
         :config
         (define-key projectile-rails-mode-map (kbd "C-c r") 'projectile-rails-command-map)
-        (projectile-rails-global-mode))
+        (add-hook 'enh-ruby-mode-hook 'projectile-rails-mode))
     #+END_SRC
 *** Scala
     #+BEGIN_SRC emacs-lisp
