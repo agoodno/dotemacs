@@ -1139,21 +1139,31 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
        :init
        (setq slack-buffer-emojify t)
        (setq slack-prefer-current-team t)
+       (setq auth-source-debug 'trivia)
        :config
+       ;; (slack-register-team
+       ;;  :name slack-elmlang-team
+       ;;  :client-id slack-elmlang-client-id
+       ;;  :client-secret slack-elmlang-client-secret
+       ;;  :token slack-elmlang-token
+       ;;  :full-and-display-names t)
+       ;; (slack-register-team
+       ;;  :name slack-cucumberbdd-team
+       ;;  :default t
+       ;;  :client-id slack-cucumberbdd-client-id
+       ;;  :client-secret slack-cucumberbdd-client-secret
+       ;;  :token slack-cucumberbdd-token
+       ;;  :full-and-display-names t
+       ;;  :subscribed-channels '(announcements events help intros podcasts-and-webinars recommended_media school))
        (slack-register-team
-        :name slack-elmlang-team
-        :client-id slack-elmlang-client-id
-        :client-secret slack-elmlang-client-secret
-        :token slack-elmlang-token
-        :full-and-display-names t)
-       (slack-register-team
-        :name slack-cucumberbdd-team
-        :default t
-        :client-id slack-cucumberbdd-client-id
-        :client-secret slack-cucumberbdd-client-secret
-        :token slack-cucumberbdd-token
-        :full-and-display-names t
-        :subscribed-channels '(announcements events help intros podcasts-and-webinars recommended_media school)))
+        :name "zendesk"
+        :token (auth-source-pick-first-password
+                :host "zendesk.slack.com"
+                :user "agoodnough@zendesk.com")
+        :cookie (auth-source-pick-first-password
+                 :host "zendesk.slack.com"
+                 :user "agoodnough@zendesk.com^cookie")
+        :subscribed-channels '((sunburst-build-deploy sunburst-eng-p tood-directs-p))))
    #+END_SRC
 ** Email
    #+BEGIN_SRC emacs-lisp
