@@ -496,18 +496,15 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
 * Development
 ** General
    #+BEGIN_SRC emacs-lisp
-     (use-package auto-complete
+     (use-package company
        :ensure t
+       :defer 5
+       :diminish
+       :bind
+       ((:map company-active-map
+              ("<tab>" . #'company-indent-or-complete-common)))
        :init
-       (setq ac-ignore-case nil)
-       :config
-       (add-to-list 'ac-modes 'enh-ruby-mode)
-       (add-to-list 'ac-modes 'inf-ruby-mode)
-       (add-to-list 'ac-modes 'js2-mode)
-       (add-to-list 'ac-modes 'rjsx-mode)
-       (ac-config-default)
-       (add-to-list 'ac-dictionary-directories "~/.emacs.d/auto-complete-config/dict")
-       (global-auto-complete-mode t))
+       (global-company-mode))
 
      (use-package deadgrep
        :ensure t
@@ -602,11 +599,6 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
         (add-hook 'nxml-mode-hook 'progmodes-hooks)
         :bind (:map nxml-mode-map
                     ("C-c C-l" . agg/xml-format)))
-
-      (use-package auto-complete-nxml
-        :ensure t
-        :defer t
-        :after (auto-complete))
     #+END_SRC
 *** YAML
     #+BEGIN_SRC emacs-lisp
@@ -682,13 +674,6 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
         (add-hook 'java-mode-hook 'progmodes-hooks)
         :config
         (help-at-pt-set-timer))
-
-      (use-package ac-emacs-eclim
-        :ensure t
-        :defer t
-        :after (auto-complete eclim)
-        :config
-        (ac-emacs-eclim-config))
     #+END_SRC
 *** Javascript
     #+BEGIN_SRC emacs-lisp
@@ -703,32 +688,16 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
         :defer t
         :mode
         "\\.js\\'"
-        :after (auto-complete smartparens)
+        :after (smartparens add-node-modules-path)
         :init
         (setq js2-strict-missing-semi-warning nil)
         (setq js2-missing-semi-one-line-override nil)
         (add-hook 'js2-mode-hook 'progmodes-hooks)
         (add-hook 'js2-mode-hook #'smartparens-mode)
+        (add-hook 'js2-mode-hook (lambda () (company-mode)))
         (add-hook 'js2-mode-hook (lambda () (setq js2-basic-offset 2)))
         (add-hook 'js2-mode-hook #'add-node-modules-path))
-
-      (use-package tern
-        :ensure t
-        :defer t
-        :config
-        (define-key tern-mode-keymap (kbd "M-.") nil)
-        (define-key tern-mode-keymap (kbd "M-,") nil)
-        (add-hook 'js2-mode-hook (lambda () (tern-mode t))))
-
-      (use-package tern-auto-complete
-        :ensure t
-        :defer t
-        :after (auto-complete tern)
-        :init
-        (setq tern-command "/usr/local/bin/tern")
-        :config
-        (tern-ac-setup))
-
+      
       (use-package js2-refactor
         :ensure t
         :defer t
@@ -824,14 +793,9 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
 
       (use-package inf-ruby
         :ensure t
+        :defer t
         :init
         (add-hook 'enh-ruby-mode-hook 'inf-ruby-minor-mode))
-
-      (use-package ac-inf-ruby
-        :after (inf-ruby enh-ruby-mode auto-complete)
-        :ensure t
-        :init
-        (add-hook 'inf-ruby-mode-hook 'ac-inf-ruby-enable))
 
       (use-package yari
         :ensure t
@@ -841,15 +805,16 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
 
       (use-package rubocop
         :ensure t
+        :defer t
         :init
         (add-hook 'enh-ruby-mode-hook 'rubocop-mode))
 
       (use-package robe
         :ensure t
-        :after (enh-ruby-mode auto-complete)
+        :defer t
+        :after (enh-ruby-mode)
         :init
-        (add-hook 'enh-ruby-mode-hook 'robe-mode)
-        (add-hook 'enh-robe-mode-hook 'ac-robe-setup))
+        (add-hook 'enh-ruby-mode-hook 'robe-mode))
 
       (use-package haml-mode
         :ensure t
@@ -867,18 +832,21 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
 
       (use-package ruby-tools
         :ensure t
+        :defer t
         :init
         (add-hook 'enh-ruby-mode-hook 'ruby-tools-mode)
         :diminish ruby-tools-mode)
 
       (use-package rbenv
         :ensure t
+        :defer t
         :init
         (add-hook 'enh-ruby-mode-hook 'rbenv-use-corresponding)
         (global-rbenv-mode))
 
       (use-package projectile-rails
         :ensure t
+        :defer t
         :config
         (define-key projectile-rails-mode-map (kbd "C-c r") 'projectile-rails-command-map)
         (add-hook 'enh-ruby-mode-hook 'projectile-rails-mode))
