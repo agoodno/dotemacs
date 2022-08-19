@@ -442,7 +442,7 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
                                             ;(global-set-key "\C-q" 'backward-kill-word)
 
     ;;Permanently, force TAB to insert just one TAB (in every mode):
-    (global-set-key (kbd "TAB") 'tab-to-tab-stop)
+    ;; (global-set-key (kbd "TAB") 'tab-to-tab-stop)
 
     ;;Opens browser to url
     (global-set-key (kbd "C-x C-u") 'browse-url)
