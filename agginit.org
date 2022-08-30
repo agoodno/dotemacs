@@ -1344,8 +1344,6 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
          (quote
            (("Name" 40 magit-repolist-column-ident nil)
            ("Path" 99 magit-repolist-column-path))))
-       (customize-set-variable 'magit-repository-directories
-         magit-projects)
        (global-set-key (kbd "C-c g") 'magit-status)
        (global-set-key (kbd "C-c h") 'magit-list-repositories))
    #+END_SRC
