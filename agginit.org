@@ -556,6 +556,8 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
                                            (local-set-key (kbd "C-c C-f") 'json-pretty-print-buffer))))
 
       (use-package json-reformat
+        :ensure t
+        :defer t
         :init
         (customize-set-variable 'json-reformat:indent-width 2))
     #+END_SRC
