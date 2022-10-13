@@ -21,3 +21,4 @@ projectile-bookmarks.eld
 secrets.el
 *.cache
 custom.el
+/vendor
