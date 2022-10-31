@@ -571,7 +571,7 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
         :init
         (add-hook 'json-mode-hook '(lambda ()
                                            (setq indent-tabs-mode nil)
-                                           (setq tab-width 2)
+                                           (setq tab-width 4)
                                            (setq indent-line-function (quote insert-tab))
                                            (local-set-key (kbd "C-c C-f") 'json-pretty-print-buffer))))
 
@@ -579,7 +579,7 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
         :ensure t
         :defer t
         :init
-        (customize-set-variable 'json-reformat:indent-width 2))
+        (customize-set-variable 'json-reformat:indent-width 4))
     #+END_SRC
 *** Terrform
     #+BEGIN_SRC emacs-lisp
@@ -692,7 +692,7 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
     #+END_SRC
 *** Javascript
     #+BEGIN_SRC emacs-lisp
-      (setq js-indent-level 2)
+      (setq js-indent-level 4)
 
       (use-package add-node-modules-path
         :ensure t
@@ -710,8 +710,7 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
         (add-hook 'js2-mode-hook 'progmodes-hooks)
         (add-hook 'js2-mode-hook #'smartparens-mode)
         (add-hook 'js2-mode-hook (lambda () (setq js2-basic-offset 2)))
-        (add-hook 'js2-mode-hook #'add-node-modules-path)
-        (add-hook 'js2-mode-hook 'ac-js2-mode))
+        (add-hook 'js2-mode-hook #'add-node-modules-path))
 
       (use-package tern
         :ensure t
@@ -773,7 +772,7 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
         :mode "\\.ts\\'"
         :hook (typescript-mode . lsp-deferred)
         :config
-        (setq typescript-indent-level 2))
+        (setq typescript-indent-level 4))
     #+END_SRC
 
 *** Markdown
