@@ -1357,6 +1357,24 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
        ;; (require 'ob-sh)
        ;; (org-babel-do-load-languages 'org-babel-load-languages '((shell . t)))
    #+END_SRC
+** org-roam
+   #+BEGIN_SRC emacs-lisp
+     (use-package org-roam
+       :after org
+       :init (setq org-roam-v2-ack t) ;; Acknowledge V2 upgrade
+       :custom
+       (org-roam-directory (file-truename (concat (file-name-as-directory (getenv "HOME")) "org-roam-nodes")))
+       :config
+       (org-roam-setup)
+       :bind (("C-c n f" . org-roam-node-find)
+              ("C-c n r" . org-roam-node-random)
+              (:map org-mode-map
+                    (("C-c n i" . org-roam-node-insert)
+                     ("C-c n o" . org-id-get-create)
+                     ("C-c n t" . org-roam-tag-add)
+                     ("C-c n a" . org-roam-alias-add)
+                     ("C-c n l" . org-roam-buffer-toggle)))))
+    #+END_SRC
 ** pdf-tools
    #+BEGIN_SRC emacs-lisp
      (use-package pdf-tools
