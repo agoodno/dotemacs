@@ -795,8 +795,6 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
 
       (use-package inf-ruby
         :ensure t
-        :bind-keymap
-        ("TAB" . inf-ruby-mode-map)
         :init
         (add-hook 'enh-ruby-mode-hook 'inf-ruby-minor-mode))
 
