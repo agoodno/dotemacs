@@ -11,15 +11,7 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
   #+BEGIN_SRC emacs-lisp
     (require 'package)
     (setq package-enable-at-startup nil)
-    (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
     (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
-    ;; (add-to-list 'package-archives
-    ;;              '("melpa2" . "http://www.mirrorservice.org/sites/melpa.org/packages/"))
-    ;; (add-to-list 'package-archives
-    ;;              '("melpa3" . "http://www.mirrorservice.org/sites/stable.melpa.org/packages/"))
-    ;; (add-to-list 'package-archives
-    ;;              '("melpa-stable" . "https://stable.melpa.org/packages/") t)
-    (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
     (package-initialize)
 
     (when (not package-archive-contents)
@@ -494,54 +486,59 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
   #+END_SRC
 * Development
 ** General
-   #+BEGIN_SRC emacs-lisp
-     (use-package company
-       :ensure t
-       :defer 5
-       :diminish
-       :bind
-       ((:map company-active-map
-              ("<tab>" . #'company-indent-or-complete-common)))
-       :init
-       (global-company-mode))
+#+BEGIN_SRC emacs-lisp
+      ;; (use-package company
+      ;;   :ensure t
+      ;;   :defer 5
+      ;;   :diminish
+      ;;   :bind
+      ;;   ((:map company-active-map
+      ;;          ("<tab>" . #'company-indent-or-complete-common)))
+      ;;   :init
+      ;;   (global-company-mode))
 
-     (use-package deadgrep
-       :ensure t
-       :init
-       (global-set-key (kbd "<f10>") #'deadgrep))
+      (use-package company
+        :ensure t
+        :init
+        (global-company-mode))
 
-     (use-package smartparens
-       :ensure t
-       :init
-       (require 'smartparens-config))
+      (use-package deadgrep
+        :ensure t
+        :init
+        (global-set-key (kbd "<f10>") #'deadgrep))
 
-     (use-package yasnippet
-       :ensure t
-       :defer t)
+      (use-package smartparens
+        :ensure t
+        :init
+        (require 'smartparens-config))
 
-     (use-package lsp-mode
-       :commands (lsp lsp-deferred)
-       :init
-       (setq lsp-keymap-prefix "C-c l"))
+      (use-package yasnippet
+        :ensure t
+        :defer t
+        :init
+        (yas-global-mode 1))
 
-     ;; optionally
-     (use-package lsp-ui :commands lsp-ui-mode :after lsp)
-     ;; if you are helm user
-     ;; (use-package helm-lsp :commands helm-lsp-workspace-symbol)
-     ;; if you are ivy user
-     (use-package lsp-ivy :commands lsp-ivy-workspace-symbol :after lsp)
-     ;; (use-package lsp-treemacs :commands lsp-treemacs-errors-list)
+      (use-package lsp-mode
+        :ensure t
+        :commands (lsp lsp-deferred))
 
-     ;; optionally if you want to use debugger
-     ;; (use-package dap-mode)
-     ;; (use-package dap-LANGUAGE) to load the dap adapter for your language
+      ;; optionally
+      (use-package lsp-ui :commands lsp-ui-mode :after lsp)
+      ;; if you are helm user
+      ;; (use-package helm-lsp :commands helm-lsp-workspace-symbol)
+      ;; if you are ivy user
+      (use-package lsp-ivy :commands lsp-ivy-workspace-symbol :after lsp)
+      ;; (use-package lsp-treemacs :commands lsp-treemacs-errors-list)
 
-     ;; optional if you want which-key integration
-     ;; (use-package which-key
-     ;;     :config
-     ;;     (which-key-mode))
+      ;; optionally if you want to use debugger
+      ;; (use-package dap-mode)
+      ;; (use-package dap-LANGUAGE) to load the dap adapter for your language
 
-   #+END_SRC
+      ;; optional if you want which-key integration
+      ;; (use-package which-key
+      ;;     :config
+      ;;     (which-key-mode))
+#+END_SRC
 ** Data Formats
 *** Cucumber
     #+BEGIN_SRC emacs-lisp
@@ -614,26 +611,32 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
     #+END_SRC
 ** Languages
 *** Clojure
-    #+BEGIN_SRC emacs-lisp
-      (use-package clojure-mode
-        :ensure t
-        :defer t
-        :after (paredit)
-        :init
-        (add-hook 'clojure-mode-hook #'smartparens-mode))
+#+BEGIN_SRC emacs-lisp
+  (use-package clojure-mode
+    :ensure t
+    :defer t
+    :after (paredit)
+    :init
+    (add-hook 'clojure-mode-hook #'smartparens-mode))
 
-      ;; avoid clojure-mode-extra-font-locking if using CIDER
+  ;; avoid clojure-mode-extra-font-locking if using CIDER
 
-      (use-package cider
-        :ensure t
-        :defer t
-        :init
-        (setq clojure-indent-style :always-indent)
-        (setq cider-repl-use-pretty-printing t)
-        (setq cider-repl-wrap-history t)
-        (setq cider-repl-history-size 1000)
-        (setq cider-repl-history-file "~/.cider-repl-history.txt"))
-    #+END_SRC
+  (use-package cider
+    :ensure t
+    :defer t
+    :init
+    (setq clojure-indent-style :always-indent)
+    (setq cider-repl-use-pretty-printing t)
+    (setq cider-repl-wrap-history t)
+    (setq cider-repl-history-size 1000)
+    (setq cider-repl-history-file "~/.cider-repl-history.txt"))
+
+  (use-package flycheck-clojure
+    :ensure t
+    :defer t
+    :after (flycheck)
+    :config (flycheck-clojure-setup))
+#+END_SRC
 *** CSS
     #+BEGIN_SRC emacs-lisp
      (customize-set-variable 'css-indent-offset 2)
@@ -734,14 +737,22 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
     #+END_SRC
 
 *** Typescript
-    #+BEGIN_SRC emacs-lisp
-      (use-package typescript-mode
-        :ensure t
-        :mode "\\.ts\\'"
-        :hook (typescript-mode . lsp-deferred)
-        :config
-        (setq typescript-indent-level 4))
-    #+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (use-package typescript-mode
+    :ensure t
+    :mode "\\.ts\\'"
+    :hook (typescript-mode . lsp-deferred)
+    :config
+    (setq typescript-indent-level 4))
+
+      ;; (use-package flycheck-clojure
+      ;;   :ensure t
+      ;;   :defer t
+      ;;   :after (flycheck)
+      ;;   :config (flycheck-clojure-setup))
+
+#+END_SRC
 
 *** Markdown
     #+BEGIN_SRC emacs-lisp
@@ -1241,30 +1252,24 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
     :ensure t)
    #+END_SRC
 ** flycheck
-   #+BEGIN_SRC emacs-lisp
-     (use-package flycheck
-       :ensure t
-       :init
-       (setq flycheck-javascript-eslint-executable "~/work/wastewitness/node_modules/.bin/eslint")
-       (setq flycheck-javascript-standard-executable "~/work/wastewitness/node_modules/.bin/standard")
-       (setq-default flycheck-disabled-checkers
-                     '(emacs-lisp-checkdoc))
-       (setq-default flycheck-disabled-checkers
-                     (append flycheck-disabled-checkers
-                             '(javascript-jshint)))
-       (setq-default flycheck-disabled-checkers
-                     (append flycheck-disabled-checkers
-                             '(json-jsonlist)))
-       (global-flycheck-mode))
-   #+END_SRC
-** flycheck-clojure
-   #+BEGIN_SRC emacs-lisp
-  (use-package flycheck-clojure
+
+#+BEGIN_SRC emacs-lisp
+  (use-package flycheck
     :ensure t
-    :defer t
-    :after (flycheck)
-    :config (flycheck-clojure-setup))
-   #+END_SRC
+    :init
+    ;; (setq flycheck-javascript-eslint-executable "~/work/wastewitness/node_modules/.bin/eslint")
+    ;; (setq flycheck-javascript-standard-executable "~/work/wastewitness/node_modules/.bin/standard")
+    (setq-default flycheck-disabled-checkers
+                  '(emacs-lisp-checkdoc))
+    (setq-default flycheck-disabled-checkers
+                  (append flycheck-disabled-checkers
+                          '(javascript-jshint)))
+    (setq-default flycheck-disabled-checkers
+                  (append flycheck-disabled-checkers
+                          '(json-jsonlist)))
+    (global-flycheck-mode))
+#+END_SRC
+
 ** ido
    #+BEGIN_SRC emacs-lisp
      (use-package ido
