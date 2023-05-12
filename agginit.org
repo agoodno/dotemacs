@@ -641,6 +641,12 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
     #+BEGIN_SRC emacs-lisp
      (customize-set-variable 'css-indent-offset 2)
     #+END_SRC
+*** Groovy
+#+BEGIN_SRC emacs-lisp
+  (use-package groovy-mode
+    :ensure t
+    :defer t)
+#+END_SRC
 *** HTML
     #+BEGIN_SRC emacs-lisp
       (add-hook 'html-mode-hook 'turn-off-auto-fill)
@@ -699,7 +705,7 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
         (add-hook 'js2-mode-hook (lambda () (company-mode)))
         (add-hook 'js2-mode-hook (lambda () (setq js2-basic-offset 2)))
         (add-hook 'js2-mode-hook #'add-node-modules-path))
-      
+
       (use-package js2-refactor
         :ensure t
         :defer t
