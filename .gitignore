@@ -22,3 +22,4 @@ secrets.el
 *.cache
 custom.el
 /vendor
+.lsp-session-v1
