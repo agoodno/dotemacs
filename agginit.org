@@ -647,6 +647,12 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
     :ensure t
     :defer t)
 #+END_SRC
+*** Elm
+#+begin_src emacs-lisp
+  (use-package elm-mode
+    :ensure t
+    :defer t)
+#+end_src
 *** HTML
     #+BEGIN_SRC emacs-lisp
       (add-hook 'html-mode-hook 'turn-off-auto-fill)
