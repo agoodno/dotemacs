@@ -129,6 +129,10 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
        :ensure t
        :defer t)
 
+     (use-package catppuccin-theme
+       :ensure t
+       :defer t)
+
      (use-package spacemacs-theme
        :ensure t
        :defer t
