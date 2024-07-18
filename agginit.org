@@ -488,6 +488,71 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
     ;;   (local-set-key (kbd "<f5>") 'recompile))
     ;; (add-hook 'c-mode-common-hook 'my/bindkey-recompile)
   #+END_SRC
+* Features
+** Completions
+#+BEGIN_SRC emacs-lisp
+  (use-package ido
+    :ensure t
+    :init
+    ;; File finding
+    (global-set-key (kbd "C-x M-f") 'ido-find-file-other-window)
+    (global-set-key (kbd "C-x f") 'recentf-ido-find-file)
+    :config
+    (ido-mode 1)
+    (ido-everywhere 1)
+    (icomplete-mode 1))
+
+  (use-package ido-completing-read+
+    :ensure t
+    :after (ido)
+    :init
+    (ido-ubiquitous-mode 1))
+
+  (use-package ido-vertical-mode
+    :ensure t
+    :after (ido)
+    :init
+    (setq ido-vertical-define-keys 'C-n-and-C-p-only)
+    :config
+    (ido-vertical-mode 1))
+
+  ;; (use-package helm
+  ;;   :ensure t
+  ;;   :bind
+  ;;   ("M-x" . helm-M-x)
+  ;;   ("C-x C-f" . helm-find-files)
+  ;;   ("C-x b" . helm-buffers-list)
+  ;;   ("<C-backspace>" . helm-find-files-up-one-level)
+  ;;   :config
+  ;;   (helm-mode 1))
+
+  (define-key minibuffer-local-completion-map (kbd "SPC") 'self-insert-command)
+#+END_SRC
+
+** Notes
+#+BEGIN_SRC emacs-lisp
+  (use-package org-roam
+    :ensure t
+    :after org
+    :init
+    (setq org-roam-v2-ack t) ;; acknowledge upgrade and remove warning at startup
+    ;; (setq org-roam-database-connector 'sqlite3)
+    :custom
+    ;; (org-roam-db-location "/Users/andrew/Library/Mobile Documents/com~apple~CloudDocs/Documents/org-roam.db")
+    (org-roam-directory "/Users/andrew/org-roam-nodes")
+    :config
+    (org-roam-setup)
+    :bind (("C-c n l" . org-roam-buffer-toggle)
+           ("C-c n f" . org-roam-node-find)
+           ("C-c n i" . org-roam-node-insert)
+           ("C-c n r" . org-roam-node-random)))
+  ;; (:map org-mode-map
+  ;;       (("C-c n i" . org-roam-node-insert)
+  ;;        ("C-c n o" . org-id-get-create)
+  ;;        ("C-c n t" . org-roam-tag-add)
+  ;;        ("C-c n a" . org-roam-alias-add)
+  ;;        ("C-c n l" . org-roam-buffer-toggle)))))
+#+END_SRC
 * Development
 ** General
 #+BEGIN_SRC emacs-lisp
@@ -1286,33 +1351,6 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
     (global-flycheck-mode))
 #+END_SRC
 
-** ido
-   #+BEGIN_SRC emacs-lisp
-     (use-package ido
-       :ensure t
-       :init
-       ;; File finding
-       (global-set-key (kbd "C-x M-f") 'ido-find-file-other-window)
-       (global-set-key (kbd "C-x f") 'recentf-ido-find-file)
-       :config
-       (ido-mode 1)
-       (ido-everywhere 1)
-       (icomplete-mode 1))
-
-     (use-package ido-completing-read+
-       :ensure t
-       :after (ido)
-       :init
-       (ido-ubiquitous-mode 1))
-
-     (use-package ido-vertical-mode
-       :ensure t
-       :after (ido)
-       :init
-       (setq ido-vertical-define-keys 'C-n-and-C-p-only)
-       :config
-       (ido-vertical-mode 1))
-   #+END_SRC
 ** ledger
    #+BEGIN_SRC emacs-lisp
      (use-package ledger-mode
@@ -1374,24 +1412,6 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
        ;; (require 'ob-sh)
        ;; (org-babel-do-load-languages 'org-babel-load-languages '((shell . t)))
    #+END_SRC
-** org-roam
-   #+BEGIN_SRC emacs-lisp
-     (use-package org-roam
-       :after org
-       :init (setq org-roam-v2-ack t) ;; Acknowledge V2 upgrade
-       :custom
-       (org-roam-directory (file-truename (concat (file-name-as-directory (getenv "HOME")) "org-roam-nodes")))
-       :config
-       (org-roam-setup)
-       :bind (("C-c n f" . org-roam-node-find)
-              ("C-c n r" . org-roam-node-random)
-              (:map org-mode-map
-                    (("C-c n i" . org-roam-node-insert)
-                     ("C-c n o" . org-id-get-create)
-                     ("C-c n t" . org-roam-tag-add)
-                     ("C-c n a" . org-roam-alias-add)
-                     ("C-c n l" . org-roam-buffer-toggle)))))
-    #+END_SRC
 ** pdf-tools
    #+BEGIN_SRC emacs-lisp
      (use-package pdf-tools
