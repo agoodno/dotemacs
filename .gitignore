@@ -23,3 +23,5 @@ secrets.el
 custom.el
 /vendor
 .lsp-session-v1
+/org-roam.db
+org-persist/
