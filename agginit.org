@@ -516,6 +516,7 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
     :config
     (ido-vertical-mode 1))
 
+  ;; see https://www.reddit.com/r/emacs/comments/bxt0cz/helm_and_the_tab_key/
   ;; (use-package helm
   ;;   :ensure t
   ;;   :bind
