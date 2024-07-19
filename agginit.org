@@ -536,10 +536,10 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
     :after org
     :init
     (setq org-roam-v2-ack t) ;; acknowledge upgrade and remove warning at startup
-    ;; (setq org-roam-database-connector 'sqlite3)
+    (setq org-roam-completion-everywhere t)
     :custom
     ;; (org-roam-db-location "/Users/andrew/Library/Mobile Documents/com~apple~CloudDocs/Documents/org-roam.db")
-    (org-roam-directory "/Users/andrew/org-roam-nodes")
+    (org-roam-directory "/Users/andrew/notes")
     :config
     (org-roam-setup)
     :bind (("C-c n l" . org-roam-buffer-toggle)
