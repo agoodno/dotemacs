@@ -42,6 +42,10 @@ or machine that emacs is running on. To bootstrap, copy the
 ~secrets.el.sample~ to ~secrets.el~ and set the values as appropriate.
 
 #+BEGIN_SRC emacs-lisp
+  (defcustom notes-location "/path/to/notes/repo"
+    "Set to the location of the checked out notes git repo."
+    :type 'string)
+
   ;; load secrets after customize initialization so custom variable is not overwritten
   (setq secrets-file (concat user-emacs-directory "secrets.el"))
   (load secrets-file :noerror)
@@ -552,7 +556,7 @@ or machine that emacs is running on. To bootstrap, copy the
     (setq org-roam-completion-everywhere t)
     :custom
     ;; (org-roam-db-location "/Users/andrew/Library/Mobile Documents/com~apple~CloudDocs/Documents/org-roam.db")
-    (org-roam-directory "/Users/andrew/notes")
+    (org-roam-directory notes-location)
     :config
     (org-roam-setup)
     :bind (("C-c n l" . org-roam-buffer-toggle)
