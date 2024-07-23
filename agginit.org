@@ -36,20 +36,43 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
   #+END_SRC
 * General config
 ** User variables
-Load all the user-specific user variables from the ~secrets.el~
-file. the variables don't have to be secret, just unique to the user
-or machine that emacs is running on. To bootstrap, copy the
-~secrets.el.sample~ to ~secrets.el~ and set the values as appropriate.
+Define custom user variables that get set once per machine. Bootstrap
+by customizing the ~agg~ group and use Apply and Save to save the
+values to the ~custom.el~ for future sessions.
+
+#+BEGIN_SRC bash
+  customize-group <RET>
+  agg
+#+END_SRC
 
 #+BEGIN_SRC emacs-lisp
-  (defcustom notes-location "/path/to/notes/repo"
-    "Set to the location of the checked out notes git repo."
+  (defcustom user-full-name ""
+    "Name used in tool config."
     :type 'string
     :group 'agg)
 
-  ;; load secrets after customize initialization so custom variable is not overwritten
-  (setq secrets-file (concat user-emacs-directory "secrets.el"))
-  (load secrets-file :noerror)
+  (defcustom user-email-address ""
+    "Email used in tool config."
+    :type 'string
+    :group 'agg)
+
+  (defcustom notes-location "/path/to/notes/repo"
+    "Location of the checked out notes git repo."
+    :type 'string
+    :group 'agg)
+
+  ;; Consider setting these variables in future
+  ;; system-name ""
+  ;; user-login-name ""
+
+  ;; slack-cucumberbdd-team ""
+  ;; slack-cucumberbdd-client-id ""
+  ;; slack-cucumberbdd-client-secret ""
+  ;; slack-cucumberbdd-token ""
+  ;; slack-elmlang-team ""
+  ;; slack-elmlang-client-id ""
+  ;; slack-elmlang-client-secret ""
+  ;; slack-elmlang-token ""
 #+END_SRC
 ** Editor
    #+BEGIN_SRC emacs-lisp
@@ -1021,7 +1044,7 @@ or machine that emacs is running on. To bootstrap, copy the
       ;; erc-nickserv-passwords `((freenode ("agoodno" . ,freenode-password)))
       erc-email-userid "andrew.goodnough@wicourts.gov"
       ;; erc-email-userid "agoodno@gmail.com"
-      erc-user-full-name "Andrew Goodnough"
+      erc-user-full-name user-full-name
       ;; erc-autojoin-channels-alist '(("irc.wicourts.gov" "#ccap3" "#cc"))
       erc-autojoin-channels-alist
       '(("freenode.net" "#emacs" "#elasticsearch")
