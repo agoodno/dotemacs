@@ -13,9 +13,9 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
     (setq package-enable-at-startup nil)
 
     ;; Used to fix issue with package install of org mode
-    ;; (setq package-check-signature nil)
+    (setq package-check-signature nil)
     ;; (setq package-check-signature "allow-unsigned")
-    ;; (add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/"))
+    (add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/"))
     (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
     (package-initialize)
 
