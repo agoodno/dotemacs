@@ -583,7 +583,6 @@ values to the ~custom.el~ for future sessions.
     ;; (org-roam-db-location "/Users/andrew/Library/Mobile Documents/com~apple~CloudDocs/Documents/org-roam.db")
     (org-roam-directory notes-location)
     :config
-    (org-roam-setup)
     (org-roam-db-autosync-mode)
     :bind (("C-c n l" . org-roam-buffer-toggle)
            ("C-c n f" . org-roam-node-find)
