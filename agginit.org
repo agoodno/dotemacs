@@ -465,9 +465,6 @@ values to the ~custom.el~ for future sessions.
         (let ((case-fold-search isearch-case-fold-search))
           (occur (if isearch-regexp isearch-string (regexp-quote isearch-string))))))
 
-    ;; Org
-    (define-key global-map "\C-ca" 'org-agenda)
-
     (define-key global-map (kbd "C-M-+") 'text-scale-increase)
     (define-key global-map (kbd "C-M-_") 'text-scale-decrease)
 
@@ -570,7 +567,38 @@ values to the ~custom.el~ for future sessions.
   (define-key minibuffer-local-completion-map (kbd "SPC") 'self-insert-command)
 #+END_SRC
 
+** Organization
+Configuration for Org Mode.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package org
+    :init
+    (setq org-log-done 'time)
+    (setq org-log-done 'note)
+    (setq org-todo-keywords
+          '((sequence "IDEA" "TODO" "PLANNING" "DESIGNING" "PROGRAMMING" "WAITING" "TESTING" "CHECKLIST" "MR" "APPROVED" "|" "MERGED" "DELEGATED" "DONE" "CANCELED")))
+    (setq org-log-done nil)
+    (add-hook 'org-mode-hook (lambda () (org-bullets-mode t)))
+    :bind (("C-c h" . org-store-link) ;; h for href
+           ("C-c c" . org-capture)
+           ("C-c a" . org-agenda)
+           ("C-c t" . ins-tommorrows-date)
+           ("C-c d" . insdate-insert-current-date)
+           :map org-mode-map
+           ("C-c !" . org-time-stamp-inactive))
+    :mode ("\\.org$" . org-mode)
+    :config
+    (require 'org-id))
+
+  (use-package org-bullets
+    :ensure t)
+
+  ;; (require 'ob-sh)
+  ;; (org-babel-do-load-languages 'org-babel-load-languages '((shell . t)))
+#+END_SRC
 ** Notes
+Configuration for Org Roam.
+
 #+BEGIN_SRC emacs-lisp
   (use-package org-roam
     :ensure t
@@ -1431,28 +1459,6 @@ values to the ~custom.el~ for future sessions.
            ("Path" 99 magit-repolist-column-path))))
        (global-set-key (kbd "C-c g") 'magit-status)
        (global-set-key (kbd "C-c h") 'magit-list-repositories))
-   #+END_SRC
-** org-mode
-   #+BEGIN_SRC emacs-lisp
-     (use-package org
-       :init
-       (setq org-log-done 'time)
-       (setq org-log-done 'note)
-       (setq org-todo-keywords
-             '((sequence "IDEA" "TODO" "PLANNING" "DESIGNING" "PROGRAMMING" "WAITING" "TESTING" "CHECKLIST" "MR" "APPROVED" "|" "MERGED" "DELEGATED" "DONE" "CANCELED")))
-       (setq org-log-done nil)
-       :bind (("C-c h" . org-store-link) ;; h for href
-              ("C-c c" . org-capture)
-              ("C-c a" . org-agenda)
-              ("C-c t" . ins-tommorrows-date)
-              ("C-c d" . insdate-insert-current-date)
-              :map org-mode-map
-              ("C-c !" . org-time-stamp-inactive))
-       :mode ("\\.org$" . org-mode)
-       :config
-       (require 'org-id))
-       ;; (require 'ob-sh)
-       ;; (org-babel-do-load-languages 'org-babel-load-languages '((shell . t)))
    #+END_SRC
 ** pdf-tools
    #+BEGIN_SRC emacs-lisp
