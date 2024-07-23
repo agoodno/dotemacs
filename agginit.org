@@ -30,15 +30,22 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
 
     (setq load-prefer-newer t)
 
-    ;; load secrets
-    (setq secrets-file (concat user-emacs-directory "secrets.el"))
-    (load secrets-file :noerror)
-
     ;; set custom file location
     (setq custom-file (concat user-emacs-directory "custom.el"))
     (load custom-file :noerror)
   #+END_SRC
 * General config
+** User variables
+Load all the user-specific user variables from the ~secrets.el~
+file. the variables don't have to be secret, just unique to the user
+or machine that emacs is running on. To bootstrap, copy the
+~secrets.el.sample~ to ~secrets.el~ and set the values as appropriate.
+
+#+BEGIN_SRC emacs-lisp
+  ;; load secrets after customize initialization so custom variable is not overwritten
+  (setq secrets-file (concat user-emacs-directory "secrets.el"))
+  (load secrets-file :noerror)
+#+END_SRC
 ** Editor
    #+BEGIN_SRC emacs-lisp
      ;; Note: *inhibit-startup-message* and *inhibit-splash-screen* are aliases for this variable
