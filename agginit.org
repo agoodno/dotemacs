@@ -44,7 +44,8 @@ or machine that emacs is running on. To bootstrap, copy the
 #+BEGIN_SRC emacs-lisp
   (defcustom notes-location "/path/to/notes/repo"
     "Set to the location of the checked out notes git repo."
-    :type 'string)
+    :type 'string
+    :group 'agg)
 
   ;; load secrets after customize initialization so custom variable is not overwritten
   (setq secrets-file (concat user-emacs-directory "secrets.el"))
