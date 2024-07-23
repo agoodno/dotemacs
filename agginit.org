@@ -578,6 +578,7 @@ Configuration for Org Mode.
     (setq org-todo-keywords
           '((sequence "IDEA" "TODO" "PLANNING" "DESIGNING" "PROGRAMMING" "WAITING" "TESTING" "CHECKLIST" "MR" "APPROVED" "|" "MERGED" "DELEGATED" "DONE" "CANCELED")))
     (setq org-log-done nil)
+    (setq org-hide-leading-stars t)
     (add-hook 'org-mode-hook (lambda () (org-bullets-mode t)))
     :bind (("C-c h" . org-store-link) ;; h for href
            ("C-c c" . org-capture)
