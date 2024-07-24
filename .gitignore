@@ -25,3 +25,4 @@ custom.el
 .lsp-session-v1
 /org-roam.db
 org-persist/
+.org-id-locations
