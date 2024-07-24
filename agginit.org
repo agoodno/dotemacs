@@ -576,7 +576,7 @@ Configuration for Org Mode.
     (setq org-log-done 'time)
     (setq org-log-done 'note)
     (setq org-todo-keywords
-          '((sequence "IDEA" "TODO" "PLANNING" "DESIGNING" "PROGRAMMING" "WAITING" "TESTING" "CHECKLIST" "MR" "APPROVED" "|" "MERGED" "DELEGATED" "DONE" "CANCELED")))
+          '((sequence "TODO" "INPROGRESS" "|" "DONE" "CANCELED")))
     (setq org-log-done nil)
     (setq org-hide-leading-stars t)
     (add-hook 'org-mode-hook (lambda () (org-bullets-mode t)))
