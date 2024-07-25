@@ -587,7 +587,7 @@ Configuration for Org Roam.
     (org-roam-db-autosync-mode)
     (add-hook 'org-roam-find-file-hook  #'my-set-fill-column)
     (add-hook 'org-roam-find-file-hook #'turn-on-auto-fill)
-    (defun my-set-fill-column () (setq-local fill-column 200))
+    (defun my-set-fill-column () (setq-local fill-column 180))
     :bind (("C-c n l" . org-roam-buffer-toggle)
            ("C-c n f" . org-roam-node-find)
            ("C-c n i" . org-roam-node-insert)
