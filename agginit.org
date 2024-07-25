@@ -528,43 +528,15 @@ values to the ~custom.el~ for future sessions.
 * Features
 ** Completions
 #+BEGIN_SRC emacs-lisp
-  (use-package ido
+  (use-package vertico
     :ensure t
     :init
-    ;; File finding
-    (global-set-key (kbd "C-x M-f") 'ido-find-file-other-window)
-    (global-set-key (kbd "C-x f") 'recentf-ido-find-file)
-    :config
-    (ido-mode 1)
-    (ido-everywhere 1)
-    (icomplete-mode 1))
+    (vertico-mode t))
 
-  (use-package ido-completing-read+
+  (use-package marginalia
     :ensure t
-    :after (ido)
     :init
-    (ido-ubiquitous-mode 1))
-
-  (use-package ido-vertical-mode
-    :ensure t
-    :after (ido)
-    :init
-    (setq ido-vertical-define-keys 'C-n-and-C-p-only)
-    :config
-    (ido-vertical-mode 1))
-
-  ;; see https://www.reddit.com/r/emacs/comments/bxt0cz/helm_and_the_tab_key/
-  ;; (use-package helm
-  ;;   :ensure t
-  ;;   :bind
-  ;;   ("M-x" . helm-M-x)
-  ;;   ("C-x C-f" . helm-find-files)
-  ;;   ("C-x b" . helm-buffers-list)
-  ;;   ("<C-backspace>" . helm-find-files-up-one-level)
-  ;;   :config
-  ;;   (helm-mode 1))
-
-  (define-key minibuffer-local-completion-map (kbd "SPC") 'self-insert-command)
+    (marginalia-mode t))
 #+END_SRC
 
 ** Organization
@@ -1438,7 +1410,6 @@ Configuration for Org Roam.
      (use-package magit
        :ensure t
        :init
-       (setq magit-completing-read-function 'magit-ido-completing-read)
        (customize-set-variable 'magit-display-buffer-function
          (quote magit-display-buffer-fullframe-status-v1))
        (customize-set-variable 'magit-status-sections-hook
@@ -1520,15 +1491,6 @@ Configuration for Org Roam.
     ;; Makes the prompt read-only running in emacs 'M-x shell'
     (setq comint-prompt-read-only t))
   (add-hook 'comint-mode-hook 'agg/my-comint-init)
-   #+END_SRC
-** smex
-   #+BEGIN_SRC emacs-lisp
-  (use-package smex
-    :ensure t
-    :init (smex-initialize)
-    (global-set-key (kbd "M-x") 'smex)
-    (global-set-key (kbd "M-X") 'smex-major-mode-commands)
-    (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command))
    #+END_SRC
 ** tidy
    #+BEGIN_SRC emacs-lisp
