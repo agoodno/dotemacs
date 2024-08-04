@@ -26,3 +26,4 @@ custom.el
 /org-roam.db
 org-persist/
 .org-id-locations
+tree-sitter/

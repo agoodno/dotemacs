@@ -526,6 +526,54 @@ values to the ~custom.el~ for future sessions.
     ;; (add-hook 'c-mode-common-hook 'my/bindkey-recompile)
   #+END_SRC
 * Features
+** Langs
+#+begin_src elisp
+  (setq treesit-language-source-alist
+        '((bash "https://github.com/tree-sitter/tree-sitter-bash")
+          (cmake "https://github.com/uyha/tree-sitter-cmake")
+          (css "https://github.com/tree-sitter/tree-sitter-css")
+          (elisp "https://github.com/Wilfred/tree-sitter-elisp")
+          (elm "https://github.com/elm-tooling/tree-sitter-elm" "main" "src")
+          (go "https://github.com/tree-sitter/tree-sitter-go")
+          (html "https://github.com/tree-sitter/tree-sitter-html")
+          (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
+          (json "https://github.com/tree-sitter/tree-sitter-json")
+          (make "https://github.com/alemuller/tree-sitter-make")
+          (markdown "https://github.com/ikatyang/tree-sitter-markdown")
+          (python "https://github.com/tree-sitter/tree-sitter-python")
+          (ruby "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
+          (toml "https://github.com/tree-sitter/tree-sitter-toml")
+          (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
+          (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
+          (yaml "https://github.com/ikatyang/tree-sitter-yaml")))
+
+  ;; Consider integrating tree-sitter-langs because it is a curated list
+  ;; of langs and (presumably) working versions
+  ;; (use-package tree-sitter-langs
+  ;;   :ensure t)
+
+  (setq major-mode-remap-alist
+        '((bash-mode . bash-ts-mode)
+          (cmake-mode . cmake-ts-mode)
+          (css-mode . css-ts-mode)
+          (elisp-mode . elisp-ts-mode)
+          ;; (elm-mode . elm-ts-mode) ;; not working because elm-ts-mode doesn't exist after this registration
+          (enh-ruby-mode . ruby-ts-mode)
+          (go-mode . go-ts-mode)
+          (html-mode . html-ts-mode)
+          (js2-mode . js-ts-mode)
+          (json-mode . json-ts-mode)
+          (make-mode . make-ts-mode)
+          (markdown-mode . markdown-ts-mode)
+          (python-mode . python-ts-mode)
+          (ruby-mode . ruby-ts-mode)
+          (tsx-mode . tsx-ts-mode)
+          (typescript-mode . typescript-ts-mode)
+          (yaml-mode . yaml-ts-mode)))
+
+  ;; Compiles all so you don't have to M-x treesit-install-language-grammar
+  ;; (mapc #'treesit-install-language-grammar (mapcar #'car treesit-language-source-alist))
+#+end_src
 ** Completions
 #+BEGIN_SRC emacs-lisp
   (use-package vertico
