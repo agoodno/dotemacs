@@ -682,26 +682,32 @@ Configuration for Org Roam.
     :after org
     :init
     (setq org-roam-v2-ack t) ;; acknowledge upgrade and remove warning at startup
-    (setq org-roam-completion-everywhere t)
-    (setq org-roam-db-update-on-save t)
     :custom
-    ;; (org-roam-db-location "/Users/andrew/Library/Mobile Documents/com~apple~CloudDocs/Documents/org-roam.db")
     (org-roam-directory notes-location)
-    :config
-    (org-roam-db-autosync-mode)
-    (add-hook 'org-roam-find-file-hook  #'my-set-fill-column)
-    (add-hook 'org-roam-find-file-hook #'turn-on-auto-fill)
-    (defun my-set-fill-column () (setq-local fill-column 180))
+    (org-roam-completion-everywhere t)
+    (org-roam-db-update-on-save t)
     :bind (("C-c n l" . org-roam-buffer-toggle)
            ("C-c n f" . org-roam-node-find)
            ("C-c n i" . org-roam-node-insert)
-           ("C-c n r" . org-roam-node-random)))
-  ;; (:map org-mode-map
-  ;;       (("C-c n i" . org-roam-node-insert)
-  ;;        ("C-c n o" . org-id-get-create)
-  ;;        ("C-c n t" . org-roam-tag-add)
-  ;;        ("C-c n a" . org-roam-alias-add)
-  ;;        ("C-c n l" . org-roam-buffer-toggle)))))
+           ("C-c n r" . org-roam-node-random)
+           :map org-mode-map
+           ("C-M-i" . completion-at-point)
+           ("C-c n i" . org-roam-node-insert)
+           ("C-c n o" . org-id-get-create)
+           ("C-c n t" . org-roam-tag-add)
+           ("C-c n a" . org-roam-alias-add)
+           ("C-c n l" . org-roam-buffer-toggle)
+           :map org-roam-dailies-map
+           ("Y" . org-roam-dailies-capture-yesterday)
+           ("T" . org-roam-dailies-capture-tomorrow))
+    :bind-keymap
+    ("C-c n d" . org-roam-dailies-map)
+    :config
+    (require 'org-roam-dailies) ;; Ensure the keymap is available
+    (defun my-set-fill-column () (setq-local fill-column 180))
+    (add-hook 'org-roam-find-file-hook #'my-set-fill-column)
+    (add-hook 'org-roam-find-file-hook #'turn-on-auto-fill)
+    (org-roam-db-autosync-mode))
 #+END_SRC
 * Development
 ** General
