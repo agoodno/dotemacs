@@ -171,7 +171,7 @@ values to the ~custom.el~ for future sessions.
 
   (use-package catppuccin-theme
     :ensure t
-    :defer f
+    :defer t
     :init
     ;; from lightest to darkest
     (setq catppuccin-flavor 'latte)
@@ -179,7 +179,7 @@ values to the ~custom.el~ for future sessions.
     ;; (setq catppuccin-flavor 'macchiato)
     ;; (setq catppuccin-flavor 'mocha)
     ;; (catppuccin-reload)
-    (load-theme 'catppuccin :no-confirm))
+    )
 
   (use-package spacemacs-theme
     :ensure t
@@ -334,58 +334,6 @@ values to the ~custom.el~ for future sessions.
       (interactive "p")
       (kmacro-exec-ring-item
        (quote ([134217847 16 5 return 112 117 116 115 32 34 25 61 35 123 25 125 34] 0 "%d")) arg))
-
-    (defun agg-set-background-color-dark ()
-      (progn
-        (load-theme 'spacemacs-dark t)
-
-        (set-face-attribute 'region
-                            nil
-                            :background "white")
-
-        (set-face-attribute  'mode-line-inactive
-                             nil
-                             :foreground "gray80"
-                             :background "gray25"
-                             :box '(:line-width 1 :style released-button))
-        (set-face-attribute  'mode-line
-                             nil
-                             :foreground "gray25"
-                             :background "gray80"
-                             :box '(:line-width 1 :style released-button))
-
-        (set-face-background 'hl-line "#3e4446")
-        (set-face-foreground 'hl-line nil)))
-
-    (defun agg-set-background-color-light ()
-      (progn
-        (load-theme 'spacemacs-light t)
-
-        (set-face-attribute 'region
-                            nil
-                            :background "#ffcc80")
-
-        (set-face-attribute  'mode-line
-                             nil
-                             :box '(:line-width 1 :style released-button))
-        (set-face-attribute  'mode-line-inactive
-                             nil
-                             :box '(:line-width 1 :style released-button))
-
-        (set-face-background 'hl-line "#f4ee49")
-        (set-face-foreground 'hl-line nil)))
-
-    (defun agg-toggle-background-color ()
-      "Toggle background and foreground colors between light and dark."
-      (interactive)
-      ;; use a property “state”. Value is t or nil
-      (if (get 'agg-toggle-background-color 'state)
-          (progn
-            (agg-set-background-color-light)
-            (put 'agg-toggle-background-color 'state nil))
-        (progn
-          (agg-set-background-color-dark)
-          (put 'agg-toggle-background-color 'state t))))
 
     (defun turn-off-mouse (&optional frame)
       (interactive)
@@ -1646,11 +1594,12 @@ Configuration for Org Roam.
    #+END_SRC
 * Startup
   #+BEGIN_SRC emacs-lisp
-    ;; (agg-set-background-color-light)
-    ;; uncomment this for dark mode
-    ;; (agg-toggle-background-color)
-    ;; (setq catppuccin-flavor 'frappe) ; or 'latte, 'macchiato, or 'mocha
-    ;; (load-theme 'catppuccin t)
+    (load-theme 'catppuccin :no-confirm)
+
+    ;; (load-theme 'spacemacs-light t)
+    ;; (load-theme 'spacemacs-dark t)
+    ;; (load-theme 'agg-spacemacs-light t)
+    ;; (load-theme 'agg-spacemacs-dark t)
     (server-start)
   #+END_SRC
 * Notes
