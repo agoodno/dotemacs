@@ -27,3 +27,4 @@ custom.el
 org-persist/
 .org-id-locations
 tree-sitter/
+eln-cache/
