@@ -160,26 +160,34 @@ values to the ~custom.el~ for future sessions.
        (add-hook 'compilation-filter-hook 'my/ansi-colorize-buffer))
    #+END_SRC
 ** Color Themes
-   #+BEGIN_SRC emacs-lisp
-     (use-package dracula-theme
-       :ensure t
-       :defer t)
+#+BEGIN_SRC emacs-lisp
+  (use-package dracula-theme
+    :ensure t
+    :defer t)
 
-     (use-package gruvbox-theme
-       :ensure t
-       :defer t)
+  (use-package gruvbox-theme
+    :ensure t
+    :defer t)
 
-     (use-package catppuccin-theme
-       :ensure t
-       :defer t)
+  (use-package catppuccin-theme
+    :ensure t
+    :defer f
+    :init
+    ;; from lightest to darkest
+    (setq catppuccin-flavor 'latte)
+    ;; (setq catppuccin-flavor 'frappe)
+    ;; (setq catppuccin-flavor 'macchiato)
+    ;; (setq catppuccin-flavor 'mocha)
+    ;; (catppuccin-reload)
+    (load-theme 'catppuccin :no-confirm))
 
-     (use-package spacemacs-theme
-       :ensure t
-       :defer t
-       :init
-       (setq spacemacs-theme-org-agenda-height nil)
-       (setq spacemacs-theme-org-height nil))
-   #+END_SRC
+  (use-package spacemacs-theme
+    :ensure t
+    :defer t
+    :init
+    (setq spacemacs-theme-org-agenda-height nil)
+    (setq spacemacs-theme-org-height nil))
+#+END_SRC
 ** Indenting
    #+BEGIN_SRC emacs-lisp
      (show-paren-mode 1)
@@ -1638,9 +1646,11 @@ Configuration for Org Roam.
    #+END_SRC
 * Startup
   #+BEGIN_SRC emacs-lisp
-    (agg-set-background-color-light)
+    ;; (agg-set-background-color-light)
     ;; uncomment this for dark mode
-    (agg-toggle-background-color)
+    ;; (agg-toggle-background-color)
+    ;; (setq catppuccin-flavor 'frappe) ; or 'latte, 'macchiato, or 'mocha
+    ;; (load-theme 'catppuccin t)
     (server-start)
   #+END_SRC
 * Notes
@@ -1650,7 +1660,7 @@ Configuration for Org Roam.
    the following:
 
    1. Close Emacs
-   1. Checkout the git revision you think should work (start with master)
+   1. Checkout the git revision you think should work (start with main)
    1. Clean the existing ELPA compiled directory
 
       ~/src/dotemacs $ rm -rf elpa
