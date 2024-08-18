@@ -1,8 +1,8 @@
-(deftheme aggdark
+(deftheme agg-dark
   "Created 2024-08-17.")
 
 (custom-theme-set-faces
- 'aggdark
+ 'agg-dark
  '(default ((t (:family "DejaVu Sans Mono" :foundry "PfEd" :width normal :height 98 :weight regular :slant normal :underline nil :overline nil :extend nil :strike-through nil :box nil :inverse-video nil :foreground "#b2b2b2" :background "#292b2e" :stipple nil :inherit nil))))
  '(cursor ((t (:background "#e3dedd"))))
  '(fixed-pitch ((t (:family "Monospace"))))
@@ -60,4 +60,4 @@
  '(next-error ((t (:inherit (region)))))
  '(query-replace ((t (:inherit (isearch))))))
 
-(provide-theme 'aggdark)
+(provide-theme 'agg-dark)

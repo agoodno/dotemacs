@@ -159,12 +159,13 @@ values to the ~custom.el~ for future sessions.
            (ansi-color-apply-on-region (point-min) (point-max))))
        (add-hook 'compilation-filter-hook 'my/ansi-colorize-buffer))
    #+END_SRC
-** Color Themes
+** Themes
 #+BEGIN_SRC emacs-lisp
   (use-package dracula-theme
     :ensure t
     :defer t)
 
+  ;; fix https://github.com/greduan/emacs-theme-gruvbox/blob/master/gruvbox.el#L550, set :foreground gruvbox-dark1 to ;background gruvbox-dark1
   (use-package gruvbox-theme
     :ensure t
     :defer t)
@@ -187,6 +188,18 @@ values to the ~custom.el~ for future sessions.
     :init
     (setq spacemacs-theme-org-agenda-height nil)
     (setq spacemacs-theme-org-height nil))
+
+  (use-package timu-spacegrey-theme
+    :ensure t
+    :defer t
+    :init
+    (customize-set-variable 'timu-spacegrey-flavour "light")
+    (customize-set-variable 'timu-spacegrey-contrasted-comments nil)
+    (customize-set-variable 'timu-spacegrey-scale-org-document-title t)
+    (customize-set-variable 'timu-spacegrey-scale-org-document-info t)
+    (customize-set-variable 'timu-spacegrey-scale-org-level-1 t)
+    (customize-set-variable 'timu-spacegrey-scale-org-level-2 t)
+    (customize-set-variable 'timu-spacegrey-scale-org-level-3 t))
 #+END_SRC
 ** Indenting
    #+BEGIN_SRC emacs-lisp
@@ -1593,15 +1606,17 @@ Configuration for Org Roam.
   (setq uniquify-buffer-name-style 'forward)
    #+END_SRC
 * Startup
-  #+BEGIN_SRC emacs-lisp
-    (load-theme 'catppuccin :no-confirm)
-
-    ;; (load-theme 'spacemacs-light t)
-    ;; (load-theme 'spacemacs-dark t)
-    ;; (load-theme 'agg-spacemacs-light t)
-    ;; (load-theme 'agg-spacemacs-dark t)
-    (server-start)
-  #+END_SRC
+#+BEGIN_SRC emacs-lisp
+  ;; (load-theme 'catppuccin :no-confirm)
+  ;; (load-theme 'dracula t)
+  (load-theme 'gruvbox t)
+  ;; (load-theme 'spacemacs-light t)
+  ;; (load-theme 'spacemacs-dark t)
+  ;; (load-theme 'agg-light t)
+  ;; (load-theme 'agg-dark t)
+  ;; (load-theme 'timu-spacegrey t)
+  (server-start)
+#+END_SRC
 * Notes
 ** Clean test
    Occasionally, I like to test my init files from a clean environment so

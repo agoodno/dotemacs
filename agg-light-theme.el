@@ -1,8 +1,8 @@
-(deftheme agglight
+(deftheme agg-light
   "Created 2024-08-17.")
 
 (custom-theme-set-faces
- 'agglight
+ 'agg-light
  '(default ((t (:family "DejaVu Sans Mono" :foundry "PfEd" :width normal :height 98 :weight regular :slant normal :underline nil :overline nil :extend nil :strike-through nil :box nil :inverse-video nil :foreground "#655370" :background "#fbf8ef" :stipple nil :inherit nil))))
  '(cursor ((t (:background "#100a14"))))
  '(fixed-pitch ((t (:family "Monospace"))))
@@ -60,4 +60,4 @@
  '(next-error ((t (:inherit (region)))))
  '(query-replace ((t (:inherit (isearch))))))
 
-(provide-theme 'agglight)
+(provide-theme 'agg-light)
