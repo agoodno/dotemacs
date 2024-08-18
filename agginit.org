@@ -168,7 +168,9 @@ values to the ~custom.el~ for future sessions.
   ;; fix https://github.com/greduan/emacs-theme-gruvbox/blob/master/gruvbox.el#L550, set :foreground gruvbox-dark1 to ;background gruvbox-dark1
   (use-package gruvbox-theme
     :ensure t
-    :defer t)
+    :defer t
+    :init
+    (custom-set-faces '(magit-diff-context ((t (:extend t :background "#3c3836" :foreground "#fdf4c1"))))))
 
   (use-package catppuccin-theme
     :ensure t
@@ -179,7 +181,6 @@ values to the ~custom.el~ for future sessions.
     ;; (setq catppuccin-flavor 'frappe)
     ;; (setq catppuccin-flavor 'macchiato)
     ;; (setq catppuccin-flavor 'mocha)
-    ;; (catppuccin-reload)
     )
 
   (use-package spacemacs-theme
