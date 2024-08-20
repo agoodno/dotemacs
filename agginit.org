@@ -165,12 +165,9 @@ values to the ~custom.el~ for future sessions.
     :ensure t
     :defer t)
 
-  ;; fix https://github.com/greduan/emacs-theme-gruvbox/blob/master/gruvbox.el#L550, set :foreground gruvbox-dark1 to ;background gruvbox-dark1
   (use-package gruvbox-theme
     :ensure t
-    :defer t
-    :init
-    (custom-set-faces '(magit-diff-context ((t (:extend t :background "#3c3836" :foreground "#fdf4c1"))))))
+    :defer t)
 
   (use-package catppuccin-theme
     :ensure t
@@ -679,7 +676,7 @@ Configuration for Org Roam.
     (add-hook 'org-roam-find-file-hook #'turn-on-auto-fill)
     (org-roam-db-autosync-mode))
 
-  ;; Use M-x org-roam-ui-mode RET to enable the global mode. It will start a web server on http://127.0.0.1:35901/ and connect to it via a WebSocket for real-time updates.  
+  ;; Use M-x org-roam-ui-mode RET to enable the global mode. It will start a web server on http://127.0.0.1:35901/ and connect to it via a WebSocket for real-time updates.
   (use-package org-roam-ui
     :ensure t
     :after org-roam
