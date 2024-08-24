@@ -811,11 +811,17 @@ Configuration for Org Roam.
     #+END_SRC
 ** Templating
 *** Mustache
-    #+BEGIN_SRC emacs-lisp
-      (use-package mustache-mode
-        :ensure t
-        :defer t)
-    #+END_SRC
+#+BEGIN_SRC emacs-lisp
+  (use-package mustache-mode
+    :ensure t
+    :defer t)
+#+END_SRC
+*** haml
+#+BEGIN_SRC emacs-lisp
+  (use-package haml-mode
+    :ensure t
+    :defer t)
+#+END_SRC
 ** Languages
 *** Clojure
 #+BEGIN_SRC emacs-lisp
@@ -1049,10 +1055,6 @@ Configuration for Org Roam.
         (add-hook 'enh-ruby-mode-hook 'robe-mode))
 
       (use-package chruby
-        :ensure t
-        :defer t)
-
-      (use-package haml-mode
         :ensure t
         :defer t)
 
