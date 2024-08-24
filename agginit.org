@@ -809,19 +809,52 @@ Configuration for Org Roam.
         :ensure t
         :defer t)
     #+END_SRC
-** Templating
-*** Mustache
-#+BEGIN_SRC emacs-lisp
-  (use-package mustache-mode
-    :ensure t
-    :defer t)
-#+END_SRC
+** Templating Languages
 *** haml
 #+BEGIN_SRC emacs-lisp
   (use-package haml-mode
     :ensure t
     :defer t)
 #+END_SRC
+*** Markdown
+    #+BEGIN_SRC emacs-lisp
+      (use-package markdown-mode
+        :ensure t
+        :defer t
+        :commands (markdown-mode gfm-mode)
+        :mode (("README\\.md\\'" . gfm-mode)
+               ("\\.md\\'" . markdown-mode)
+               ("\\.markdown\\'" . markdown-mode))
+        :init (setq markdown-command "/opt/homebrew/bin/markdown"))
+
+      (add-to-list 'load-path (expand-file-name "~/.emacs.d/vendor/emacs-livedown"))
+      (require 'livedown)
+    #+END_SRC
+*** Mustache
+#+BEGIN_SRC emacs-lisp
+  (use-package mustache-mode
+    :ensure t
+    :defer t)
+#+END_SRC
+** DSLs
+*** Puppet
+    #+BEGIN_SRC emacs-lisp
+      (use-package puppet-mode
+        :ensure t
+        :defer t
+        :init
+        (add-to-list 'auto-mode-alist '("\\.pp$" . puppet-mode)))
+    #+END_SRC
+
+*** SQL
+    #+BEGIN_SRC emacs-lisp
+      (setq auto-mode-alist (cons '("\\.psql$" . sql-mode) auto-mode-alist))
+
+      (add-hook 'sql-mode-hook 'turn-off-auto-fill)
+      (add-hook 'sql-mode-hook 'progmodes-hooks)
+
+      (provide 'agg-sql-mode)
+    #+END_SRC
 ** Languages
 *** Clojure
 #+BEGIN_SRC emacs-lisp
@@ -961,51 +994,6 @@ Configuration for Org Roam.
         :after (yasnippet))
     #+END_SRC
 
-*** Typescript
-
-#+BEGIN_SRC emacs-lisp
-  (use-package typescript-mode
-    :ensure t
-    :defer t
-    :after (whitespace-mode)
-    :mode "\\.ts\\'"
-    :hook (typescript-mode . lsp-deferred)
-    :init
-    ;; automatically clean up bad whitespace
-    (setq whitespace-action '(auto-cleanup))
-    :config
-    (setq typescript-indent-level 4))
-
-  ;; (use-package flycheck-clojure
-  ;;   :ensure t
-  ;;   :defer t
-  ;;   :after (flycheck)
-  ;;   :config (flycheck-clojure-setup))
-
-#+END_SRC
-
-*** Markdown
-    #+BEGIN_SRC emacs-lisp
-      (use-package markdown-mode
-        :ensure t
-        :defer t
-        :commands (markdown-mode gfm-mode)
-        :mode (("README\\.md\\'" . gfm-mode)
-               ("\\.md\\'" . markdown-mode)
-               ("\\.markdown\\'" . markdown-mode))
-        :init (setq markdown-command "/opt/homebrew/bin/markdown"))
-
-      (add-to-list 'load-path (expand-file-name "~/.emacs.d/vendor/emacs-livedown"))
-      (require 'livedown)
-    #+END_SRC
-*** Puppet
-    #+BEGIN_SRC emacs-lisp
-      (use-package puppet-mode
-        :ensure t
-        :defer t
-        :init
-        (add-to-list 'auto-mode-alist '("\\.pp$" . puppet-mode)))
-    #+END_SRC
 *** Ruby
     #+BEGIN_SRC emacs-lisp
       (defun enh-ruby-mode-before-save-hook ()
@@ -1105,15 +1093,29 @@ Configuration for Org Roam.
       ;;  sbt:program-name "/home/agoodno/src/ccap3/sbt"
       ;;  ensime-startup-notification nil)
     #+END_SRC
-*** SQL
-    #+BEGIN_SRC emacs-lisp
-      (setq auto-mode-alist (cons '("\\.psql$" . sql-mode) auto-mode-alist))
+*** Typescript
 
-      (add-hook 'sql-mode-hook 'turn-off-auto-fill)
-      (add-hook 'sql-mode-hook 'progmodes-hooks)
+#+BEGIN_SRC emacs-lisp
+  (use-package typescript-mode
+    :ensure t
+    :defer t
+    :after (whitespace-mode)
+    :mode "\\.ts\\'"
+    :hook (typescript-mode . lsp-deferred)
+    :init
+    ;; automatically clean up bad whitespace
+    (setq whitespace-action '(auto-cleanup))
+    :config
+    (setq typescript-indent-level 4))
 
-      (provide 'agg-sql-mode)
-    #+END_SRC
+  ;; (use-package flycheck-clojure
+  ;;   :ensure t
+  ;;   :defer t
+  ;;   :after (flycheck)
+  ;;   :config (flycheck-clojure-setup))
+
+#+END_SRC
+
 *** Vue.js
     #+BEGIN_SRC emacs-lisp
       (use-package vue-mode
