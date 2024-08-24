@@ -1035,19 +1035,13 @@ Configuration for Org Roam.
         :init
         (add-hook 'enh-ruby-mode-hook 'robe-mode))
 
-      (use-package haml-mode
+      (use-package chruby
         :ensure t
         :defer t)
 
-      (use-package coffee-mode
+      (use-package haml-mode
         :ensure t
-        :defer t
-        :after (whitespace-mode)
-        :init
-        ;; automatically clean up bad whitespace
-        (setq whitespace-action '(auto-cleanup))
-        ;; only show bad whitespace
-        (setq whitespace-style '(trailing space-before-tab indentation empty space-after-tab)))
+        :defer t)
 
       (use-package ruby-tools
         :ensure t
