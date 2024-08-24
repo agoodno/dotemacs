@@ -686,6 +686,11 @@ Configuration for Org Roam.
           org-roam-ui-open-on-start t))
 
 #+END_SRC
+** Browsing
+#+BEGIN_SRC emacs-lisp
+  (use-package w3m
+    :ensure t)
+#+END_SRC
 * Development
 ** General
 #+BEGIN_SRC emacs-lisp
