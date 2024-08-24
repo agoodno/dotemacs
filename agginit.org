@@ -1005,15 +1005,10 @@ Configuration for Org Roam.
         :ensure t
         :init
         (setq rubocop-autocorrect-on-save t)
-        (add-to-list 'auto-mode-alist '("\\.rb$" . enh-ruby-mode))
-        (add-to-list 'auto-mode-alist '("\\.gemspec$" . enh-ruby-mode))
-        (add-to-list 'auto-mode-alist '("\\.rake$" . enh-ruby-mode))
-        (add-to-list 'auto-mode-alist '("\\.ru$" . enh-ruby-mode))
-        (add-to-list 'auto-mode-alist '("Capfile$" . enh-ruby-mode))
-        (add-to-list 'auto-mode-alist '("Gemfile$" . enh-ruby-mode))
-        (add-to-list 'auto-mode-alist '("Rakefile$" . enh-ruby-mode))
+        ;; use enh-ruby-mode for these files
+        (add-to-list 'auto-mode-alist
+             '("\\(?:\\.rb\\|ru\\|rake\\|thor\\|jbuilder\\|gemspec\\|podspec\\|/\\(?:Gem\\|Rake\\|Cap\\|Thor\\|Vagrant\\|Guard\\|Pod\\)file\\)\\'" . enh-ruby-mode))
         (add-hook 'enh-ruby-mode-hook 'progmodes-hooks))
-      ;; (add-hook 'enh-ruby-mode-hook 'enh-ruby-mode-hooks)) ;; Auto-formatting for rubocop broke whitespace-cleanup
 
       (use-package inf-ruby
         :ensure t
