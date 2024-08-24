@@ -1005,7 +1005,6 @@ Configuration for Org Roam.
         :ensure t
         :init
         (setq rubocop-autocorrect-on-save t)
-        (setq rubocop-check-command "rubocop --format emacs --auto-correct")
         (add-to-list 'auto-mode-alist '("\\.rb$" . enh-ruby-mode))
         (add-to-list 'auto-mode-alist '("\\.gemspec$" . enh-ruby-mode))
         (add-to-list 'auto-mode-alist '("\\.rake$" . enh-ruby-mode))
