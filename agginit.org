@@ -1042,10 +1042,6 @@ Configuration for Org Roam.
     :init
     (add-hook 'enh-ruby-mode-hook 'robe-mode))
 
-  (use-package chruby
-    :ensure t
-    :defer t)
-
   (use-package ruby-tools
     :ensure t
     :defer t
@@ -1053,12 +1049,16 @@ Configuration for Org Roam.
     (add-hook 'enh-ruby-mode-hook 'ruby-tools-mode)
     :diminish ruby-tools-mode)
 
-  (use-package rbenv
+  ;; (use-package rbenv
+  ;;   :ensure t
+  ;;   :defer t
+  ;;   :init
+  ;;   (add-hook 'enh-ruby-mode-hook 'rbenv-use-corresponding)
+  ;;   (global-rbenv-mode))
+
+  (use-package chruby
     :ensure t
-    :defer t
-    :init
-    (add-hook 'enh-ruby-mode-hook 'rbenv-use-corresponding)
-    (global-rbenv-mode))
+    :defer t)
 
   (use-package projectile-rails
     :ensure t
