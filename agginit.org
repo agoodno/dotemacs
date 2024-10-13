@@ -688,8 +688,8 @@ Configuration for Org Roam.
 #+END_SRC
 ** Browsing
 #+BEGIN_SRC emacs-lisp
-  (use-package w3m
-    :ensure t)
+  ;; (use-package w3m
+  ;;   :ensure t)
 #+END_SRC
 * Development
 ** General
