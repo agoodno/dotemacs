@@ -15,7 +15,7 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
   ;; Used to fix issue with package install of org mode
   (setq package-check-signature nil)
   ;; (setq package-check-signature "allow-unsigned")
-  (add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/"))
+  ;; (add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/"))
   (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
   (package-initialize)
 
@@ -161,17 +161,13 @@ values to the ~custom.el~ for future sessions.
 #+END_SRC
 ** Themes
 #+BEGIN_SRC emacs-lisp
-  (use-package dracula-theme
-    :ensure t
-    :defer t)
+  (use-package dracula-theme)
 
   (use-package gruvbox-theme
-    :ensure t
-    :defer t)
+    :ensure t)
 
   (use-package catppuccin-theme
     :ensure t
-    :defer t
     :init
     ;; from lightest to darkest
     (setq catppuccin-flavor 'latte)
@@ -182,14 +178,12 @@ values to the ~custom.el~ for future sessions.
 
   (use-package spacemacs-theme
     :ensure t
-    :defer t
     :init
     (setq spacemacs-theme-org-agenda-height nil)
     (setq spacemacs-theme-org-height nil))
 
   (use-package timu-spacegrey-theme
     :ensure t
-    :defer t
     :init
     (customize-set-variable 'timu-spacegrey-flavour "light")
     (customize-set-variable 'timu-spacegrey-contrasted-comments nil)
@@ -707,7 +701,6 @@ Configuration for Org Roam.
 #+BEGIN_SRC emacs-lisp
   ;; (use-package company
   ;;   :ensure t
-  ;;   :defer 5
   ;;   :diminish
   ;;   :bind
   ;;   ((:map company-active-map
@@ -732,7 +725,6 @@ Configuration for Org Roam.
 
   (use-package yasnippet
     :ensure t
-    :defer t
     :init
     (yas-global-mode 1))
 
@@ -762,17 +754,15 @@ Configuration for Org Roam.
 #+BEGIN_SRC emacs-lisp
   (use-package docker
     :ensure t
-    :defer t)
+    :disabled)
 
   (use-package dockerfile-mode
-    :ensure t
-    :defer t)
+    :ensure t)
 #+END_SRC
 *** JSON
 #+BEGIN_SRC emacs-lisp
   (use-package json-mode
     :ensure t
-    :defer t
     :init
     (add-hook 'json-mode-hook '(lambda ()
                                  (setq indent-tabs-mode nil)
@@ -782,7 +772,6 @@ Configuration for Org Roam.
 
   (use-package json-reformat
     :ensure t
-    :defer t
     :init
     (customize-set-variable 'json-reformat:indent-width 4))
 #+END_SRC
@@ -807,13 +796,12 @@ Configuration for Org Roam.
 #+BEGIN_SRC emacs-lisp
   (use-package haml-mode
     :ensure t
-    :defer t)
+    :disabled)
 #+END_SRC
 *** Markdown
 #+BEGIN_SRC emacs-lisp
   (use-package markdown-mode
     :ensure t
-    :defer t
     :commands (markdown-mode gfm-mode)
     :mode (("README\\.md\\'" . gfm-mode)
            ("\\.md\\'" . markdown-mode)
@@ -827,20 +815,20 @@ Configuration for Org Roam.
 #+BEGIN_SRC emacs-lisp
   (use-package mustache-mode
     :ensure t
-    :defer t)
+    :disabled)
 #+END_SRC
 ** DSLs
 *** Cucumber
 #+BEGIN_SRC emacs-lisp
   (use-package feature-mode
     :ensure t
-    :defer t)
+    :disabled)
 #+END_SRC
 *** Puppet
 #+BEGIN_SRC emacs-lisp
   (use-package puppet-mode
     :ensure t
-    :defer t
+    :disabled
     :init
     (add-to-list 'auto-mode-alist '("\\.pp$" . puppet-mode)))
 #+END_SRC
@@ -857,21 +845,19 @@ Configuration for Org Roam.
 *** Terrform
 #+BEGIN_SRC emacs-lisp
   (use-package terraform-mode
-    :ensure
-    :defer)
+    :ensure t)
 #+END_SRC
 *** YAML
 #+BEGIN_SRC emacs-lisp
   (use-package yaml-mode
-    :ensure t
-    :defer t)
+    :ensure t)
 #+END_SRC
 ** Languages
 *** Clojure
 #+BEGIN_SRC emacs-lisp
   (use-package clojure-mode
     :ensure t
-    :defer t
+    :disabled
     :after (paredit)
     :init
     (add-hook 'clojure-mode-hook #'smartparens-mode))
@@ -880,7 +866,7 @@ Configuration for Org Roam.
 
   (use-package cider
     :ensure t
-    :defer t
+    :disabled
     :init
     (setq clojure-indent-style :always-indent)
     (setq cider-repl-use-pretty-printing t)
@@ -890,7 +876,7 @@ Configuration for Org Roam.
 
   (use-package flycheck-clojure
     :ensure t
-    :defer t
+    :disabled
     :after (flycheck)
     :config (flycheck-clojure-setup))
 #+END_SRC
@@ -902,13 +888,12 @@ Configuration for Org Roam.
 #+BEGIN_SRC emacs-lisp
   (use-package groovy-mode
     :ensure t
-    :defer t)
+    :disabled)
 #+END_SRC
 *** Elm
 #+begin_src emacs-lisp
   (use-package elm-mode
-    :ensure t
-    :defer t)
+    :ensure t)
 #+end_src
 *** HTML
 #+BEGIN_SRC emacs-lisp
@@ -929,7 +914,7 @@ Configuration for Org Roam.
 
   (use-package eclim
     :ensure t
-    :defer t
+    :disabled
     :init
     (setq eclimd-autostart nil)
     (setq eclim-eclipse-dirs '("/Applications/SpringToolSuite4.app/Contents/Eclipse"))
@@ -951,12 +936,10 @@ Configuration for Org Roam.
   (setq js-indent-level 4)
 
   (use-package add-node-modules-path
-    :ensure t
-    :defer t)
+    :ensure t)
 
   (use-package js2-mode
     :ensure t
-    :defer t
     :mode
     "\\.js\\'"
     :after (smartparens add-node-modules-path)
@@ -971,7 +954,6 @@ Configuration for Org Roam.
 
   (use-package js2-refactor
     :ensure t
-    :defer t
     :after (js2-mode)
     :init
     (setq js2-skip-preprocessor-directives t)
@@ -980,7 +962,7 @@ Configuration for Org Roam.
 
   (use-package rjsx-mode
     :ensure t
-    :defer t
+    :disabled
     :mode
     "\\.jsx\\'"
     "\\.tsx\\'"
@@ -992,16 +974,13 @@ Configuration for Org Roam.
     (add-hook 'rjsx-mode (lambda () (setq js2-basic-offset 2))))
 
   (use-package eslint-fix
-    :ensure t
-    :defer t)
+    :ensure t)
 
   (use-package eslintd-fix
-    :ensure t
-    :defer t)
+    :ensure t)
 
   (use-package react-snippets
     :ensure t
-    :defer t
     :after (yasnippet))
 #+END_SRC
 
@@ -1017,7 +996,6 @@ Configuration for Org Roam.
 
   (use-package enh-ruby-mode
     :ensure t
-    :defer t
     :init
     ;; automatically clean up bad whitespace on save
     (setq whitespace-action '(auto-cleanup))
@@ -1030,32 +1008,27 @@ Configuration for Org Roam.
 
   (use-package inf-ruby
     :ensure t
-    :defer t
     :init
     (add-hook 'enh-ruby-mode-hook 'inf-ruby-minor-mode))
 
   (use-package yari
     :ensure t
-    :defer t
     ;; C-h R
     :init (define-key 'help-command "R" 'yari))
 
   (use-package rubocop
     :ensure t
-    :defer t
     :init
     (add-hook 'enh-ruby-mode-hook 'rubocop-mode))
 
   (use-package robe
     :ensure t
-    :defer t
     :after (enh-ruby-mode)
     :init
     (add-hook 'enh-ruby-mode-hook 'robe-mode))
 
   (use-package ruby-tools
     :ensure t
-    :defer t
     :init
     (add-hook 'enh-ruby-mode-hook 'ruby-tools-mode)
     :diminish ruby-tools-mode)
@@ -1068,12 +1041,10 @@ Configuration for Org Roam.
   ;;   (global-rbenv-mode))
 
   (use-package chruby
-    :ensure t
-    :defer t)
+    :ensure t)
 
   (use-package projectile-rails
     :ensure t
-    :defer t
     :config
     (define-key projectile-rails-mode-map (kbd "C-c r") 'projectile-rails-command-map)
     (add-hook 'enh-ruby-mode-hook 'projectile-rails-mode))
@@ -1082,7 +1053,7 @@ Configuration for Org Roam.
 #+BEGIN_SRC emacs-lisp
   (use-package scala-mode
     :ensure t
-    :defer t
+    :disabled
     :init
     (add-to-list 'auto-mode-alist '("\\.sbt$" . scala-mode))
     (add-hook 'scala-mode-hook 'progmodes-hooks)
@@ -1090,12 +1061,12 @@ Configuration for Org Roam.
 
   (use-package sbt-mode
     :ensure t
-    :defer t) ;;:pin melpa-stable
+    :disabled) ;;:pin melpa-stable
 
   (use-package ensime
     :disabled
     :ensure t
-    :defer t
+    :disabled
     :init
     (add-hook 'scala-mode-hook 'ensime-scala-mode-hook)) ;;:pin melpa-stable
 
@@ -1109,7 +1080,6 @@ Configuration for Org Roam.
 #+BEGIN_SRC emacs-lisp
   (use-package typescript-mode
     :ensure t
-    :defer t
     :after (whitespace-mode)
     :mode "\\.ts\\'"
     :hook (typescript-mode . lsp-deferred)
@@ -1131,7 +1101,7 @@ Configuration for Org Roam.
 #+BEGIN_SRC emacs-lisp
   (use-package vue-mode
     :ensure t
-    :defer t
+    :disabled
     :init
     (add-hook 'vue-mode-hook 'progmodes-hooks)
     :config
@@ -1360,7 +1330,7 @@ Configuration for Org Roam.
   (use-package slack
     :disabled
     :ensure t
-    :defer t
+    :disabled
     :commands (slack-start)
     :init
     (setq slack-buffer-emojify t)
@@ -1504,7 +1474,7 @@ Configuration for Org Roam.
 ** ledger
 #+BEGIN_SRC emacs-lisp
   (use-package ledger-mode
-    :defer t
+    :disabled
     :ensure t
     :init
     (add-to-list 'auto-mode-alist '("\\.dat$" . ledger-mode)))
@@ -1544,7 +1514,6 @@ Configuration for Org Roam.
   (use-package pdf-tools
     :disabled
     :ensure t
-    :defer t
     :init
     (pdf-tools-install))
 #+END_SRC
@@ -1560,8 +1529,7 @@ Configuration for Org Roam.
 ** restclient
 #+BEGIN_SRC emacs-lisp
   (use-package restclient
-    :ensure t
-    :defer t)
+    :ensure t)
 #+END_SRC
 ** saveplace
 #+BEGIN_SRC emacs-lisp
