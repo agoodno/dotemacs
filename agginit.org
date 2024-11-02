@@ -1621,15 +1621,20 @@ Configuration for Org Roam.
 #+END_SRC
 * Startup
 #+BEGIN_SRC emacs-lisp
-  ;; (load-theme 'catppuccin :no-confirm)
-  ;; (load-theme 'dracula t)
-  (load-theme 'gruvbox t)
-  ;; (load-theme 'spacemacs-light t)
-  ;; (load-theme 'spacemacs-dark t)
-  ;; (load-theme 'agg-light t)
-  ;; (load-theme 'agg-dark t)
-  ;; (load-theme 'timu-spacegrey t)
-  (server-start)
+  (use-package server
+    :config
+    ;; (load-theme 'catppuccin :no-confirm)
+    ;; (load-theme 'dracula t)
+    (load-theme 'gruvbox t)
+    ;; (load-theme 'spacemacs-light t)
+    ;; (load-theme 'spacemacs-dark t)
+    ;; (load-theme 'agg-light t)
+    ;; (load-theme 'agg-dark t)
+    ;; (load-theme 'timu-spacegrey t)
+    (unless (and (fboundp 'server-running-p) (server-running-p))
+      (message "Starting Emacs server...")
+      (setq server-client-instructions nil)
+      (server-start)))
 #+END_SRC
 * Notes
 ** Clean test
