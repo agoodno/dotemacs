@@ -640,7 +640,8 @@ Configuration for Org Mode.
            ("C-c !" . org-time-stamp-inactive))
     :mode ("\\.org$" . org-mode)
     :config
-    (require 'org-id))
+    (require 'org-id)
+    (define-key org-mode-map (kbd "C-c C-r") verb-command-map))
 
   (use-package org-bullets
     :ensure t)
@@ -1590,6 +1591,12 @@ Configuration for Org Roam.
 ** uniquify
 #+BEGIN_SRC emacs-lisp
   (setq uniquify-buffer-name-style 'forward)
+#+END_SRC
+* Embedded Clients
+** Verb REST client
+#+BEGIN_SRC emacs-lisp
+  (use-package verb
+    :ensure t)
 #+END_SRC
 * Startup
 #+BEGIN_SRC emacs-lisp
