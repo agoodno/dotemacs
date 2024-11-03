@@ -640,8 +640,7 @@ Configuration for Org Mode.
            ("C-c !" . org-time-stamp-inactive))
     :mode ("\\.org$" . org-mode)
     :config
-    (require 'org-id)
-    (define-key org-mode-map (kbd "C-c C-r") verb-command-map))
+    (require 'org-id))
 
   (use-package org-bullets
     :ensure t)
@@ -1531,11 +1530,6 @@ Configuration for Org Roam.
     (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
     (projectile-mode +1))
 #+END_SRC
-** restclient
-#+BEGIN_SRC emacs-lisp
-  (use-package restclient
-    :ensure t)
-#+END_SRC
 ** saveplace
 #+BEGIN_SRC emacs-lisp
   (setq save-place-file (locate-user-emacs-file "places" ".emacs-places"))
@@ -1596,6 +1590,11 @@ Configuration for Org Roam.
 ** Verb REST client
 #+BEGIN_SRC emacs-lisp
   (use-package verb
+    :ensure t
+    :config
+    (define-key org-mode-map (kbd "C-c C-r") verb-command-map))
+
+  (use-package impostman
     :ensure t)
 #+END_SRC
 * Startup
