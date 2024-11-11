@@ -629,7 +629,6 @@ Configuration for Org Mode.
 
 #+BEGIN_SRC emacs-lisp
   (use-package org
-    :ensure t
     :init
     (setq org-log-done 'time)
     (setq org-log-done 'note)
@@ -752,13 +751,12 @@ Configuration for Org Roam.
   ;; if you are helm user
   ;; (use-package helm-lsp :commands helm-lsp-workspace-symbol)
   ;; if you are ivy user
-  ;; (use-package lsp-ivy
-  ;;   :ensure t
-  ;;   :commands lsp-ivy-workspace-symbol
-  ;;   :after lsp)
+  (use-package lsp-ivy
+    :ensure t
+    :commands lsp-ivy-workspace-symbol
+    :after lsp)
 
-  ;; ;; (use
-  -package lsp-treemacs :commands lsp-treemacs-errors-list)
+  ;; (use-package lsp-treemacs :commands lsp-treemacs-errors-list)
 
   ;; optionally if you want to use debugger
   ;; (use-package dap-mode)
@@ -798,7 +796,6 @@ Configuration for Org Roam.
 *** XML
 #+BEGIN_SRC emacs-lisp
   (use-package nxml-mode
-    :ensure t
     :mode "\\.xml\\'"
     :init
     (defun agg/xml-format ()
@@ -1616,7 +1613,6 @@ Configuration for Org Roam.
 * Startup
 #+BEGIN_SRC emacs-lisp
   (use-package server
-    :ensure t
     :config
     ;; (load-theme 'catppuccin :no-confirm)
     ;; (load-theme 'dracula t)
