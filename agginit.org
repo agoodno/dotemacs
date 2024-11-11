@@ -163,7 +163,11 @@ values to the ~custom.el~ for future sessions.
 #+END_SRC
 ** Themes
 #+BEGIN_SRC emacs-lisp
-  (use-package dracula-theme)
+  (use-package color-theme-sanityinc-tomorrow
+    :ensure t)
+
+  (use-package dracula-theme
+    :ensure t)
 
   (use-package gruvbox-theme
     :ensure t)
