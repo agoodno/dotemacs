@@ -248,8 +248,8 @@ values to the ~custom.el~ for future sessions.
 ** Menu Tree
 #+BEGIN_SRC emacs-lisp
   (use-package dired-sidebar
-    :bind (("C-x C-n" . dired-sidebar-toggle-sidebar))
     :ensure t
+    :bind (("C-x C-n" . dired-sidebar-toggle-sidebar))
     :commands (dired-sidebar-toggle-sidebar)
     :init
     (add-hook 'dired-sidebar-mode-hook
@@ -629,6 +629,7 @@ Configuration for Org Mode.
 
 #+BEGIN_SRC emacs-lisp
   (use-package org
+    :ensure t
     :init
     (setq org-log-done 'time)
     (setq org-log-done 'note)
@@ -743,12 +744,21 @@ Configuration for Org Roam.
     :commands (lsp lsp-deferred))
 
   ;; optionally
-  (use-package lsp-ui :commands lsp-ui-mode :after lsp)
+  (use-package lsp-ui
+    :ensure t
+    :commands lsp-ui-mode
+    :after lsp)
+
   ;; if you are helm user
   ;; (use-package helm-lsp :commands helm-lsp-workspace-symbol)
   ;; if you are ivy user
-  (use-package lsp-ivy :commands lsp-ivy-workspace-symbol :after lsp)
-  ;; (use-package lsp-treemacs :commands lsp-treemacs-errors-list)
+  ;; (use-package lsp-ivy
+  ;;   :ensure t
+  ;;   :commands lsp-ivy-workspace-symbol
+  ;;   :after lsp)
+
+  ;; ;; (use
+  -package lsp-treemacs :commands lsp-treemacs-errors-list)
 
   ;; optionally if you want to use debugger
   ;; (use-package dap-mode)
@@ -788,6 +798,7 @@ Configuration for Org Roam.
 *** XML
 #+BEGIN_SRC emacs-lisp
   (use-package nxml-mode
+    :ensure t
     :mode "\\.xml\\'"
     :init
     (defun agg/xml-format ()
@@ -1074,7 +1085,6 @@ Configuration for Org Roam.
     :disabled) ;;:pin melpa-stable
 
   (use-package ensime
-    :disabled
     :ensure t
     :disabled
     :init
@@ -1338,7 +1348,6 @@ Configuration for Org Roam.
   ;; Works by issuing command (slack-start), then enter Team: and Token:
   ;; but doesn't work with the token in team config below for some reason
   (use-package slack
-    :disabled
     :ensure t
     :disabled
     :commands (slack-start)
@@ -1380,7 +1389,8 @@ Configuration for Org Roam.
 
   ;; This [[https://jherrlin.github.io/posts/emacs-mu4e/][link]] was helpful for this setup
   (use-package mu4e
-    :disabled mu4e-enabled
+    :ensure t
+    :disabled
     :init
     (require 'smtpmail)
     (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu/mu4e")
@@ -1484,8 +1494,8 @@ Configuration for Org Roam.
 ** ledger
 #+BEGIN_SRC emacs-lisp
   (use-package ledger-mode
-    :disabled
     :ensure t
+    :disabled
     :init
     (add-to-list 'auto-mode-alist '("\\.dat$" . ledger-mode)))
 #+END_SRC
@@ -1522,8 +1532,8 @@ Configuration for Org Roam.
 ** pdf-tools
 #+BEGIN_SRC emacs-lisp
   (use-package pdf-tools
-    :disabled
     :ensure t
+    :disabled
     :init
     (pdf-tools-install))
 #+END_SRC
@@ -1606,6 +1616,7 @@ Configuration for Org Roam.
 * Startup
 #+BEGIN_SRC emacs-lisp
   (use-package server
+    :ensure t
     :config
     ;; (load-theme 'catppuccin :no-confirm)
     ;; (load-theme 'dracula t)
