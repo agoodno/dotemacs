@@ -13,9 +13,9 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
   (setq package-enable-at-startup nil)
 
   ;; Used to fix issue with package install of org mode
-  (setq package-check-signature nil)
+  ;; (setq package-check-signature nil)
   ;; (setq package-check-signature "allow-unsigned")
-  ;; (add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/"))
+  (add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/"))
   (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
   (package-initialize)
 
@@ -29,7 +29,9 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
     (require 'use-package))
 
   (setq load-prefer-newer t)
-
+#+END_SRC
+* Custom initialization
+#+BEGIN_SRC emacs-lisp
   ;; set custom file location
   (setq custom-file (concat user-emacs-directory "custom.el"))
   (load custom-file :noerror)
