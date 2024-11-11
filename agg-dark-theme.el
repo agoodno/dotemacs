@@ -3,7 +3,6 @@
 
 (custom-theme-set-faces
  'agg-dark
- '(default ((t (:family "DejaVu Sans Mono" :foundry "PfEd" :width normal :height 98 :weight regular :slant normal :underline nil :overline nil :extend nil :strike-through nil :box nil :inverse-video nil :foreground "#b2b2b2" :background "#292b2e" :stipple nil :inherit nil))))
  '(cursor ((t (:background "#e3dedd"))))
  '(fixed-pitch ((t (:family "Monospace"))))
  '(variable-pitch ((((type w32)) (:foundry "outline" :family "Arial")) (t (:family "Sans Serif"))))
