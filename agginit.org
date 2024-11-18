@@ -1614,13 +1614,25 @@ Configuration for Org Roam.
 #+BEGIN_SRC emacs-lisp
   (use-package server
     :config
+    ;; (setq catppuccin-flavor 'frappe) ;; or 'latte, 'macchiato, or 'mocha
+    ;; (catppuccin-reload)
+    ;;
     ;; (load-theme 'catppuccin :no-confirm)
-    ;; (load-theme 'dracula t)
-    (load-theme 'gruvbox t)
+
     ;; (load-theme 'spacemacs-light t)
     ;; (load-theme 'spacemacs-dark t)
+
     ;; (load-theme 'agg-light t)
     ;; (load-theme 'agg-dark t)
+
+    (load-theme 'dracula t)
+
+    ;; (load-theme 'gruvbox t) ;; sets to default
+    ;; (load-theme 'gruvbox-light-soft t)
+    ;; (load-theme 'gruvbox-light-medium t)
+    ;; (load-theme 'gruvbox-light-hard t)
+    ;; (load-theme 'gruvbox-dark-soft t)
+    ;; (load-theme 'gruvbox-dark-medium t) ;; default
     ;; (load-theme 'timu-spacegrey t)
     (unless (and (fboundp 'server-running-p) (server-running-p))
       (message "Starting Emacs server...")
