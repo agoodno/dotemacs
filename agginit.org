@@ -750,11 +750,12 @@ Configuration for Org Roam.
 
   ;; if you are helm user
   ;; (use-package helm-lsp :commands helm-lsp-workspace-symbol)
+
   ;; if you are ivy user
-  (use-package lsp-ivy
-    :ensure t
-    :commands lsp-ivy-workspace-symbol
-    :after lsp)
+  ;; (use-package lsp-ivy
+  ;;   :ensure t
+  ;;   :commands lsp-ivy-workspace-symbol
+  ;;   :after lsp)
 
   ;; (use-package lsp-treemacs :commands lsp-treemacs-errors-list)
 
