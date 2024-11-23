@@ -7,7 +7,8 @@ and brighter; it simply makes everything else vanish."
 
 See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Reference Manual]]
 
-* Package initialization
+* Emacs Config
+** Package initialization
 #+BEGIN_SRC emacs-lisp
   (require 'package)
   (setq package-enable-at-startup nil)
@@ -30,14 +31,14 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
 
   (setq load-prefer-newer t)
 #+END_SRC
-* Custom initialization
+** Custom initialization
 #+BEGIN_SRC emacs-lisp
   ;; set custom file location
   (setq custom-file (concat user-emacs-directory "custom.el"))
   (load custom-file :noerror)
 #+END_SRC
-* General config
-** User variables
+** General config
+*** User variables
 Define custom user variables that get set once per machine. Bootstrap
 by customizing the ~agg~ group and use Apply and Save to save the
 values to the ~custom.el~ for future sessions.
@@ -76,7 +77,7 @@ values to the ~custom.el~ for future sessions.
   ;; slack-elmlang-client-secret ""
   ;; slack-elmlang-token ""
 #+END_SRC
-** Editor
+*** Editor
 #+BEGIN_SRC emacs-lisp
   ;; Note: *inhibit-startup-message* and *inhibit-splash-screen* are aliases for this variable
   ;; Turn off startup splash
@@ -127,7 +128,7 @@ values to the ~custom.el~ for future sessions.
   ;; Show on top of current buffer instead of new buffer
   (add-to-list 'same-window-buffer-names "*compilation*")
 #+END_SRC
-** Environment
+*** Environment
 #+BEGIN_SRC emacs-lisp
   (use-package exec-path-from-shell
     :ensure t
@@ -140,28 +141,28 @@ values to the ~custom.el~ for future sessions.
     (defadvice ansi-term (after advise-ansi-term-coding-system)
       (set-buffer-process-coding-system 'utf-8-unix 'utf-8-unix)))
 #+END_SRC
-* Look & Feel
-** Bell
+** Look & Feel
+*** Bell
 #+BEGIN_SRC emacs-lisp
-  (defun friendly-visible-bell ()
+  (defun agg/friendly-visible-bell ()
     "A friendlier visual bell effect."
     (invert-face 'mode-line)
-    (run-with-timer 0.1 nil 'invert-face 'mode-line))
+    (run-with-timer 0.3 nil 'invert-face 'mode-line))
 
   (setq visible-bell nil
-        ring-bell-function #'friendly-visible-bell)
+        ring-bell-function #'agg/friendly-visible-bell)
 #+END_SRC
-** Color
+*** Color
 #+BEGIN_SRC emacs-lisp
   (use-package ansi-color
     :ensure t
     :init
-    (defun my/ansi-colorize-buffer ()
+    (defun agg/ansi-colorize-buffer ()
       (let ((buffer-read-only nil))
         (ansi-color-apply-on-region (point-min) (point-max))))
-    (add-hook 'compilation-filter-hook 'my/ansi-colorize-buffer))
+    (add-hook 'compilation-filter-hook 'agg/ansi-colorize-buffer))
 #+END_SRC
-** Themes
+*** Themes
 #+BEGIN_SRC emacs-lisp
   (use-package color-theme-sanityinc-tomorrow
     :ensure t)
@@ -198,8 +199,36 @@ values to the ~custom.el~ for future sessions.
     (customize-set-variable 'timu-spacegrey-scale-org-level-1 t)
     (customize-set-variable 'timu-spacegrey-scale-org-level-2 t)
     (customize-set-variable 'timu-spacegrey-scale-org-level-3 t))
+
+  ;; (load-theme 'agg-light t)
+  ;; (load-theme 'agg-dark t)
+
+  ;; (setq catppuccin-flavor 'frappe) ;; or 'latte, 'macchiato, or 'mocha
+  ;; (catppuccin-reload)
+  ;;
+  ;; (load-theme 'catppuccin :no-confirm)
+
+  ;; (load-theme 'sanityinc-tomorrow-day)
+  ;; (load-theme 'sanityinc-tomorrow-night)
+  ;; (load-theme 'sanityinc-tomorrow-blue)
+  ;; (load-theme 'sanityinc-tomorrow-bright)
+  (load-theme 'sanityinc-tomorrow-eighties)
+
+  ;; (load-theme 'dracula t)
+
+  ;; (load-theme 'gruvbox t) ;; sets to default
+  ;; (load-theme 'gruvbox-light-soft t)
+  ;; (load-theme 'gruvbox-light-medium t)
+  ;; (load-theme 'gruvbox-light-hard t)
+  ;; (load-theme 'gruvbox-dark-soft t)
+  ;; (load-theme 'gruvbox-dark-medium t) ;; default
+
+  ;; (load-theme 'spacemacs-light t)
+  ;; (load-theme 'spacemacs-dark t)
+
+  ;; (load-theme 'timu-spacegrey t)
 #+END_SRC
-** Indenting
+*** Indenting
 #+BEGIN_SRC emacs-lisp
   (show-paren-mode 1)
   (setq-default indent-tabs-mode nil)
@@ -219,7 +248,7 @@ values to the ~custom.el~ for future sessions.
   (use-package aggressive-indent
     :ensure t)
 #+END_SRC
-** Line and cursor
+*** Line and cursor
 #+BEGIN_SRC emacs-lisp
   (global-hl-line-mode +1)
 
@@ -227,7 +256,7 @@ values to the ~custom.el~ for future sessions.
     :ensure t
     :init (bar-cursor-mode 1))
 #+END_SRC
-** Selection
+*** Selection
 #+BEGIN_SRC emacs-lisp
   (setq x-select-enable-clipboard t
         ;; x-select-enable-primary t ;;causes problems with delete-selection-mode
@@ -238,14 +267,14 @@ values to the ~custom.el~ for future sessions.
   ;; Paste and backspace operations delete the selection and "pastes over" it
   (delete-selection-mode t)
 #+END_SRC
-** Windowing
+*** Windowing
 #+BEGIN_SRC emacs-lisp
   ;; Make side by side buffers function the same as the main window
   (setq truncate-partial-width-windows nil)
 
   (setq split-width-threshold nil)
 #+END_SRC
-** Menu Tree
+*** Sidebar
 #+BEGIN_SRC emacs-lisp
   (use-package dired-sidebar
     :ensure t
@@ -265,7 +294,7 @@ values to the ~custom.el~ for future sessions.
     (setq dired-sidebar-use-term-integration t)
     (setq dired-sidebar-use-custom-font t))
 #+END_SRC
-** Modeline
+*** Modeline
 #+BEGIN_SRC emacs-lisp
   (use-package spaceline
     :ensure t
@@ -274,32 +303,32 @@ values to the ~custom.el~ for future sessions.
     :config
     (spaceline-spacemacs-theme))
 #+END_SRC
-* Functions
+** Functions
 #+BEGIN_SRC emacs-lisp
-  (defun untabify-buffer ()
+  (defun agg/untabify-buffer ()
     "Untabify current buffer"
     (interactive)
     (untabify (point-min) (point-max)))
 
-  (defun progmodes-before-save-hook ()
+  (defun agg/progmodes-before-save-hook ()
     "Hooks which run on file write for programming modes"
     (require 'whitespace)
 
     (prog1 nil
       (set-buffer-file-coding-system 'utf-8-unix)
-      (untabify-buffer)))
+      (agg/untabify-buffer)))
 
-  (defun progmodes-hooks ()
+  (defun agg/progmodes-hooks ()
     "Hooks for programming modes"
-    (add-hook 'before-save-hook 'progmodes-before-save-hook))
+    (add-hook 'before-save-hook 'agg/progmodes-before-save-hook))
 
-  (defun shell-dir (name dir)
+  (defun agg/shell-dir (name dir)
     "Opens a shell into the specified directory
            ex. (shell-dir "cmd-rails" "/Users/agoodnough/src/rails/")"
     (let ((default-directory dir))
       (shell name)))
 
-  (defun insert-current-date ()
+  (defun agg/insert-current-date ()
     (interactive)
     (insert (shell-command-to-string "echo -n $(date %Y-%m-%d)")))
 
@@ -312,7 +341,7 @@ values to the ~custom.el~ for future sessions.
     (insert (calendar-date-string (calendar-current-date) nil
                                   omit-day-of-week-p)))
 
-  (defun insert-date (prefix)
+  (defun agg/insert-date (prefix)
     "Insert the current date. With prefix-argument, use ISO format. With
              two prefix arguments, write out the day and month name."
     (interactive "P")
@@ -320,7 +349,7 @@ values to the ~custom.el~ for future sessions.
           (system-time-locale "en_US"))
       (insert (format-time-string format))))
 
-  (defun ins-tommorrows-date ()
+  (defun agg/ins-tommorrows-date ()
     (interactive)
     (insert (format-time-string "%A, %B %e, %Y" (time-add (current-time) (seconds-to-time (* 60 (* 60 (* 24))))))))
 
@@ -335,42 +364,42 @@ values to the ~custom.el~ for future sessions.
   ;; (format-time-string "%A, %B %e, %Y" (time-add (current-time) (seconds-to-time (* 60 (* 60 (* 24))))))
   ;; (decode-time (seconds-to-time (+ (float-time (current-time)) (* 60 (* 60 (* 24))))))
 
-  (defun back-window ()
+  (defun agg/back-window ()
     (interactive)
     (other-window -1))
 
-  (defun log-region (&optional arg)
+  (defun agg/log-region (&optional arg)
     "Keyboard macro."
     (interactive "p")
     (kmacro-exec-ring-item
      (quote ([134217847 16 5 return 112 117 116 115 32 34 25 61 35 123 25 125 34] 0 "%d")) arg))
 
-  (defun turn-off-mouse (&optional frame)
+  (defun agg/turn-off-mouse (&optional frame)
     (interactive)
     (shell-command "xinput --disable \"SynPS/2 Synaptics TouchPad\""))
 
-  (defun turn-on-mouse (&optional frame)
+  (defun agg/turn-on-mouse (&optional frame)
     (interactive)
     (shell-command "xinput --enable \"SynPS/2 Synaptics TouchPad\""))
 
-  (defun register-mouse-hooks ()
+  (defun agg/register-mouse-hooks ()
     (progn
-      (add-hook 'focus-in-hook #'turn-off-mouse)
-      (add-hook 'focus-out-hook #'turn-on-mouse)
-      (add-hook 'delete-frame-functions #'turn-on-mouse)
-      (add-hook 'kill-emacs-hook #'turn-on-mouse)))
+      (add-hook 'focus-in-hook #'agg/turn-off-mouse)
+      (add-hook 'focus-out-hook #'agg/turn-on-mouse)
+      (add-hook 'delete-frame-functions #'agg/turn-on-mouse)
+      (add-hook 'kill-emacs-hook #'agg/turn-on-mouse)))
 
   ;; new style for 27.1 (doesn't quite work yet)
   ;; (defun register-new-mouse-hooks ()
   ;;   (progn
-  ;;    (add-function :after after-focus-change-function #'turn-off-mouse)
-  ;;    (add-function :after after-focus-change-function #'turn-on-mouse)
-  ;;    (add-function :after delete-frame-functions #'turn-on-mouse)))
+  ;;    (add-function :after after-focus-change-function #'agg/turn-off-mouse)
+  ;;    (add-function :after after-focus-change-function #'agg/turn-on-mouse)
+  ;;    (add-function :after delete-frame-functions #'agg/turn-on-mouse)))
 
   (if (string-equal system-type "gnu/linux")
-      (register-mouse-hooks))
+      (agg/register-mouse-hooks))
 #+END_SRC
-* Bindings
+** Key Bindings
 #+BEGIN_SRC emacs-lisp
   ;; Align your code in a pretty way.
   (global-set-key (kbd "C-x \\") 'align-regexp)
@@ -471,7 +500,7 @@ values to the ~custom.el~ for future sessions.
 
   (global-set-key [f12] 'toggle-truncate-lines)
 
-  (global-set-key (kbd "C-,") 'back-window)
+  (global-set-key (kbd "C-,") 'agg/back-window)
 
   (global-set-key (kbd "C-.") 'other-window)
 
@@ -479,72 +508,20 @@ values to the ~custom.el~ for future sessions.
 
   (global-set-key (kbd "s-n") 'next-buffer)
 
-  (global-set-key (kbd "C-x C-l") 'log-region)
+  (global-set-key (kbd "C-x C-l") 'agg/log-region)
 
   ;; Two approaches are discussed here for local key bindings
   ;; http://stackoverflow.com/questions/9818307/emacs-mode-specific-custom-key-bindings-local-set-key-vs-define-key
 
   ;; This is a general approach to binding a specific key binding to one
   ;; or more modes. Should be used in this file.
-  ;; (defun my/bindkey-recompile ()
+  ;; (defun agg/bindkey-recompile ()
   ;;   "Bind <F5> to `recompile'."
   ;;   (local-set-key (kbd "<f5>") 'recompile))
-  ;; (add-hook 'c-mode-common-hook 'my/bindkey-recompile)
+  ;; (add-hook 'c-mode-common-hook 'agg/bindkey-recompile)
 #+END_SRC
-* Features
-** Langs
-#+begin_src elisp
-  ;; Consider integrating tree-sitter-langs because it is a curated list
-  ;; of langs and (presumably) working versions
-
-  (use-package tree-sitter
-    :ensure t
-    :init
-    (setq major-mode-remap-alist
-          '((bash-mode . bash-ts-mode)
-            (cmake-mode . cmake-ts-mode)
-            (css-mode . css-ts-mode)
-            (elisp-mode . elisp-ts-mode)
-            (elm-mode . elm-ts-mode) ;; not working because elm-ts-mode doesn't exist after this registration
-            (enh-ruby-mode . ruby-ts-mode)
-            (go-mode . go-ts-mode)
-            (html-mode . html-ts-mode)
-            (js2-mode . js-ts-mode)
-            (json-mode . json-ts-mode)
-            (make-mode . make-ts-mode)
-            (markdown-mode . markdown-ts-mode)
-            (python-mode . python-ts-mode)
-            (ruby-mode . ruby-ts-mode)
-            (tsx-mode . tsx-ts-mode)
-            ;; (typescript-mode . typescript-ts-mode)  // LSP doesn't work with this on
-            (yaml-mode . yaml-ts-mode))))
-
-  (use-package tree-sitter-langs
-    :ensure t
-    :init
-    (setq treesit-language-source-alist
-          '((bash "https://github.com/tree-sitter/tree-sitter-bash")
-            (cmake "https://github.com/uyha/tree-sitter-cmake")
-            (css "https://github.com/tree-sitter/tree-sitter-css")
-            (elisp "https://github.com/Wilfred/tree-sitter-elisp")
-            (elm "https://github.com/elm-tooling/tree-sitter-elm" "main" "src")
-            (go "https://github.com/tree-sitter/tree-sitter-go")
-            (html "https://github.com/tree-sitter/tree-sitter-html")
-            (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
-            (json "https://github.com/tree-sitter/tree-sitter-json")
-            (make "https://github.com/alemuller/tree-sitter-make")
-            (markdown "https://github.com/ikatyang/tree-sitter-markdown")
-            (python "https://github.com/tree-sitter/tree-sitter-python")
-            (ruby "https://github.com/tree-sitter/tree-sitter-ruby" "master" "src")
-            (toml "https://github.com/tree-sitter/tree-sitter-toml")
-            (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
-            (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
-            (yaml "https://github.com/ikatyang/tree-sitter-yaml"))))
-
-  ;; Compiles all so you don't have to M-x treesit-install-language-grammar
-  ;; (mapc #'treesit-install-language-grammar (mapcar #'car treesit-language-source-alist))
-#+end_src
-** Completions
+** Features
+*** Completions
 #+BEGIN_SRC emacs-lisp
   (use-package vertico
     :ensure t
@@ -624,7 +601,7 @@ values to the ~custom.el~ for future sessions.
            ("M-r" . consult-history)))
 #+END_SRC
 
-** Organization
+*** Organization
 Configuration for Org Mode.
 
 #+BEGIN_SRC emacs-lisp
@@ -654,7 +631,7 @@ Configuration for Org Mode.
   ;; (require 'ob-sh)
   ;; (org-babel-do-load-languages 'org-babel-load-languages '((shell . t)))
 #+END_SRC
-** Notes
+*** Notes
 Configuration for Org Roam.
 
 #+BEGIN_SRC emacs-lisp
@@ -701,13 +678,13 @@ Configuration for Org Roam.
           org-roam-ui-open-on-start t))
 
 #+END_SRC
-** Browsing
+*** Browsing
 #+BEGIN_SRC emacs-lisp
   ;; (use-package w3m
   ;;   :ensure t)
 #+END_SRC
-* Development
-** General
+** Development
+*** General
 #+BEGIN_SRC emacs-lisp
   ;; (use-package company
   ;;   :ensure t
@@ -768,8 +745,8 @@ Configuration for Org Roam.
   ;;     :config
   ;;     (which-key-mode))
 #+END_SRC
-** Data Formats
-*** Docker
+*** Data Formats
+**** Docker
 #+BEGIN_SRC emacs-lisp
   (use-package docker
     :ensure t
@@ -778,7 +755,7 @@ Configuration for Org Roam.
   (use-package dockerfile-mode
     :ensure t)
 #+END_SRC
-*** JSON
+**** JSON
 #+BEGIN_SRC emacs-lisp
   (use-package json-mode
     :ensure t
@@ -794,7 +771,7 @@ Configuration for Org Roam.
     :init
     (customize-set-variable 'json-reformat:indent-width 4))
 #+END_SRC
-*** XML
+**** XML
 #+BEGIN_SRC emacs-lisp
   (use-package nxml-mode
     :mode "\\.xml\\'"
@@ -806,18 +783,18 @@ Configuration for Org Roam.
                                "xmllint -format -"
                                (current-buffer) t
                                "*Xmllint Error Buffer*" t))
-    (add-hook 'nxml-mode-hook 'progmodes-hooks)
+    (add-hook 'nxml-mode-hook 'agg/progmodes-hooks)
     :bind (:map nxml-mode-map
                 ("C-c C-l" . agg/xml-format)))
 #+END_SRC
-** Templating Languages
-*** haml
+*** Templating Languages
+**** haml
 #+BEGIN_SRC emacs-lisp
   (use-package haml-mode
     :ensure t
     :disabled)
 #+END_SRC
-*** Markdown
+**** Markdown
 #+BEGIN_SRC emacs-lisp
   (use-package markdown-mode
     :ensure t
@@ -830,20 +807,20 @@ Configuration for Org Roam.
   (add-to-list 'load-path (expand-file-name "~/.emacs.d/vendor/emacs-livedown"))
   (require 'livedown)
 #+END_SRC
-*** Mustache
+**** Mustache
 #+BEGIN_SRC emacs-lisp
   (use-package mustache-mode
     :ensure t
     :disabled)
 #+END_SRC
-** DSLs
-*** Cucumber
+*** DSLs
+**** Cucumber
 #+BEGIN_SRC emacs-lisp
   (use-package feature-mode
     :ensure t
     :disabled)
 #+END_SRC
-*** Puppet
+**** Puppet
 #+BEGIN_SRC emacs-lisp
   (use-package puppet-mode
     :ensure t
@@ -852,27 +829,79 @@ Configuration for Org Roam.
     (add-to-list 'auto-mode-alist '("\\.pp$" . puppet-mode)))
 #+END_SRC
 
-*** SQL
+**** SQL
 #+BEGIN_SRC emacs-lisp
   (setq auto-mode-alist (cons '("\\.psql$" . sql-mode) auto-mode-alist))
 
   (add-hook 'sql-mode-hook 'turn-off-auto-fill)
-  (add-hook 'sql-mode-hook 'progmodes-hooks)
+  (add-hook 'sql-mode-hook 'agg/progmodes-hooks)
 
   (provide 'agg-sql-mode)
 #+END_SRC
-*** Terrform
+**** Terrform
 #+BEGIN_SRC emacs-lisp
   (use-package terraform-mode
     :ensure t)
 #+END_SRC
-*** YAML
+**** YAML
 #+BEGIN_SRC emacs-lisp
   (use-package yaml-mode
     :ensure t)
 #+END_SRC
-** Languages
-*** Clojure
+*** Languages
+**** Treesitter Setup
+#+begin_src elisp
+  ;; Consider integrating tree-sitter-langs because it is a curated list
+  ;; of langs and (presumably) working versions
+
+  (use-package tree-sitter
+    :ensure t
+    :init
+    (setq major-mode-remap-alist
+          '((bash-mode . bash-ts-mode)
+            (cmake-mode . cmake-ts-mode)
+            (css-mode . css-ts-mode)
+            (elisp-mode . elisp-ts-mode)
+            (elm-mode . elm-ts-mode) ;; not working because elm-ts-mode doesn't exist after this registration
+            (enh-ruby-mode . ruby-ts-mode)
+            (go-mode . go-ts-mode)
+            (html-mode . html-ts-mode)
+            (js2-mode . js-ts-mode)
+            (json-mode . json-ts-mode)
+            (make-mode . make-ts-mode)
+            (markdown-mode . markdown-ts-mode)
+            (python-mode . python-ts-mode)
+            (ruby-mode . ruby-ts-mode)
+            (tsx-mode . tsx-ts-mode)
+            ;; (typescript-mode . typescript-ts-mode)  // LSP doesn't work with this on
+            (yaml-mode . yaml-ts-mode))))
+
+  (use-package tree-sitter-langs
+    :ensure t
+    :init
+    (setq treesit-language-source-alist
+          '((bash "https://github.com/tree-sitter/tree-sitter-bash")
+            (cmake "https://github.com/uyha/tree-sitter-cmake")
+            (css "https://github.com/tree-sitter/tree-sitter-css")
+            (elisp "https://github.com/Wilfred/tree-sitter-elisp")
+            (elm "https://github.com/elm-tooling/tree-sitter-elm" "main" "src")
+            (go "https://github.com/tree-sitter/tree-sitter-go")
+            (html "https://github.com/tree-sitter/tree-sitter-html")
+            (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
+            (json "https://github.com/tree-sitter/tree-sitter-json")
+            (make "https://github.com/alemuller/tree-sitter-make")
+            (markdown "https://github.com/ikatyang/tree-sitter-markdown")
+            (python "https://github.com/tree-sitter/tree-sitter-python")
+            (ruby "https://github.com/tree-sitter/tree-sitter-ruby" "master" "src")
+            (toml "https://github.com/tree-sitter/tree-sitter-toml")
+            (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
+            (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
+            (yaml "https://github.com/ikatyang/tree-sitter-yaml"))))
+
+  ;; Compiles all so you don't have to M-x treesit-install-language-grammar
+  ;; (mapc #'treesit-install-language-grammar (mapcar #'car treesit-language-source-alist))
+#+end_src
+**** Clojure
 #+BEGIN_SRC emacs-lisp
   (use-package clojure-mode
     :ensure t
@@ -899,25 +928,25 @@ Configuration for Org Roam.
     :after (flycheck)
     :config (flycheck-clojure-setup))
 #+END_SRC
-*** CSS
+**** CSS
 #+BEGIN_SRC emacs-lisp
   (customize-set-variable 'css-indent-offset 2)
 #+END_SRC
-*** Groovy
+**** Elm
+#+begin_src emacs-lisp
+  (use-package elm-mode
+    :ensure t)
+#+end_src
+**** Groovy
 #+BEGIN_SRC emacs-lisp
   (use-package groovy-mode
     :ensure t
     :disabled)
 #+END_SRC
-*** Elm
-#+begin_src emacs-lisp
-  (use-package elm-mode
-    :ensure t)
-#+end_src
-*** HTML
+**** HTML
 #+BEGIN_SRC emacs-lisp
   (add-hook 'html-mode-hook 'turn-off-auto-fill)
-  (add-hook 'html-mode-hook 'progmodes-hooks)
+  (add-hook 'html-mode-hook 'agg/progmodes-hooks)
 
   ;; (use-package org-preview-html)
 
@@ -925,7 +954,7 @@ Configuration for Org Roam.
   ;;   :ensure t
   ;;   :defer t)
 #+END_SRC
-*** Java
+**** Java
 #+BEGIN_SRC emacs-lisp
   (add-hook 'java-mode-hook (lambda ()
                               (setq c-basic-offset 4
@@ -943,14 +972,14 @@ Configuration for Org Roam.
     ;; display compilation error messages in the echo area
     (setq help-at-pt-display-when-idle t)
     (setq help-at-pt-timer-delay 0.1)
-    (defun my-java-mode-hook ()
+    (defun agg/java-mode-hook ()
       (eclim-mode t))
-    (add-hook 'java-mode-hook 'my-java-mode-hook)
+    (add-hook 'java-mode-hook 'agg/java-mode-hook)
     (add-hook 'java-mode-hook 'progmodes-hooks)
     :config
     (help-at-pt-set-timer))
 #+END_SRC
-*** Javascript
+**** Javascript
 #+BEGIN_SRC emacs-lisp
   (setq js-indent-level 4)
 
@@ -1003,7 +1032,7 @@ Configuration for Org Roam.
     :after (yasnippet))
 #+END_SRC
 
-*** Ruby
+**** Ruby
 #+BEGIN_SRC emacs-lisp
   (defun enh-ruby-mode-before-save-hook ()
     (when (eq major-mode 'enh-ruby-mode)
@@ -1068,7 +1097,7 @@ Configuration for Org Roam.
     (define-key projectile-rails-mode-map (kbd "C-c r") 'projectile-rails-command-map)
     (add-hook 'enh-ruby-mode-hook 'projectile-rails-mode))
 #+END_SRC
-*** Scala
+**** Scala
 #+BEGIN_SRC emacs-lisp
   (use-package scala-mode
     :ensure t
@@ -1093,7 +1122,7 @@ Configuration for Org Roam.
   ;;  sbt:program-name "/home/agoodno/src/ccap3/sbt"
   ;;  ensime-startup-notification nil)
 #+END_SRC
-*** Typescript
+**** Typescript
 
 #+BEGIN_SRC emacs-lisp
   (use-package typescript-mode
@@ -1115,19 +1144,83 @@ Configuration for Org Roam.
 
 #+END_SRC
 
-*** Vue.js
+** Embedded Clients
+*** Email
 #+BEGIN_SRC emacs-lisp
-  (use-package vue-mode
+  (defun search-for-sender (msg)
+    "Search for messages sent by the sender of the message at point."
+    (mu4e-headers-search
+     (concat "from:" (cdar (mu4e-message-field msg :from)))))
+
+  ;; This [[https://jherrlin.github.io/posts/emacs-mu4e/][link]] was helpful for this setup
+  (use-package mu4e
     :ensure t
     :disabled
     :init
-    (add-hook 'vue-mode-hook 'progmodes-hooks)
+    (require 'smtpmail)
+    (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu/mu4e")
+    (setq mu4e-mu-binary "/usr/local/bin/mu"
+          mu4e-get-mail-command "mbsync -q -a"
+          mu4e-maildir (expand-file-name "~/Mail")
+          mu4e-change-filenames-when-moving t
+          mu4e-update-interval 300
+          mu4e-index-update-in-background t
+          mu4e-view-html-plaintext-ratio-heuristic most-positive-fixnum
+          mu4e-sent-messages-behavior 'delete
+          smtpmail-debug-info t
+          smtpmail-stream-type 'starttls
+          starttls-use-gnutls nil
+          message-kill-buffer-on-exit t
+          mu4e-attachment-dir "~/Downloads"
+          mu4e-view-show-addresses t
+          mu4e-html2text-command "textutil -stdin -format html -convert txt -stdout"
+          shr-color-visible-luminance-min 5
+          mu4e-split-view 'horizontal  ; 'vertical ; 'single-window
+          mu4e-headers-visible-lines 16
+          message-send-mail-function 'smtpmail-send-it)
+
+    ;; define 'x' as the shortcut
+    (add-to-list 'mu4e-view-actions
+                 '("xsearch for sender" . search-for-sender) t)
     :config
-    ;; 0, 1, or 2, representing (respectively) none, low, and high coloring
-    (setq mmm-submode-decoration-level 0))
+    (setq mu4e-contexts
+          `( ,(make-mu4e-context
+               :name "Gmail"
+               :enter-func (lambda () (mu4e-message "Entering Gmail context"))
+               :leave-func (lambda () (mu4e-message "Leaving Gmail context"))
+               :match-func (lambda (msg)
+                             (when msg
+                               (mu4e-message-contact-field-matches msg
+                                                                   :from "agoodno@gmail.com")))
+               :vars '((user-full-name . "Andrew Goodnough")
+                       (user-mail-address . "agoodno@gmail.com")
+                       (smtpmail-smtp-server . "smtp.gmail.com")
+                       (smtpmail-smtp-service . 587)
+                       (smtpmail-smtp-user . "agoodno")
+                       (mu4e-drafts-folder . "/gmail/drafts")
+                       (mu4e-sent-folder . "/gmail/sent")
+                       (mu4e-trash-folder . "/gmail/trash")
+                       (mu4e-refile-folder . "/gmail/all")))
+             ,(make-mu4e-context
+               :name "iCloud"
+               :enter-func (lambda () (mu4e-message "Entering iCloud context"))
+               :leave-func (lambda () (mu4e-message "Leaving iCloud context"))
+               :match-func (lambda (msg)
+                             (when msg
+                               (mu4e-message-contact-field-matches msg
+                                                                   :from "andrew.goodnough@icloud.com")))
+               :vars '((user-full-name . "Andrew Goodnough")
+                       (user-mail-address . "andrew.goodnough@icloud.com")
+                       (smtpmail-smtp-server . "smtp.mail.me.com")
+                       (smtpmail-smtp-service . 587)
+                       (smtpmail-smtp-user . "andrew.goodnough")
+                       (mu4e-drafts-folder . "/icloud/drafts")
+                       (mu4e-sent-folder . "/icloud/sent")
+                       (mu4e-trash-folder . "/icloud/trash")
+                       (mu4e-refile-folder . "/icloud/archive")))))
+    (add-hook 'mu4e-view-mode-hook (lambda () (setq truncate-lines t))))
 #+END_SRC
-* Social
-** IRC
+*** IRC
 #+BEGIN_SRC emacs-lisp
   ;; (defvar freenode-password "")
   ;; (defvar bitlbee-password "")
@@ -1338,7 +1431,7 @@ Configuration for Org Roam.
   ;;     (add-to-list 'erc-modules 'hipchatify)
   ;;     (erc-update-modules)))
 #+END_SRC
-** Slack
+*** Slack
 #+BEGIN_SRC emacs-lisp
   ;; How to get a token
   ;; https://github.com/yuya373/emacs-slack#how-to-get-token
@@ -1378,83 +1471,18 @@ Configuration for Org Roam.
               :user "agoodnough@zendesk.com^cookie")
      :subscribed-channels '((sunburst-build-deploy sunburst-eng-p tood-directs-p))))
 #+END_SRC
-** Email
+*** Verb REST client
 #+BEGIN_SRC emacs-lisp
-  (defun search-for-sender (msg)
-    "Search for messages sent by the sender of the message at point."
-    (mu4e-headers-search
-     (concat "from:" (cdar (mu4e-message-field msg :from)))))
-
-  ;; This [[https://jherrlin.github.io/posts/emacs-mu4e/][link]] was helpful for this setup
-  (use-package mu4e
+  (use-package verb
     :ensure t
-    :disabled
-    :init
-    (require 'smtpmail)
-    (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu/mu4e")
-    (setq mu4e-mu-binary "/usr/local/bin/mu"
-          mu4e-get-mail-command "mbsync -q -a"
-          mu4e-maildir (expand-file-name "~/Mail")
-          mu4e-change-filenames-when-moving t
-          mu4e-update-interval 300
-          mu4e-index-update-in-background t
-          mu4e-view-html-plaintext-ratio-heuristic most-positive-fixnum
-          mu4e-sent-messages-behavior 'delete
-          smtpmail-debug-info t
-          smtpmail-stream-type 'starttls
-          starttls-use-gnutls nil
-          message-kill-buffer-on-exit t
-          mu4e-attachment-dir "~/Downloads"
-          mu4e-view-show-addresses t
-          mu4e-html2text-command "textutil -stdin -format html -convert txt -stdout"
-          shr-color-visible-luminance-min 5
-          mu4e-split-view 'horizontal  ; 'vertical ; 'single-window
-          mu4e-headers-visible-lines 16
-          message-send-mail-function 'smtpmail-send-it)
-
-    ;; define 'x' as the shortcut
-    (add-to-list 'mu4e-view-actions
-                 '("xsearch for sender" . search-for-sender) t)
     :config
-    (setq mu4e-contexts
-          `( ,(make-mu4e-context
-               :name "Gmail"
-               :enter-func (lambda () (mu4e-message "Entering Gmail context"))
-               :leave-func (lambda () (mu4e-message "Leaving Gmail context"))
-               :match-func (lambda (msg)
-                             (when msg
-                               (mu4e-message-contact-field-matches msg
-                                                                   :from "agoodno@gmail.com")))
-               :vars '((user-full-name . "Andrew Goodnough")
-                       (user-mail-address . "agoodno@gmail.com")
-                       (smtpmail-smtp-server . "smtp.gmail.com")
-                       (smtpmail-smtp-service . 587)
-                       (smtpmail-smtp-user . "agoodno")
-                       (mu4e-drafts-folder . "/gmail/drafts")
-                       (mu4e-sent-folder . "/gmail/sent")
-                       (mu4e-trash-folder . "/gmail/trash")
-                       (mu4e-refile-folder . "/gmail/all")))
-             ,(make-mu4e-context
-               :name "iCloud"
-               :enter-func (lambda () (mu4e-message "Entering iCloud context"))
-               :leave-func (lambda () (mu4e-message "Leaving iCloud context"))
-               :match-func (lambda (msg)
-                             (when msg
-                               (mu4e-message-contact-field-matches msg
-                                                                   :from "andrew.goodnough@icloud.com")))
-               :vars '((user-full-name . "Andrew Goodnough")
-                       (user-mail-address . "andrew.goodnough@icloud.com")
-                       (smtpmail-smtp-server . "smtp.mail.me.com")
-                       (smtpmail-smtp-service . 587)
-                       (smtpmail-smtp-user . "andrew.goodnough")
-                       (mu4e-drafts-folder . "/icloud/drafts")
-                       (mu4e-sent-folder . "/icloud/sent")
-                       (mu4e-trash-folder . "/icloud/trash")
-                       (mu4e-refile-folder . "/icloud/archive")))))
-    (add-hook 'mu4e-view-mode-hook (lambda () (setq truncate-lines t))))
+    (define-key org-mode-map (kbd "C-c C-r") verb-command-map))
+
+  (use-package impostman
+    :ensure t)
 #+END_SRC
-* Packages
-** browse-url
+** Packages
+*** browse-url
 #+BEGIN_SRC emacs-lisp
   ;; Open links in Chrome on macOS
   ;; (setq gnus-button-url 'browse-url-generic
@@ -1465,12 +1493,12 @@ Configuration for Org Roam.
   (setq browse-url-browser-function 'browse-url-generic
         browse-url-generic-program "open")
 #+END_SRC
-** f
+*** f
 #+BEGIN_SRC emacs-lisp
   (use-package f
     :ensure t)
 #+END_SRC
-** flycheck
+*** flycheck
 
 #+BEGIN_SRC emacs-lisp
   (use-package flycheck
@@ -1489,7 +1517,7 @@ Configuration for Org Roam.
     (global-flycheck-mode))
 #+END_SRC
 
-** ledger
+*** ledger
 #+BEGIN_SRC emacs-lisp
   (use-package ledger-mode
     :ensure t
@@ -1497,7 +1525,7 @@ Configuration for Org Roam.
     :init
     (add-to-list 'auto-mode-alist '("\\.dat$" . ledger-mode)))
 #+END_SRC
-** magit
+*** magit
 #+BEGIN_SRC emacs-lisp
   (use-package magit
     :ensure t
@@ -1527,7 +1555,7 @@ Configuration for Org Roam.
     (global-set-key (kbd "C-c g") 'magit-status)
     (global-set-key (kbd "C-c h") 'magit-list-repositories))
 #+END_SRC
-** pdf-tools
+*** pdf-tools
 #+BEGIN_SRC emacs-lisp
   (use-package pdf-tools
     :ensure t
@@ -1535,7 +1563,7 @@ Configuration for Org Roam.
     :init
     (pdf-tools-install))
 #+END_SRC
-** projectile
+*** projectile
 #+BEGIN_SRC emacs-lisp
   (use-package projectile
     :ensure t
@@ -1544,13 +1572,13 @@ Configuration for Org Roam.
     (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
     (projectile-mode +1))
 #+END_SRC
-** saveplace
+*** saveplace
 #+BEGIN_SRC emacs-lisp
   (setq save-place-file (locate-user-emacs-file "places" ".emacs-places"))
 
   (save-place-mode 1)
 #+END_SRC
-** shell-mode
+*** shell-mode
 #+BEGIN_SRC emacs-lisp
   ;; Some ideas from: https://www.reddit.com/r/emacs/comments/9x2st8/disable_all_colours_in_shell_mode/
 
@@ -1577,13 +1605,13 @@ Configuration for Org Roam.
     (setq comint-prompt-read-only t))
   (add-hook 'comint-mode-hook 'agg/my-comint-init)
 #+END_SRC
-** tidy
+*** tidy
 #+BEGIN_SRC emacs-lisp
   (setq tidy-shell-command "/usr/local/bin/tidy")
   (setq tidy-config-file "~/.tidyrc")
   (setq tidy-temp-directory "/tmp")
 #+END_SRC
-** tramp
+*** tramp
 #+BEGIN_SRC emacs-lisp
   (setq tramp-default-method "ssh")
 
@@ -1591,62 +1619,25 @@ Configuration for Org Roam.
     (interactive)
     (dired "/lcbuser@patproc-test-host.library.wisc.edu:/opt/patproc-test/"))
 #+END_SRC
-** unfill
+*** unfill
 #+BEGIN_SRC emacs-lisp
   (use-package unfill
     :ensure t)
 #+END_SRC
-** uniquify
+*** uniquify
 #+BEGIN_SRC emacs-lisp
   (setq uniquify-buffer-name-style 'forward)
 #+END_SRC
-* Embedded Clients
-** Verb REST client
-#+BEGIN_SRC emacs-lisp
-  (use-package verb
-    :ensure t
-    :config
-    (define-key org-mode-map (kbd "C-c C-r") verb-command-map))
-
-  (use-package impostman
-    :ensure t)
-#+END_SRC
-* Startup
+** Startup
 #+BEGIN_SRC emacs-lisp
   (use-package server
     :config
-    ;; (load-theme 'agg-light t)
-    ;; (load-theme 'agg-dark t)
-
-    ;; (setq catppuccin-flavor 'frappe) ;; or 'latte, 'macchiato, or 'mocha
-    ;; (catppuccin-reload)
-    ;;
-    ;; (load-theme 'catppuccin :no-confirm)
-
-    ;; (load-theme 'sanityinc-tomorrow-day)
-    ;; (load-theme 'sanityinc-tomorrow-night)
-    ;; (load-theme 'sanityinc-tomorrow-blue)
-    ;; (load-theme 'sanityinc-tomorrow-bright)
-    (load-theme 'sanityinc-tomorrow-eighties)
-
-    ;; (load-theme 'dracula t)
-
-    ;; (load-theme 'gruvbox t) ;; sets to default
-    ;; (load-theme 'gruvbox-light-soft t)
-    ;; (load-theme 'gruvbox-light-medium t)
-    ;; (load-theme 'gruvbox-light-hard t)
-    ;; (load-theme 'gruvbox-dark-soft t)
-    ;; (load-theme 'gruvbox-dark-medium t) ;; default
-
-    ;; (load-theme 'spacemacs-light t)
-    ;; (load-theme 'spacemacs-dark t)
-
-    ;; (load-theme 'timu-spacegrey t)
     (unless (and (fboundp 'server-running-p) (server-running-p))
       (message "Starting Emacs server...")
       (setq server-client-instructions nil)
       (server-start)))
 #+END_SRC
+
 * Notes
 ** Clean test
 Occasionally, I like to test my init files from a clean environment so
@@ -1658,6 +1649,7 @@ the following:
 1. Clean the existing ELPA compiled directory
 
    ~/src/dotemacs $ rm -rf elpa
+
 1. Start Emacs
 
    Repeat all steps until you get a clean launch. If you don't get a
@@ -1666,29 +1658,3 @@ the following:
 
    It would be nice to have something like a build server that would
    perform a "clean build" on all new configuration changes.
-** Mac OS Notes
-
-switch default key bindings
-
-(setq mac-right-option-modifier 'control)
-
-Above was my first attempt to get a control key on the right side
-
-I ended up switching the modifier keys in the Keyboard control panel
-Command becomes Alt
-Alt becomes Command
-Doing it this way the command-line editing is identical to Emacs
-
-On the Keyboard tab, also set "Use all F1, F2, etc. as standard function keys..." = true
-
-And on the Shortcuts tab, unchecked almost all keyboard shortcuts
-
-This made it so the mac settings were not needed (as the keys were
-already flipped at the OS-level. Having them in the emacs config
-would have flipped them again.
-
-Using KeyRemap4MacBook to re-map Left Arrow to be my Right Cntl Key
-
-iTerm, set "Use option as meta key" = true
-
-Last issue is the function key. I often hit it when I want my Left Cntl Key so I'd like to swap Function and Left Cntl.
