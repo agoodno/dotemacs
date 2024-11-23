@@ -686,25 +686,6 @@ Configuration for Org Roam.
 ** Development
 *** General
 #+BEGIN_SRC emacs-lisp
-  ;; (use-package company
-  ;;   :ensure t
-  ;;   :diminish
-  ;;   :bind
-  ;;   ((:map company-active-map
-  ;;          ("<tab>" . #'company-indent-or-complete-common)))
-  ;;   :init
-  ;;   (global-company-mode))
-
-  (use-package company
-    :ensure t
-    :init
-    (global-company-mode))
-
-  (use-package deadgrep
-    :ensure t
-    :init
-    (global-set-key (kbd "<f10>") #'deadgrep))
-
   (use-package smartparens
     :ensure t
     :init
@@ -725,25 +706,14 @@ Configuration for Org Roam.
     :commands lsp-ui-mode
     :after lsp)
 
-  ;; if you are helm user
-  ;; (use-package helm-lsp :commands helm-lsp-workspace-symbol)
-
-  ;; if you are ivy user
-  ;; (use-package lsp-ivy
-  ;;   :ensure t
-  ;;   :commands lsp-ivy-workspace-symbol
-  ;;   :after lsp)
-
-  ;; (use-package lsp-treemacs :commands lsp-treemacs-errors-list)
-
   ;; optionally if you want to use debugger
   ;; (use-package dap-mode)
   ;; (use-package dap-LANGUAGE) to load the dap adapter for your language
 
-  ;; optional if you want which-key integration
-  ;; (use-package which-key
-  ;;     :config
-  ;;     (which-key-mode))
+  (use-package which-key
+    :ensure t
+    :config
+    (which-key-mode))
 #+END_SRC
 *** Data Formats
 **** Docker
