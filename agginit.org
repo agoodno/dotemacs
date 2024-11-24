@@ -1399,57 +1399,66 @@ Configuration for Org Roam.
 #+END_SRC
 *** Slack
 #+BEGIN_SRC emacs-lisp
-  ;; How to get a token
-  ;; Run this command to describe the process of saving token and cookie
-  ;; M-x slack-refresh-token
+    ;; How to get a token
+    ;; Run this command to describe the process of saving token and cookie
+    ;; M-x slack-refresh-token
 
-  ;; The short version is to grab:
-  ;; token xoxc-XXXX
-  ;; d    xoxd-YYYY
-  ;; d-s  123
-  ;; lc   456
-  ;; combine to make:
-  ;; xoxd-YYYY; d-s=123; lc=456
+    ;; The short version is to grab:
+    ;; token xoxc-XXXX
+    ;; d    xoxd-YYYY
+    ;; d-s  123
+    ;; lc   456
+    ;; combine to make:
+    ;; xoxd-YYYY; d-s=123; lc=456
 
-  ;; See this to get it working with enterprise tokens:
-  ;; https://github.com/emacs-slack/emacs-slack/commit/472c48673f21148d85c069e8f404584349e780ca
+    ;; See this to get it working with enterprise tokens:
+    ;; https://github.com/emacs-slack/emacs-slack/commit/472c48673f21148d85c069e8f404584349e780ca
 
-  (setq auth-sources '("~/.authinfo"))
+    (setq auth-sources '("~/.authinfo"))
 
-  ;; == ~/.authinfo contents ==
-  ;; machine clojurians.slack.com user token password "xoxc-XXX"
-  ;; machine clojurians.slack.com user cookie password "xoxd-YYY; d-s=123; lc=456"
-
-  (use-package slack
-    :ensure t
-    :commands (slack-start)
-    :init
-    (setq slack-buffer-emojify t)
-    (setq slack-prefer-current-team t)
-    (setq auth-source-debug 'trivia)
-    :config
-    ;; (slack-register-team
-    ;;  :name slack-elmlang-team
-    ;;  :client-id slack-elmlang-client-id
-    ;;  :client-secret slack-elmlang-client-secret
-    ;;  :token slack-elmlang-token
-    ;;  :full-and-display-names t)
-
-    (slack-register-team
-     :name "clojurians"
-     :default t
-     :full-and-display-names t
-     :subscribed-channels '(announcements beginners clojurescript)
-     :token (auth-source-pick-first-password
-             :host "clojurians.slack.com"
-             :user "token"
-             :type 'netrc
-             :max 1)
-     :cookie (auth-source-pick-first-password
-              :host "clojurians.slack.com"
-              :user "cookie"
-              :type 'netrc
-              :max 1)))
+    ;; == ~/.authinfo contents ==
+    ;; machine clojurians.slack.com user token password "xoxc-XXX"
+    ;; machine clojurians.slack.com user cookie password "xoxd-YYY; d-s=123; lc=456"
+    ;; machine elmlang.slack.com user token password "xoxc-ZZZ"
+    ;; machine elmlang.slack.com user cookie password "xoxd-zzz; d-s-789; lc=012"
+  
+    (use-package slack
+      :ensure t
+      :commands (slack-start)
+      :init
+      (setq slack-buffer-emojify t)
+      (setq slack-prefer-current-team t)
+      (setq auth-source-debug 'trivia)
+      :config
+      (slack-register-team
+       :name "elmlang"
+       :default t
+       :full-and-display-names t
+       :subscribed-channels '(beginners)
+       :token (auth-source-pick-first-password
+               :host "elmlang.slack.com"
+               :user "token"
+               :type 'netrc
+               :max 1)
+       :cookie (auth-source-pick-first-password
+                :host "elmlang.slack.com"
+                :user "cookie"
+                :type 'netrc
+                :max 1))
+      (slack-register-team
+       :name "clojurians"
+       :full-and-display-names t
+       :subscribed-channels '(announcements beginners clojurescript)
+       :token (auth-source-pick-first-password
+               :host "clojurians.slack.com"
+               :user "token"
+               :type 'netrc
+               :max 1)
+       :cookie (auth-source-pick-first-password
+                :host "clojurians.slack.com"
+                :user "cookie"
+                :type 'netrc
+                :max 1)))
     ;; (slack-register-team
     ;;  :name "zendesk"
     ;;  :token (auth-source-pick-first-password
