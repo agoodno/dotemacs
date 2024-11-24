@@ -1399,80 +1399,107 @@ Configuration for Org Roam.
 #+END_SRC
 *** Slack
 #+BEGIN_SRC emacs-lisp
-    ;; How to get a token
-    ;; Run this command to describe the process of saving token and cookie
-    ;; M-x slack-refresh-token
+  ;; How to get a token
+  ;; Run this command to describe the process of saving token and cookie
+  ;; M-x slack-refresh-token
 
-    ;; The short version is to grab:
-    ;; token xoxc-XXXX
-    ;; d    xoxd-YYYY
-    ;; d-s  123
-    ;; lc   456
-    ;; combine to make:
-    ;; xoxd-YYYY; d-s=123; lc=456
+  ;; The short version is to grab:
+  ;; token xoxc-XXXX
+  ;; d    xoxd-YYYY
+  ;; d-s  123
+  ;; lc   456
+  ;; combine to make:
+  ;; xoxd-YYYY; d-s=123; lc=456
 
-    ;; See this to get it working with enterprise tokens:
-    ;; https://github.com/emacs-slack/emacs-slack/commit/472c48673f21148d85c069e8f404584349e780ca
+  ;; See this to get it working with enterprise tokens:
+  ;; https://github.com/emacs-slack/emacs-slack/commit/472c48673f21148d85c069e8f404584349e780ca
 
-    (setq auth-sources '("~/.authinfo"))
+  (setq auth-sources '("~/.authinfo"))
 
-    ;; == ~/.authinfo contents ==
-    ;; machine clojurians.slack.com user token password "xoxc-XXX"
-    ;; machine clojurians.slack.com user cookie password "xoxd-YYY; d-s=123; lc=456"
-    ;; machine elmlang.slack.com user token password "xoxc-ZZZ"
-    ;; machine elmlang.slack.com user cookie password "xoxd-zzz; d-s-789; lc=012"
-  
-    (use-package slack
-      :ensure t
-      :commands (slack-start)
-      :init
-      (setq slack-buffer-emojify t)
-      (setq slack-prefer-current-team t)
-      (setq auth-source-debug 'trivia)
-      :config
-      (slack-register-team
-       :name "elmlang"
-       :default t
-       :full-and-display-names t
-       :subscribed-channels '(beginners)
-       :token (auth-source-pick-first-password
-               :host "elmlang.slack.com"
-               :user "token"
-               :type 'netrc
-               :max 1)
-       :cookie (auth-source-pick-first-password
-                :host "elmlang.slack.com"
-                :user "cookie"
-                :type 'netrc
-                :max 1))
-      (slack-register-team
-       :name "clojurians"
-       :full-and-display-names t
-       :subscribed-channels '(announcements beginners clojurescript)
-       :token (auth-source-pick-first-password
-               :host "clojurians.slack.com"
-               :user "token"
-               :type 'netrc
-               :max 1)
-       :cookie (auth-source-pick-first-password
-                :host "clojurians.slack.com"
-                :user "cookie"
-                :type 'netrc
-                :max 1)))
-    ;; (slack-register-team
-    ;;  :name "zendesk"
-    ;;  :token (auth-source-pick-first-password
-    ;;          :host "zendesk.slack.com"
-    ;;          :user "agoodnough@zendesk.com")
-    ;;  :cookie (auth-source-pick-first-password
-    ;;           :host "zendesk.slack.com"
-    ;;           :user "agoodnough@zendesk.com^cookie")
-    ;;  :subscribed-channels '((sunburst-build-deploy sunburst-eng-p tood-directs-p))))
+  ;; == ~/.authinfo contents ==
+  ;; machine clojurians.slack.com user token password "xoxc-XXX"
+  ;; machine clojurians.slack.com user cookie password "xoxd-YYY; d-s=123; lc=456"
+  ;; machine elmlang.slack.com user token password "xoxc-ZZZ"
+  ;; machine elmlang.slack.com user cookie password "xoxd-zzz; d-s-789; lc=012"
 
-    (use-package alert
-      :commands (alert)
-      :init
-      (setq alert-default-style 'notifier))
+  (use-package slack
+    :ensure t
+    :commands (slack-start)
+    :init
+    (setq slack-buffer-emojify t)
+    (setq slack-prefer-current-team t)
+    (setq auth-source-debug 'trivia)
+    :bind (("C-c S S" . slack-start)
+           ("C-c S K" . slack-stop)
+           ("C-c S c" . slack-select-rooms)
+           ("C-c S u" . slack-select-unread-rooms)
+           ("C-c S U" . slack-user-select)
+           ("C-c S s" . slack-search-from-messages)
+           ("C-c S J" . slack-jump-to-browser)
+           ("C-c S j" . slack-jump-to-app)
+           ("C-c S e" . slack-insert-emoji)
+           ("C-c S E" . slack-message-edit)
+           ("C-c S r" . slack-message-add-reaction)
+           ("C-c S t" . slack-thread-show-or-create)
+           ("C-c S g" . slack-message-redisplay)
+           ("C-c S G" . slack-conversations-list-update-quick)
+           ("C-c S q" . slack-quote-and-reply)
+           ("C-c S Q" . slack-quote-and-reply-with-link)
+           (:map slack-mode-map
+                 (("@" . slack-message-embed-mention)
+                  ("#" . slack-message-embed-channel)))
+           (:map slack-thread-message-buffer-mode-map
+                 (("C-c '" . slack-message-write-another-buffer)
+                  ("@" . slack-message-embed-mention)
+                  ("#" . slack-message-embed-channel)))
+           (:map slack-message-buffer-mode-map
+                 (("C-c '" . slack-message-write-another-buffer)))
+           (:map slack-message-compose-buffer-mode-map
+                 (("C-c '" . slack-message-send-from-buffer))))
+    :config
+    (slack-register-team
+     :name "elmlang"
+     :default t
+     :full-and-display-names t
+     :subscribed-channels '(beginners)
+     :token (auth-source-pick-first-password
+             :host "elmlang.slack.com"
+             :user "token"
+             :type 'netrc
+             :max 1)
+     :cookie (auth-source-pick-first-password
+              :host "elmlang.slack.com"
+              :user "cookie"
+              :type 'netrc
+              :max 1))
+    (slack-register-team
+     :name "clojurians"
+     :full-and-display-names t
+     :subscribed-channels '(announcements beginners clojurescript)
+     :token (auth-source-pick-first-password
+             :host "clojurians.slack.com"
+             :user "token"
+             :type 'netrc
+             :max 1)
+     :cookie (auth-source-pick-first-password
+              :host "clojurians.slack.com"
+              :user "cookie"
+              :type 'netrc
+              :max 1)))
+  ;; (slack-register-team
+  ;;  :name "zendesk"
+  ;;  :token (auth-source-pick-first-password
+  ;;          :host "zendesk.slack.com"
+  ;;          :user "agoodnough@zendesk.com")
+  ;;  :cookie (auth-source-pick-first-password
+  ;;           :host "zendesk.slack.com"
+  ;;           :user "agoodnough@zendesk.com^cookie")
+  ;;  :subscribed-channels '((sunburst-build-deploy sunburst-eng-p tood-directs-p))))
+
+  (use-package alert
+    :commands (alert)
+    :init
+    (setq alert-default-style 'notifier))
 #+END_SRC
 *** Verb REST client
 #+BEGIN_SRC emacs-lisp
