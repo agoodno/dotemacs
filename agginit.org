@@ -67,15 +67,6 @@ values to the ~custom.el~ for future sessions.
   ;; Consider setting these variables in future
   ;; system-name ""
   ;; user-login-name ""
-
-  ;; slack-cucumberbdd-team ""
-  ;; slack-cucumberbdd-client-id ""
-  ;; slack-cucumberbdd-client-secret ""
-  ;; slack-cucumberbdd-token ""
-  ;; slack-elmlang-team ""
-  ;; slack-elmlang-client-id ""
-  ;; slack-elmlang-client-secret ""
-  ;; slack-elmlang-token ""
 #+END_SRC
 *** Editor
 #+BEGIN_SRC emacs-lisp
@@ -1409,13 +1400,28 @@ Configuration for Org Roam.
 *** Slack
 #+BEGIN_SRC emacs-lisp
   ;; How to get a token
-  ;; https://github.com/yuya373/emacs-slack#how-to-get-token
+  ;; Run this command to describe the process of saving token and cookie
+  ;; M-x slack-refresh-token
 
-  ;; Works by issuing command (slack-start), then enter Team: and Token:
-  ;; but doesn't work with the token in team config below for some reason
+  ;; The short version is to grab:
+  ;; token xoxc-XXXX
+  ;; d    xoxd-YYYY
+  ;; d-s  123
+  ;; lc   456
+  ;; combine to make:
+  ;; xoxd-YYYY; d-s=123; lc=456
+
+  ;; See this to get it working with enterprise tokens:
+  ;; https://github.com/emacs-slack/emacs-slack/commit/472c48673f21148d85c069e8f404584349e780ca
+
+  (setq auth-sources '("~/.authinfo"))
+
+  ;; == ~/.authinfo contents ==
+  ;; machine clojurians.slack.com user token password "xoxc-XXX"
+  ;; machine clojurians.slack.com user cookie password "xoxd-YYY; d-s=123; lc=456"
+
   (use-package slack
     :ensure t
-    :disabled
     :commands (slack-start)
     :init
     (setq slack-buffer-emojify t)
@@ -1428,23 +1434,36 @@ Configuration for Org Roam.
     ;;  :client-secret slack-elmlang-client-secret
     ;;  :token slack-elmlang-token
     ;;  :full-and-display-names t)
-    ;; (slack-register-team
-    ;;  :name slack-cucumberbdd-team
-    ;;  :default t
-    ;;  :client-id slack-cucumberbdd-client-id
-    ;;  :client-secret slack-cucumberbdd-client-secret
-    ;;  :token slack-cucumberbdd-token
-    ;;  :full-and-display-names t
-    ;;  :subscribed-channels '(announcements events help intros podcasts-and-webinars recommended_media school))
+
     (slack-register-team
-     :name "zendesk"
+     :name "clojurians"
+     :default t
+     :full-and-display-names t
+     :subscribed-channels '(announcements beginners clojurescript)
      :token (auth-source-pick-first-password
-             :host "zendesk.slack.com"
-             :user "agoodnough@zendesk.com")
+             :host "clojurians.slack.com"
+             :user "token"
+             :type 'netrc
+             :max 1)
      :cookie (auth-source-pick-first-password
-              :host "zendesk.slack.com"
-              :user "agoodnough@zendesk.com^cookie")
-     :subscribed-channels '((sunburst-build-deploy sunburst-eng-p tood-directs-p))))
+              :host "clojurians.slack.com"
+              :user "cookie"
+              :type 'netrc
+              :max 1)))
+    ;; (slack-register-team
+    ;;  :name "zendesk"
+    ;;  :token (auth-source-pick-first-password
+    ;;          :host "zendesk.slack.com"
+    ;;          :user "agoodnough@zendesk.com")
+    ;;  :cookie (auth-source-pick-first-password
+    ;;           :host "zendesk.slack.com"
+    ;;           :user "agoodnough@zendesk.com^cookie")
+    ;;  :subscribed-channels '((sunburst-build-deploy sunburst-eng-p tood-directs-p))))
+
+    (use-package alert
+      :commands (alert)
+      :init
+      (setq alert-default-style 'notifier))
 #+END_SRC
 *** Verb REST client
 #+BEGIN_SRC emacs-lisp
@@ -1633,3 +1652,6 @@ the following:
 
    It would be nice to have something like a build server that would
    perform a "clean build" on all new configuration changes.
+> >
+** Future packages
+*** [[https://github.com/syohex/emacs-realtime-markdown-viewer][Emacs Realtime Markdown Viewer]]

@@ -29,3 +29,4 @@ org-persist/
 tree-sitter/
 eln-cache/
 history
+request/
