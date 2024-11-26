@@ -246,6 +246,10 @@ values to the ~custom.el~ for future sessions.
   (use-package bar-cursor
     :ensure t
     :init (bar-cursor-mode 1))
+
+  (use-package beacon
+    :ensure t
+    :init (beacon-mode 1))
 #+END_SRC
 *** Selection
 #+BEGIN_SRC emacs-lisp
