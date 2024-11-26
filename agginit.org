@@ -191,6 +191,8 @@ values to the ~custom.el~ for future sessions.
     (customize-set-variable 'timu-spacegrey-scale-org-level-2 t)
     (customize-set-variable 'timu-spacegrey-scale-org-level-3 t))
 
+  ;; Use M-x customize-themes to save theme choice to custom.el so it saves across sessions without manually loading here
+  ;;
   ;; (load-theme 'agg-light t)
   ;; (load-theme 'agg-dark t)
 
@@ -203,7 +205,7 @@ values to the ~custom.el~ for future sessions.
   ;; (load-theme 'sanityinc-tomorrow-night)
   ;; (load-theme 'sanityinc-tomorrow-blue)
   ;; (load-theme 'sanityinc-tomorrow-bright)
-  (load-theme 'sanityinc-tomorrow-eighties)
+  ;; (load-theme 'sanityinc-tomorrow-eighties)
 
   ;; (load-theme 'dracula t)
 
