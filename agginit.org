@@ -243,9 +243,9 @@ values to the ~custom.el~ for future sessions.
 #+BEGIN_SRC emacs-lisp
   (global-hl-line-mode +1)
 
-  (use-package bar-cursor
-    :ensure t
-    :init (bar-cursor-mode 1))
+  ;; (use-package bar-cursor
+  ;;   :ensure t
+  ;;   :init (bar-cursor-mode 1))
 
   (use-package beacon
     :ensure t
