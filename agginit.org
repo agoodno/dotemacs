@@ -307,7 +307,8 @@ values to the ~custom.el~ for future sessions.
 
     (prog1 nil
       (set-buffer-file-coding-system 'utf-8-unix)
-      (agg/untabify-buffer)))
+      (agg/untabify-buffer)
+      (whitespace-cleanup)))
 
   (defun agg/progmodes-hooks ()
     "Hooks for programming modes"
@@ -1011,8 +1012,6 @@ Configuration for Org Roam.
   (use-package enh-ruby-mode
     :ensure t
     :init
-    ;; automatically clean up bad whitespace on save
-    (setq whitespace-action '(auto-cleanup))
     ;; automatically run rubocop autocorrect on save
     (setq rubocop-autocorrect-on-save t)
     ;; use enh-ruby-mode for these files
@@ -1093,21 +1092,12 @@ Configuration for Org Roam.
 #+BEGIN_SRC emacs-lisp
   (use-package typescript-mode
     :ensure t
-    :after (whitespace-mode)
     :mode "\\.ts\\'"
     :hook (typescript-mode . lsp-deferred)
     :init
-    ;; automatically clean up bad whitespace
-    (setq whitespace-action '(auto-cleanup))
+    (add-hook 'typescript-mode-hook 'agg/progmodes-hooks)
     :config
     (setq typescript-indent-level 4))
-
-  ;; (use-package flycheck-clojure
-  ;;   :ensure t
-  ;;   :defer t
-  ;;   :after (flycheck)
-  ;;   :config (flycheck-clojure-setup))
-
 #+END_SRC
 
 ** Embedded Clients
