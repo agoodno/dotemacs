@@ -70,54 +70,72 @@ values to the ~custom.el~ for future sessions.
 #+END_SRC
 *** Editor
 #+BEGIN_SRC emacs-lisp
-  ;; Note: *inhibit-startup-message* and *inhibit-splash-screen* are aliases for this variable
-  ;; Turn off startup splash
-  (setq inhibit-startup-screen t)
+  (use-package emacs
+    :custom
+    ;; TAB cycle if there are only few candidates
+    ;; (completion-cycle-threshold 3)
 
-  ;; Turn off menu
-  (menu-bar-mode -1)
+    ;; Enable indentation+completion using the TAB key.
+    ;; `completion-at-point' is often bound to M-TAB.
+    (tab-always-indent 'complete)
 
-  ;; Turn off tool-bar
-  (when (fboundp 'tool-bar-mode)
-    (tool-bar-mode -1))
+    ;; Emacs 30 and newer: Disable Ispell completion function.
+    ;; Try `cape-dict' as an alternative.
+    (text-mode-ispell-word-completion nil)
 
-  ;; Turn off scroll-bar
-  (when (fboundp 'scroll-bar-mode)
-    (scroll-bar-mode -1))
+    ;; Hide commands in M-x which do not apply to the current mode.  Corfu
+    ;; commands are hidden, since they are not used via M-x. This setting is
+    ;; useful beyond Corfu.
+    (read-extended-command-predicate #'command-completion-default-include-p))
 
-  ;; Turn off initial scratch buffer text message
-  (setq initial-scratch-message nil)
+    ;; Note: *inhibit-startup-message* and *inhibit-splash-screen* are aliases for this variable
+    ;; Turn off startup splash
+    (setq inhibit-startup-screen t)
 
-  ;; Disable line wrap
-  (setq default-truncate-lines t)
+    ;; Turn off menu
+    (menu-bar-mode -1)
 
-  ;; Highlight selected regions
-  (setq transient-mark-mode t)
+    ;; Turn off tool-bar
+    (when (fboundp 'tool-bar-mode)
+      (tool-bar-mode -1))
 
-  ;; Display line and column numbers
-  (setq line-number-mode t)
-  (setq column-number-mode t)
+    ;; Turn off scroll-bar
+    (when (fboundp 'scroll-bar-mode)
+      (scroll-bar-mode -1))
 
-  ;; Prompt
-  (defalias 'yes-or-no-p 'y-or-n-p)
+    ;; Turn off initial scratch buffer text message
+    (setq initial-scratch-message nil)
 
-  ;; Change backups to go to a backup directory
-  (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
+    ;; Disable line wrap
+    (setq default-truncate-lines t)
 
-  ;; Auto revert all files changed elsewhere
-  (global-auto-revert-mode t)
+    ;; Highlight selected regions
+    (setq transient-mark-mode t)
 
-  ;; Set pager to cat for shell
-  (setenv "PAGER" "/bin/cat")
+    ;; Display line and column numbers
+    (setq line-number-mode t)
+    (setq column-number-mode t)
 
-  ;; Compilation buffer
+    ;; Prompt
+    (defalias 'yes-or-no-p 'y-or-n-p)
 
-  ;; Scroll with output automatically
-  (setq compilation-scroll-output t)
-  ;;(setq compilation-scroll-output 'first-error)
+    ;; Change backups to go to a backup directory
+    (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
 
-  ;; Show on top of current buffer instead of new buffer
-  (add-to-list 'same-window-buffer-names "*compilation*")
+    ;; Auto revert all files changed elsewhere
+    (global-auto-revert-mode t)
+
+    ;; Set pager to cat for shell
+    (setenv "PAGER" "/bin/cat")
+
+    ;; Compilation buffer
+
+    ;; Scroll with output automatically
+    (setq compilation-scroll-output t)
+    ;;(setq compilation-scroll-output 'first-error)
+
+    ;; Show on top of current buffer instead of new buffer
+    (add-to-list 'same-window-buffer-names "*compilation*")
 #+END_SRC
 *** Environment
 #+BEGIN_SRC emacs-lisp
@@ -597,6 +615,28 @@ values to the ~custom.el~ for future sessions.
            :map minibuffer-local-map
            ("M-s" . consult-history)                 ;; orig. next-matching-history-element
            ("M-r" . consult-history)))
+
+  (use-package corfu
+    :ensure t
+    ;; Optional customizations
+    ;; :custom
+    ;; (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
+    ;; (corfu-quit-at-boundary nil)   ;; Never quit at completion boundary
+    ;; (corfu-quit-no-match nil)      ;; Never quit, even if there is no match
+    ;; (corfu-preview-current nil)    ;; Disable current candidate preview
+    ;; (corfu-preselect 'prompt)      ;; Preselect the prompt
+    ;; (corfu-on-exact-match nil)     ;; Configure handling of exact matches
+
+    ;; Enable Corfu only for certain modes. See also `global-corfu-modes'.
+    ;; :hook ((prog-mode . corfu-mode)
+    ;;        (shell-mode . corfu-mode)
+    ;;        (eshell-mode . corfu-mode))
+
+    ;; Recommended: Enable Corfu globally.  This is recommended since Dabbrev can
+    ;; be used globally (M-/).  See also the customization variable
+    ;; `global-corfu-modes' to exclude certain modes.
+    :init
+    (global-corfu-mode))
 #+END_SRC
 
 *** Organization
@@ -680,6 +720,11 @@ Configuration for Org Roam.
 #+BEGIN_SRC emacs-lisp
   ;; (use-package w3m
   ;;   :ensure t)
+#+END_SRC
+*** Killing/Yanking
+#+BEGIN_SRC emacs-lisp
+  (use-package browse-kill-ring
+    :ensure t)
 #+END_SRC
 ** Development
 *** General
@@ -1687,3 +1732,4 @@ the following:
 > >
 ** Future packages
 *** [[https://github.com/syohex/emacs-realtime-markdown-viewer][Emacs Realtime Markdown Viewer]]
+*** [[https://github.com/lassik/emacs-format-all-the-code][format-all for Emacs]]
