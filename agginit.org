@@ -59,11 +59,6 @@ values to the ~custom.el~ for future sessions.
     :type 'string
     :group 'agg)
 
-  (defcustom notes-location "/path/to/notes/repo"
-    "Location of the checked out notes git repo."
-    :type 'string
-    :group 'agg)
-
   ;; Consider setting these variables in future
   ;; system-name ""
   ;; user-login-name ""
@@ -679,7 +674,6 @@ Configuration for Org Roam.
     :init
     (setq org-roam-v2-ack t) ;; acknowledge upgrade and remove warning at startup
     :custom
-    (org-roam-directory notes-location)
     (org-roam-completion-everywhere t)
     (org-roam-db-update-on-save t)
     :bind (("C-c n l" . org-roam-buffer-toggle)
