@@ -418,11 +418,14 @@ values to the ~custom.el~ for future sessions.
   ;; Completion that uses many different methods to find options.
   (global-set-key (kbd "M-/") 'hippie-expand)
 
-  ;; Use regex searches by default.
-  (global-set-key (kbd "C-s") 'isearch-forward-regexp)
-  (global-set-key (kbd "C-r") 'isearch-backward-regexp)
-  (global-set-key (kbd "C-M-s") 'isearch-forward)
-  (global-set-key (kbd "C-M-r") 'isearch-backward)
+  ;; Make case-sensitive by default
+  (setq case-fold-search nil)
+
+  ;; Use regular searches by default
+  (global-set-key (kbd "C-s") 'isearch-forward)
+  (global-set-key (kbd "C-r") 'isearch-backward)
+  (global-set-key (kbd "C-M-s") 'isearch-forward-regexp)
+  (global-set-key (kbd "C-M-r") 'isearch-backward-regexp)
 
   ;; Buffers
   (global-set-key (kbd "C-c y") 'bury-buffer)
