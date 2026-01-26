@@ -742,6 +742,13 @@ Configuration for Org Roam.
     :config
     (setq eglot-autoshutdown t))  ;; shutdown server when last buffer closed
 
+  ;; consult-eglot - LSP symbol search with vertico/consult
+  (use-package consult-eglot
+    :ensure t
+    :after (consult eglot)
+    :bind (:map eglot-mode-map
+                ("C-c l s" . consult-eglot-symbols)))
+
   ;; apheleia - async auto-formatting (runs prettier, etc. without blocking)
   (use-package apheleia
     :ensure t
