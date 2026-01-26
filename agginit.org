@@ -742,20 +742,15 @@ Configuration for Org Roam.
     :config
     (setq eglot-autoshutdown t))  ;; shutdown server when last buffer closed
 
-  ;; lsp-mode - keep available for languages not yet migrated to eglot
-  (use-package lsp-mode
+  ;; apheleia - async auto-formatting (runs prettier, etc. without blocking)
+  (use-package apheleia
     :ensure t
-    :commands (lsp lsp-deferred))
-
-  ;; optionally
-  (use-package lsp-ui
-    :ensure t
-    :commands lsp-ui-mode
-    :after lsp)
-
-  ;; optionally if you want to use debugger
-  ;; (use-package dap-mode)
-  ;; (use-package dap-LANGUAGE) to load the dap adapter for your language
+    :hook ((typescript-ts-mode . apheleia-mode)
+           (tsx-ts-mode . apheleia-mode)
+           (js-ts-mode . apheleia-mode)
+           (js-mode . apheleia-mode)
+           (json-mode . apheleia-mode)
+           (json-ts-mode . apheleia-mode)))
 
   (use-package rg
     :ensure t
