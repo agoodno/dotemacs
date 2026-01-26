@@ -757,7 +757,8 @@ Configuration for Org Roam.
            (js-ts-mode . apheleia-mode)
            (js-mode . apheleia-mode)
            (json-mode . apheleia-mode)
-           (json-ts-mode . apheleia-mode)))
+           (json-ts-mode . apheleia-mode)
+           (nxml-mode . apheleia-mode)))
 
   (use-package rg
     :ensure t
