@@ -736,6 +736,13 @@ Configuration for Org Roam.
     :init
     (yas-global-mode 1))
 
+  ;; eglot - built-in LSP client (Emacs 29+)
+  (use-package eglot
+    :commands (eglot eglot-ensure)
+    :config
+    (setq eglot-autoshutdown t))  ;; shutdown server when last buffer closed
+
+  ;; lsp-mode - keep available for languages not yet migrated to eglot
   (use-package lsp-mode
     :ensure t
     :commands (lsp lsp-deferred))
@@ -1142,8 +1149,8 @@ Configuration for Org Roam.
   (use-package typescript-ts-mode
     :mode (("\\.ts\\'" . typescript-ts-mode)
            ("\\.tsx\\'" . tsx-ts-mode))
-    :hook ((typescript-ts-mode . lsp-deferred)
-           (tsx-ts-mode . lsp-deferred)
+    :hook ((typescript-ts-mode . eglot-ensure)
+           (tsx-ts-mode . eglot-ensure)
            (typescript-ts-mode . agg/progmodes-hooks)
            (tsx-ts-mode . agg/progmodes-hooks))
     :config
