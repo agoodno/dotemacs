@@ -1138,14 +1138,16 @@ Configuration for Org Roam.
 **** Typescript
 
 #+BEGIN_SRC emacs-lisp
-  (use-package typescript-mode
-    :ensure t
-    :mode "\\.ts\\'"
-    :hook (typescript-mode . lsp-deferred)
-    :init
-    (add-hook 'typescript-mode-hook 'agg/progmodes-hooks)
+  ;; Built-in to Emacs 30+ (no :ensure needed)
+  (use-package typescript-ts-mode
+    :mode (("\\.ts\\'" . typescript-ts-mode)
+           ("\\.tsx\\'" . tsx-ts-mode))
+    :hook ((typescript-ts-mode . lsp-deferred)
+           (tsx-ts-mode . lsp-deferred)
+           (typescript-ts-mode . agg/progmodes-hooks)
+           (tsx-ts-mode . agg/progmodes-hooks))
     :config
-    (setq typescript-indent-level 4))
+    (setq typescript-ts-mode-indent-offset 4))
 #+END_SRC
 
 ** Embedded Clients
