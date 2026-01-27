@@ -1661,6 +1661,13 @@ Configuration for Org Roam.
     (setq comint-prompt-read-only t))
   (add-hook 'comint-mode-hook 'agg/my-comint-init)
 #+END_SRC
+*** vterm
+#+BEGIN_SRC emacs-lisp
+  (use-package vterm
+    :ensure t
+    :bind (("C-c v" . vterm)
+           ("C-c V" . vterm-other-window)))
+#+END_SRC
 *** tidy
 #+BEGIN_SRC emacs-lisp
   (setq tidy-shell-command "/usr/local/bin/tidy")
