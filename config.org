@@ -709,9 +709,26 @@ Configuration for Org Roam.
     ("C-c n d" . org-roam-dailies-map)
     :config
     (require 'org-roam-dailies) ;; Ensure the keymap is available
-    (defun my-set-fill-column () (setq-local fill-column 180))
-    (add-hook 'org-roam-find-file-hook #'my-set-fill-column)
+    (defun agg-set-fill-column () (setq-local fill-column 180))
+    (add-hook 'org-roam-find-file-hook #'agg-set-fill-column)
     (add-hook 'org-roam-find-file-hook #'turn-on-auto-fill)
+
+    (defun agg/org-roam-switch (dir)
+      "Switch org-roam to DIR with a per-directory database."
+      (setq org-roam-directory dir
+            org-roam-db-location (expand-file-name "org-roam.db" dir))
+      (org-roam-db-sync))
+
+    (defun agg/org-roam-personal ()
+      "Switch to personal org-roam."
+      (interactive)
+      (agg/org-roam-switch "~/notes/"))
+
+    (defun agg/org-roam-work ()
+      "Switch to work org-roam."
+      (interactive)
+      (agg/org-roam-switch "~/Google Drive/My Drive/sonosnotes/"))
+
     (org-roam-db-autosync-mode))
 
   ;; Use M-x org-roam-ui-mode RET to enable the global mode. It will start a web server on http://127.0.0.1:35901/ and connect to it via a WebSocket for real-time updates.
@@ -1662,7 +1679,7 @@ Configuration for Org Roam.
   (add-hook 'shell-mode-hook '(lambda () (toggle-truncate-lines 1)))
 
   ;; comint-mode hooks
-  (defun agg/my-comint-init ()
+  (defun agg/init-comint ()
     ;; Stops echo of command
     (setq comint-process-echoes t)
     ;; The default font lock rules can be expensive and cause hangs
@@ -1671,7 +1688,7 @@ Configuration for Org Roam.
     (setq shell-font-lock-keywords nil)
     ;; Makes the prompt read-only running in emacs 'M-x shell'
     (setq comint-prompt-read-only t))
-  (add-hook 'comint-mode-hook 'agg/my-comint-init)
+  (add-hook 'comint-mode-hook 'agg/init-comint)
 #+END_SRC
 *** vterm
 #+BEGIN_SRC emacs-lisp
