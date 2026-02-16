@@ -320,6 +320,8 @@ values to the ~custom.el~ for future sessions.
 #+END_SRC
 ** Functions
 #+BEGIN_SRC emacs-lisp
+  (add-to-list 'load-path "~/.emacs.d/lisp")
+
   (defun agg/untabify-buffer ()
     "Untabify current buffer"
     (interactive)
