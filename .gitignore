@@ -13,7 +13,7 @@ ido.last
 .DS_Store
 smex-items
 projectile-bookmarks.eld
-/agginit.el
+/config.el
 /network-security.data
 /README.html
 /emojis
