@@ -36,6 +36,9 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
   ;; set custom file location
   (setq custom-file (concat user-emacs-directory "custom.el"))
   (load custom-file :noerror)
+
+  (setq custom-theme-directory
+        (expand-file-name "custom-themes" user-emacs-directory))
 #+END_SRC
 ** General config
 *** User variables
@@ -168,71 +171,73 @@ values to the ~custom.el~ for future sessions.
 #+END_SRC
 *** Themes
 #+BEGIN_SRC emacs-lisp
-  (use-package color-theme-sanityinc-tomorrow
-    :ensure t)
+  '(custom-theme-directory "~/.emacs.d/lisp/custom-themes")
 
-  (use-package dracula-theme
-    :ensure t)
+   (use-package color-theme-sanityinc-tomorrow
+     :ensure t)
 
-  (use-package gruvbox-theme
-    :ensure t)
+   (use-package dracula-theme
+     :ensure t)
 
-  (use-package catppuccin-theme
-    :ensure t
-    :init
-    ;; from lightest to darkest
-    (setq catppuccin-flavor 'latte)
-    ;; (setq catppuccin-flavor 'frappe)
-    ;; (setq catppuccin-flavor 'macchiato)
-    ;; (setq catppuccin-flavor 'mocha)
-    )
+   (use-package gruvbox-theme
+     :ensure t)
 
-  (use-package spacemacs-theme
-    :ensure t
-    :init
-    (setq spacemacs-theme-org-agenda-height nil)
-    (setq spacemacs-theme-org-height nil))
+   (use-package catppuccin-theme
+     :ensure t
+     :init
+     ;; from lightest to darkest
+     (setq catppuccin-flavor 'latte)
+     ;; (setq catppuccin-flavor 'frappe)
+     ;; (setq catppuccin-flavor 'macchiato)
+     ;; (setq catppuccin-flavor 'mocha)
+     )
 
-  (use-package timu-spacegrey-theme
-    :ensure t
-    :init
-    (customize-set-variable 'timu-spacegrey-flavour "light")
-    (customize-set-variable 'timu-spacegrey-contrasted-comments nil)
-    (customize-set-variable 'timu-spacegrey-scale-org-document-title t)
-    (customize-set-variable 'timu-spacegrey-scale-org-document-info t)
-    (customize-set-variable 'timu-spacegrey-scale-org-level-1 t)
-    (customize-set-variable 'timu-spacegrey-scale-org-level-2 t)
-    (customize-set-variable 'timu-spacegrey-scale-org-level-3 t))
+   (use-package spacemacs-theme
+     :ensure t
+     :init
+     (setq spacemacs-theme-org-agenda-height nil)
+     (setq spacemacs-theme-org-height nil))
 
-  ;; Use M-x customize-themes to save theme choice to custom.el so it saves across sessions without manually loading here
-  ;;
-  ;; (load-theme 'agg-light t)
-  ;; (load-theme 'agg-dark t)
+   (use-package timu-spacegrey-theme
+     :ensure t
+     :init
+     (customize-set-variable 'timu-spacegrey-flavour "light")
+     (customize-set-variable 'timu-spacegrey-contrasted-comments nil)
+     (customize-set-variable 'timu-spacegrey-scale-org-document-title t)
+     (customize-set-variable 'timu-spacegrey-scale-org-document-info t)
+     (customize-set-variable 'timu-spacegrey-scale-org-level-1 t)
+     (customize-set-variable 'timu-spacegrey-scale-org-level-2 t)
+     (customize-set-variable 'timu-spacegrey-scale-org-level-3 t))
 
-  ;; (setq catppuccin-flavor 'frappe) ;; or 'latte, 'macchiato, or 'mocha
-  ;; (catppuccin-reload)
-  ;;
-  ;; (load-theme 'catppuccin :no-confirm)
+   ;; Use M-x customize-themes to save theme choice to custom.el so it saves across sessions without manually loading here
+   ;;
+   ;; (load-theme 'agg-light t)
+   ;; (load-theme 'agg-dark t)
 
-  ;; (load-theme 'sanityinc-tomorrow-day)
-  ;; (load-theme 'sanityinc-tomorrow-night)
-  ;; (load-theme 'sanityinc-tomorrow-blue)
-  ;; (load-theme 'sanityinc-tomorrow-bright)
-  ;; (load-theme 'sanityinc-tomorrow-eighties)
+   ;; (setq catppuccin-flavor 'frappe) ;; or 'latte, 'macchiato, or 'mocha
+   ;; (catppuccin-reload)
+   ;;
+   ;; (load-theme 'catppuccin :no-confirm)
 
-  ;; (load-theme 'dracula t)
+   ;; (load-theme 'sanityinc-tomorrow-day)
+   ;; (load-theme 'sanityinc-tomorrow-night)
+   ;; (load-theme 'sanityinc-tomorrow-blue)
+   ;; (load-theme 'sanityinc-tomorrow-bright)
+   ;; (load-theme 'sanityinc-tomorrow-eighties)
 
-  ;; (load-theme 'gruvbox t) ;; sets to default
-  ;; (load-theme 'gruvbox-light-soft t)
-  ;; (load-theme 'gruvbox-light-medium t)
-  ;; (load-theme 'gruvbox-light-hard t)
-  ;; (load-theme 'gruvbox-dark-soft t)
-  ;; (load-theme 'gruvbox-dark-medium t) ;; default
+   ;; (load-theme 'dracula t)
 
-  ;; (load-theme 'spacemacs-light t)
-  ;; (load-theme 'spacemacs-dark t)
+   ;; (load-theme 'gruvbox t) ;; sets to default
+   ;; (load-theme 'gruvbox-light-soft t)
+   ;; (load-theme 'gruvbox-light-medium t)
+   ;; (load-theme 'gruvbox-light-hard t)
+   ;; (load-theme 'gruvbox-dark-soft t)
+   ;; (load-theme 'gruvbox-dark-medium t) ;; default
 
-  ;; (load-theme 'timu-spacegrey t)
+   ;; (load-theme 'spacemacs-light t)
+   ;; (load-theme 'spacemacs-dark t)
+
+   ;; (load-theme 'timu-spacegrey t)
 #+END_SRC
 *** Indenting
 #+BEGIN_SRC emacs-lisp
