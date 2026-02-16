@@ -34,9 +34,9 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
 ** Custom initialization
 #+BEGIN_SRC emacs-lisp
   ;; set custom file location
-  (setq custom-file (concat user-emacs-directory "custom.el"))
-  (load custom-file :noerror)
+  (load (expand-file-name "custom.el" user-emacs-directory) :noerror)
 
+  ;; set custom themes location
   (setq custom-theme-directory
         (expand-file-name "custom-themes" user-emacs-directory))
 #+END_SRC
