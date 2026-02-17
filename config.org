@@ -1721,6 +1721,13 @@ Configuration for Org Roam.
   (setq uniquify-buffer-name-style 'forward)
 #+END_SRC
 ** Startup
+*** Unbind global keys after load
+**** Make t combos available for OS windowing functions
+#+BEGIN_SRC emacs-lisp
+  (global-unset-key (kbd "M-t"))
+  (global-unset-key (kbd "s-t"))
+#+END_SRC
+**** Start server so system can open files with emacsclient
 #+BEGIN_SRC emacs-lisp
   (use-package server
     :config
@@ -1729,7 +1736,6 @@ Configuration for Org Roam.
       (setq server-client-instructions nil)
       (server-start)))
 #+END_SRC
-
 * Notes
 ** Clean test
 Occasionally, I like to test my init files from a clean environment so
