@@ -171,7 +171,7 @@ values to the ~custom.el~ for future sessions.
 #+END_SRC
 *** Themes
 #+BEGIN_SRC emacs-lisp
-  '(custom-theme-directory "~/.emacs.d/lisp/custom-themes")
+  (setq custom-theme-directory (expand-file-name "lisp/custom-themes" user-emacs-directory))
 
    (use-package color-theme-sanityinc-tomorrow
      :ensure t)
