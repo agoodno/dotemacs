@@ -8,26 +8,33 @@ and brighter; it simply makes everything else vanish."
 See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Reference Manual]]
 
 * Emacs Config
+** Startup performance
+#+BEGIN_SRC emacs-lisp
+  ;; Increase GC threshold during startup to avoid repeated collection
+  (setq gc-cons-threshold most-positive-fixnum)
+
+  ;; Lower after startup to avoid memory bloat during normal use
+  (add-hook 'emacs-startup-hook
+            (lambda ()
+              (setq gc-cons-threshold (* 16 1024 1024))))
+#+END_SRC
 ** Package initialization
 #+BEGIN_SRC emacs-lisp
   (require 'package)
   (setq package-enable-at-startup nil)
+  (setq package-quickstart t)
 
-  ;; Used to fix issue with package install of org mode
-  ;; (setq package-check-signature nil)
-  ;; (setq package-check-signature "allow-unsigned")
   (add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/"))
   (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
   (package-initialize)
 
-  (when (not package-archive-contents)
-    (package-refresh-contents))
+  ;; Refresh package list asynchronously to avoid blocking startup
+  (unless package-archive-contents
+    (package-refresh-contents t))
 
-  (unless (package-installed-p 'use-package)
-    (package-install 'use-package))
-
-  (eval-when-compile
-    (require 'use-package))
+  ;; use-package is built-in to Emacs 29+
+  (require 'use-package)
+  (setq use-package-always-ensure t)
 
   (setq load-prefer-newer t)
 #+END_SRC
