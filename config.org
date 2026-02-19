@@ -46,6 +46,13 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
   ;; set custom themes location
   (setq custom-theme-directory
         (expand-file-name "custom-themes" user-emacs-directory))
+
+  ;; Persist minibuffer history across sessions (vertico/consult use this for sorting)
+  (savehist-mode 1)
+
+  ;; Track recently opened files (consult-buffer shows these)
+  (recentf-mode 1)
+  (setq recentf-max-saved-items 200)
 #+END_SRC
 ** General config
 *** User variables
