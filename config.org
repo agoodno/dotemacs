@@ -334,10 +334,10 @@ values to the ~custom.el~ for future sessions.
     (interactive)
     (untabify (point-min) (point-max)))
 
+  (require 'whitespace)
+
   (defun agg/progmodes-before-save-hook ()
     "Hooks which run on file write for programming modes"
-    (require 'whitespace)
-
     (prog1 nil
       (set-buffer-file-coding-system 'utf-8-unix)
       (agg/untabify-buffer)
