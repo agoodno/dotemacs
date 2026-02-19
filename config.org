@@ -808,10 +808,6 @@ Configuration for Org Roam.
 *** Data Formats
 **** Docker
 #+BEGIN_SRC emacs-lisp
-  (use-package docker
-    :ensure t
-    :disabled)
-
   (use-package dockerfile-mode
     :ensure t)
 #+END_SRC
@@ -844,12 +840,6 @@ Configuration for Org Roam.
                 ("C-c C-l" . agg/xml-format)))
 #+END_SRC
 *** Templating Languages
-**** haml
-#+BEGIN_SRC emacs-lisp
-  (use-package haml-mode
-    :ensure t
-    :disabled)
-#+END_SRC
 **** Markdown
 #+BEGIN_SRC emacs-lisp
   (use-package markdown-mode
@@ -863,28 +853,7 @@ Configuration for Org Roam.
   (add-to-list 'load-path (expand-file-name "~/.emacs.d/vendor/emacs-livedown"))
   (require 'livedown)
 #+END_SRC
-**** Mustache
-#+BEGIN_SRC emacs-lisp
-  (use-package mustache-mode
-    :ensure t
-    :disabled)
-#+END_SRC
 *** DSLs
-**** Cucumber
-#+BEGIN_SRC emacs-lisp
-  (use-package feature-mode
-    :ensure t
-    :disabled)
-#+END_SRC
-**** Puppet
-#+BEGIN_SRC emacs-lisp
-  (use-package puppet-mode
-    :ensure t
-    :disabled
-    :init
-    (add-to-list 'auto-mode-alist '("\\.pp$" . puppet-mode)))
-#+END_SRC
-
 **** SQL
 #+BEGIN_SRC emacs-lisp
   (setq auto-mode-alist (cons '("\\.psql$" . sql-mode) auto-mode-alist))
@@ -932,33 +901,6 @@ Configuration for Org Roam.
           (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
           (yaml "https://github.com/ikatyang/tree-sitter-yaml")))
 #+end_src
-**** Clojure
-#+BEGIN_SRC emacs-lisp
-  (use-package clojure-mode
-    :ensure t
-    :disabled
-    :after (paredit)
-    :init
-    (add-hook 'clojure-mode-hook #'smartparens-mode))
-
-  ;; avoid clojure-mode-extra-font-locking if using CIDER
-
-  (use-package cider
-    :ensure t
-    :disabled
-    :init
-    (setq clojure-indent-style :always-indent)
-    (setq cider-repl-use-pretty-printing t)
-    (setq cider-repl-wrap-history t)
-    (setq cider-repl-history-size 1000)
-    (setq cider-repl-history-file "~/.cider-repl-history.txt"))
-
-  (use-package flycheck-clojure
-    :ensure t
-    :disabled
-    :after (flycheck)
-    :config (flycheck-clojure-setup))
-#+END_SRC
 **** CSS
 #+BEGIN_SRC emacs-lisp
   (customize-set-variable 'css-indent-offset 2)
@@ -968,12 +910,6 @@ Configuration for Org Roam.
   (use-package elm-mode
     :ensure t)
 #+end_src
-**** Groovy
-#+BEGIN_SRC emacs-lisp
-  (use-package groovy-mode
-    :ensure t
-    :disabled)
-#+END_SRC
 **** HTML
 #+BEGIN_SRC emacs-lisp
   (add-hook 'html-mode-hook 'turn-off-auto-fill)
@@ -990,25 +926,6 @@ Configuration for Org Roam.
   (add-hook 'java-mode-hook (lambda ()
                               (setq c-basic-offset 4
                                     tab-width 4)))
-
-  (use-package eclim
-    :ensure t
-    :disabled
-    :init
-    (setq eclimd-autostart nil)
-    (setq eclim-eclipse-dirs '("/Applications/SpringToolSuite4.app/Contents/Eclipse"))
-    (setq eclim-executable "/Applications/SpringToolSuite4.app/Contents/Eclipse/plugins/org.eclim_2.8.0/bin/eclim")
-    (setq eclim-auto-save t)
-    (setq eclim-use-yasnippet t)
-    ;; display compilation error messages in the echo area
-    (setq help-at-pt-display-when-idle t)
-    (setq help-at-pt-timer-delay 0.1)
-    (defun agg/java-mode-hook ()
-      (eclim-mode t))
-    (add-hook 'java-mode-hook 'agg/java-mode-hook)
-    (add-hook 'java-mode-hook 'progmodes-hooks)
-    :config
-    (help-at-pt-set-timer))
 #+END_SRC
 **** Javascript
 #+BEGIN_SRC emacs-lisp
@@ -1094,31 +1011,6 @@ Configuration for Org Roam.
     (define-key projectile-rails-mode-map (kbd "C-c r") 'projectile-rails-command-map)
     (add-hook 'enh-ruby-mode-hook 'projectile-rails-mode))
 #+END_SRC
-**** Scala
-#+BEGIN_SRC emacs-lisp
-  (use-package scala-mode
-    :ensure t
-    :disabled
-    :init
-    (add-to-list 'auto-mode-alist '("\\.sbt$" . scala-mode))
-    (add-hook 'scala-mode-hook 'progmodes-hooks)
-    :interpreter ("scala" . scala-mode)) ;;  :pin melpa-stable
-
-  (use-package sbt-mode
-    :ensure t
-    :disabled) ;;:pin melpa-stable
-
-  (use-package ensime
-    :ensure t
-    :disabled
-    :init
-    (add-hook 'scala-mode-hook 'ensime-scala-mode-hook)) ;;:pin melpa-stable
-
-  ;; (setq
-  ;;  ensime-sbt-command "/home/agoodno/src/ccap3/sbt"
-  ;;  sbt:program-name "/home/agoodno/src/ccap3/sbt"
-  ;;  ensime-startup-notification nil)
-#+END_SRC
 **** Typescript
 
 #+BEGIN_SRC emacs-lisp
@@ -1135,81 +1027,6 @@ Configuration for Org Roam.
 #+END_SRC
 
 ** Embedded Clients
-*** Email
-#+BEGIN_SRC emacs-lisp
-  (defun search-for-sender (msg)
-    "Search for messages sent by the sender of the message at point."
-    (mu4e-headers-search
-     (concat "from:" (cdar (mu4e-message-field msg :from)))))
-
-  ;; This [[https://jherrlin.github.io/posts/emacs-mu4e/][link]] was helpful for this setup
-  (use-package mu4e
-    :ensure t
-    :disabled
-    :init
-    (require 'smtpmail)
-    (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu/mu4e")
-    (setq mu4e-mu-binary "/usr/local/bin/mu"
-          mu4e-get-mail-command "mbsync -q -a"
-          mu4e-maildir (expand-file-name "~/Mail")
-          mu4e-change-filenames-when-moving t
-          mu4e-update-interval 300
-          mu4e-index-update-in-background t
-          mu4e-view-html-plaintext-ratio-heuristic most-positive-fixnum
-          mu4e-sent-messages-behavior 'delete
-          smtpmail-debug-info t
-          smtpmail-stream-type 'starttls
-          starttls-use-gnutls nil
-          message-kill-buffer-on-exit t
-          mu4e-attachment-dir "~/Downloads"
-          mu4e-view-show-addresses t
-          mu4e-html2text-command "textutil -stdin -format html -convert txt -stdout"
-          shr-color-visible-luminance-min 5
-          mu4e-split-view 'horizontal  ; 'vertical ; 'single-window
-          mu4e-headers-visible-lines 16
-          message-send-mail-function 'smtpmail-send-it)
-
-    ;; define 'x' as the shortcut
-    (add-to-list 'mu4e-view-actions
-                 '("xsearch for sender" . search-for-sender) t)
-    :config
-    (setq mu4e-contexts
-          `( ,(make-mu4e-context
-               :name "Gmail"
-               :enter-func (lambda () (mu4e-message "Entering Gmail context"))
-               :leave-func (lambda () (mu4e-message "Leaving Gmail context"))
-               :match-func (lambda (msg)
-                             (when msg
-                               (mu4e-message-contact-field-matches msg
-                                                                   :from "agoodno@gmail.com")))
-               :vars '((user-full-name . "Andrew Goodnough")
-                       (user-mail-address . "agoodno@gmail.com")
-                       (smtpmail-smtp-server . "smtp.gmail.com")
-                       (smtpmail-smtp-service . 587)
-                       (smtpmail-smtp-user . "agoodno")
-                       (mu4e-drafts-folder . "/gmail/drafts")
-                       (mu4e-sent-folder . "/gmail/sent")
-                       (mu4e-trash-folder . "/gmail/trash")
-                       (mu4e-refile-folder . "/gmail/all")))
-             ,(make-mu4e-context
-               :name "iCloud"
-               :enter-func (lambda () (mu4e-message "Entering iCloud context"))
-               :leave-func (lambda () (mu4e-message "Leaving iCloud context"))
-               :match-func (lambda (msg)
-                             (when msg
-                               (mu4e-message-contact-field-matches msg
-                                                                   :from "andrew.goodnough@icloud.com")))
-               :vars '((user-full-name . "Andrew Goodnough")
-                       (user-mail-address . "andrew.goodnough@icloud.com")
-                       (smtpmail-smtp-server . "smtp.mail.me.com")
-                       (smtpmail-smtp-service . 587)
-                       (smtpmail-smtp-user . "andrew.goodnough")
-                       (mu4e-drafts-folder . "/icloud/drafts")
-                       (mu4e-sent-folder . "/icloud/sent")
-                       (mu4e-trash-folder . "/icloud/trash")
-                       (mu4e-refile-folder . "/icloud/archive")))))
-    (add-hook 'mu4e-view-mode-hook (lambda () (setq truncate-lines t))))
-#+END_SRC
 *** IRC
 #+BEGIN_SRC emacs-lisp
   ;; (defvar freenode-password "")
@@ -1571,14 +1388,6 @@ Configuration for Org Roam.
     (global-flycheck-mode))
 #+END_SRC
 
-*** ledger
-#+BEGIN_SRC emacs-lisp
-  (use-package ledger-mode
-    :ensure t
-    :disabled
-    :init
-    (add-to-list 'auto-mode-alist '("\\.dat$" . ledger-mode)))
-#+END_SRC
 *** magit
 #+BEGIN_SRC emacs-lisp
   (use-package magit
@@ -1608,14 +1417,6 @@ Configuration for Org Roam.
                               ("Path" 99 magit-repolist-column-path))))
     (global-set-key (kbd "C-c g") 'magit-status)
     (global-set-key (kbd "C-c h") 'magit-list-repositories))
-#+END_SRC
-*** pdf-tools
-#+BEGIN_SRC emacs-lisp
-  (use-package pdf-tools
-    :ensure t
-    :disabled
-    :init
-    (pdf-tools-install))
 #+END_SRC
 *** projectile
 #+BEGIN_SRC emacs-lisp
