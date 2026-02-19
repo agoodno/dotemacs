@@ -29,5 +29,9 @@ org-persist/
 tree-sitter/
 eln-cache/
 history
+recentf
+package-quickstart.el
+package-quickstart.elc
 request/
 projects
+.claude/
