@@ -659,6 +659,25 @@ values to the ~custom.el~ for future sessions.
     ;; `global-corfu-modes' to exclude certain modes.
     :init
     (global-corfu-mode))
+
+  ;; cape - completion-at-point extensions for corfu
+  ;; Adds file path, dabbrev, and keyword completion to all modes
+  (use-package cape
+    :ensure t
+    :init
+    (add-hook 'completion-at-point-functions #'cape-dabbrev)
+    (add-hook 'completion-at-point-functions #'cape-file))
+
+  ;; embark - contextual actions on completion candidates
+  ;; Press C-; on any vertico/consult candidate to see available actions
+  (use-package embark
+    :ensure t
+    :bind (("C-;" . embark-act)
+           ("C-h B" . embark-bindings)))
+
+  (use-package embark-consult
+    :ensure t
+    :hook (embark-collect-mode . consult-preview-at-point-mode))
 #+END_SRC
 
 *** Organization
