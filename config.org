@@ -348,7 +348,7 @@ values to the ~custom.el~ for future sessions.
 
   (defun agg/insert-current-date ()
     (interactive)
-    (insert (shell-command-to-string "echo -n $(date %Y-%m-%d)")))
+    (insert (shell-command-to-string "echo -n $(date +%Y-%m-%d)")))
 
   (require 'calendar)
   (defun insdate-insert-current-date (&optional omit-day-of-week-p)
