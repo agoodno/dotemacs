@@ -261,7 +261,6 @@ values to the ~custom.el~ for future sessions.
 *** Indenting
 #+BEGIN_SRC emacs-lisp
   (show-paren-mode 1)
-  (setq-default indent-tabs-mode nil)
 
   ;; Indent with spaces, never with TABs
   (setq-default indent-tabs-mode nil)
@@ -874,10 +873,14 @@ Configuration for Org Roam.
     :mode (("README\\.md\\'" . gfm-mode)
            ("\\.md\\'" . markdown-mode)
            ("\\.markdown\\'" . markdown-mode))
-    :init (setq markdown-command "/opt/homebrew/bin/markdown"))
+    :init (setq markdown-command (or (executable-find "markdown")
+                                     (executable-find "pandoc")
+                                     "markdown")))
 
-  (add-to-list 'load-path (expand-file-name "~/.emacs.d/vendor/emacs-livedown"))
-  (require 'livedown)
+  (let ((livedown-dir (expand-file-name "vendor/emacs-livedown" user-emacs-directory)))
+    (when (file-directory-p livedown-dir)
+      (add-to-list 'load-path livedown-dir)
+      (require 'livedown nil t)))
 #+END_SRC
 *** DSLs
 **** SQL
@@ -886,8 +889,6 @@ Configuration for Org Roam.
 
   (add-hook 'sql-mode-hook 'turn-off-auto-fill)
   (add-hook 'sql-mode-hook 'agg/progmodes-hooks)
-
-  (provide 'agg-sql-mode)
 #+END_SRC
 **** Terrform
 #+BEGIN_SRC emacs-lisp
