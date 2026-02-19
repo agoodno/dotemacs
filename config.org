@@ -114,15 +114,12 @@ values to the ~custom.el~ for future sessions.
     ;; Disable line wrap
     (setq default-truncate-lines t)
 
-    ;; Highlight selected regions
-    (setq transient-mark-mode t)
-
     ;; Display line and column numbers
     (setq line-number-mode t)
     (setq column-number-mode t)
 
-    ;; Prompt
-    (defalias 'yes-or-no-p 'y-or-n-p)
+    ;; Prompt - use short yes/no answers
+    (setq use-short-answers t)
 
     ;; Change backups to go to a backup directory
     (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
@@ -141,6 +138,13 @@ values to the ~custom.el~ for future sessions.
 
     ;; Show on top of current buffer instead of new buffer
     (add-to-list 'same-window-buffer-names "*compilation*")
+
+    ;; Smooth scrolling (Emacs 29+, feels native on macOS trackpads)
+    (pixel-scroll-precision-mode 1)
+
+    ;; Suppress native-comp warnings from third-party packages
+    (setq native-comp-async-report-warnings-errors nil)
+    (setq native-compile-prune-cache t)
 #+END_SRC
 *** Environment
 #+BEGIN_SRC emacs-lisp
@@ -152,8 +156,9 @@ values to the ~custom.el~ for future sessions.
     :config
     (exec-path-from-shell-initialize)
     ;; Make ansi-term play nice with zsh prompt.
-    (defadvice ansi-term (after advise-ansi-term-coding-system)
-      (set-buffer-process-coding-system 'utf-8-unix 'utf-8-unix)))
+    (advice-add 'ansi-term :after
+                (lambda (&rest _)
+                  (set-buffer-process-coding-system 'utf-8-unix 'utf-8-unix))))
 #+END_SRC
 ** Look & Feel
 *** Bell
@@ -280,9 +285,7 @@ values to the ~custom.el~ for future sessions.
 #+END_SRC
 *** Selection
 #+BEGIN_SRC emacs-lisp
-  (setq x-select-enable-clipboard t
-        ;; x-select-enable-primary t ;;causes problems with delete-selection-mode
-        save-interprogram-paste-before-kill nil
+  (setq save-interprogram-paste-before-kill nil
         apropos-do-all t
         mouse-yank-at-point nil)
 
