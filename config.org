@@ -83,6 +83,7 @@ values to the ~custom.el~ for future sessions.
 *** Editor
 #+BEGIN_SRC emacs-lisp
   (use-package emacs
+    :ensure nil
     :custom
     ;; TAB cycle if there are only few candidates
     ;; (completion-cycle-threshold 3)
@@ -684,6 +685,7 @@ Configuration for Org Mode.
 
 #+BEGIN_SRC emacs-lisp
   (use-package org
+    :ensure nil
     :init
     (setq org-log-done 'time)
     (setq org-todo-keywords
@@ -800,6 +802,7 @@ Configuration for Org Roam.
 
   ;; eglot - built-in LSP client (Emacs 29+)
   (use-package eglot
+    :ensure nil
     :commands (eglot eglot-ensure)
     :config
     (setq eglot-autoshutdown t))  ;; shutdown server when last buffer closed
@@ -851,6 +854,7 @@ Configuration for Org Roam.
 **** XML
 #+BEGIN_SRC emacs-lisp
   (use-package nxml-mode
+    :ensure nil
     :mode "\\.xml\\'"
     :init
     (defun agg/xml-format ()
@@ -1043,6 +1047,7 @@ Configuration for Org Roam.
 #+BEGIN_SRC emacs-lisp
   ;; Built-in to Emacs 30+ (no :ensure needed)
   (use-package typescript-ts-mode
+    :ensure nil
     :mode (("\\.ts\\'" . typescript-ts-mode)
            ("\\.tsx\\'" . tsx-ts-mode))
     :hook ((typescript-ts-mode . eglot-ensure)
@@ -1533,6 +1538,7 @@ Configuration for Org Roam.
 **** Start server so system can open files with emacsclient
 #+BEGIN_SRC emacs-lisp
   (use-package server
+    :ensure nil
     :config
     (unless (and (fboundp 'server-running-p) (server-running-p))
       (message "Starting Emacs server...")
