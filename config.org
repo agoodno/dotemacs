@@ -1443,6 +1443,12 @@ Configuration for Org Roam.
                               ("Path" 99 magit-repolist-column-path))))
     (global-set-key (kbd "C-c g") 'magit-status)
     (global-set-key (kbd "C-c h") 'magit-list-repositories))
+
+  ;; diff-hl - inline git change indicators in the fringe
+  (use-package diff-hl
+    :ensure t
+    :hook ((magit-post-refresh . diff-hl-magit-post-refresh))
+    :init (global-diff-hl-mode))
 #+END_SRC
 *** projectile
 #+BEGIN_SRC emacs-lisp
