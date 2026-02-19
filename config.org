@@ -651,10 +651,8 @@ Configuration for Org Mode.
   (use-package org
     :init
     (setq org-log-done 'time)
-    (setq org-log-done 'note)
     (setq org-todo-keywords
           '((sequence "TODO" "INPROGRESS" "|" "DONE" "CANCELED")))
-    (setq org-log-done nil)
     (setq org-hide-leading-stars t)
     (add-hook 'org-mode-hook (lambda () (org-bullets-mode t)))
     :bind (("C-c h" . org-store-link) ;; h for href
