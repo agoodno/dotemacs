@@ -8,9 +8,9 @@ This is a personal Emacs configuration using **literate programming** with Org-m
 
 ## Architecture
 
-- **`init.el`** - Minimal entry point that loads the literate config via `(org-babel-load-file "~/.emacs.d/agginit.org")`
-- **`agginit.org`** - Main configuration file (literate programming format). This is where all configuration changes should be made.
-- **`agginit.el`** - Auto-generated from `agginit.org` via org-babel tangling. Do not edit directly.
+- **`init.el`** - Minimal entry point that loads the literate config via `(org-babel-load-file "~/.emacs.d/config.org")`
+- **`config.org`** - Main configuration file (literate programming format). This is where all configuration changes should be made.
+- **`config.el`** - Auto-generated from `config.org` via org-babel tangling. Do not edit directly.
 - **`custom.el`** - Machine-specific settings managed by Emacs customize system. Not committed to git.
 
 ## Package Management
@@ -43,6 +43,6 @@ GitHub Actions workflow (`.github/workflows/check.yml`) runs on push:
 
 ## Making Changes
 
-1. Edit `agginit.org` (the org file, not the generated .el file)
-2. Reload config with `M-x org-babel-load-file RET ~/.emacs.d/agginit.org` or restart Emacs
+1. Edit `config.org` (the org file, not the generated .el file)
+2. Reload config with `M-x org-babel-load-file RET ~/.emacs.d/config.org` or restart Emacs
 3. The org file is organized hierarchically by topic - find the appropriate section before adding new configuration
