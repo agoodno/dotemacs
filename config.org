@@ -782,8 +782,6 @@ Configuration for Org Roam.
     :hook ((typescript-ts-mode . apheleia-mode)
            (tsx-ts-mode . apheleia-mode)
            (js-ts-mode . apheleia-mode)
-           (js-mode . apheleia-mode)
-           (json-mode . apheleia-mode)
            (json-ts-mode . apheleia-mode)
            (nxml-mode . apheleia-mode)))
 
@@ -809,14 +807,10 @@ Configuration for Org Roam.
 #+END_SRC
 **** JSON
 #+BEGIN_SRC emacs-lisp
-  (use-package json-mode
-    :ensure t
-    :init
-    (add-hook 'json-mode-hook '(lambda ()
-                                 (setq indent-tabs-mode nil)
-                                 (setq tab-width 4)
-                                 (setq indent-line-function (quote insert-tab))
-                                 (local-set-key (kbd "C-c C-f") 'json-pretty-print-buffer))))
+  ;; json-ts-mode is built-in (Emacs 29+), activated via treesitter remap
+  (add-hook 'json-ts-mode-hook (lambda ()
+                                 (setq-local indent-tabs-mode nil)
+                                 (setq-local tab-width 4)))
 
   (use-package json-reformat
     :ensure t
@@ -897,8 +891,7 @@ Configuration for Org Roam.
 #+END_SRC
 **** YAML
 #+BEGIN_SRC emacs-lisp
-  (use-package yaml-mode
-    :ensure t)
+  ;; yaml-ts-mode is built-in (Emacs 29+), activated via treesitter remap
 #+END_SRC
 *** Languages
 **** Treesitter Setup
@@ -1009,50 +1002,19 @@ Configuration for Org Roam.
 #+END_SRC
 **** Javascript
 #+BEGIN_SRC emacs-lisp
+  ;; js-ts-mode is built-in (Emacs 29+), activated via treesitter remap
+  ;; LSP and formatting handled by eglot and apheleia respectively
   (setq js-indent-level 4)
 
   (use-package add-node-modules-path
-    :ensure t)
-
-  (use-package js2-mode
     :ensure t
-    :mode
-    "\\.js\\'"
-    :after (smartparens add-node-modules-path)
-    :init
-    (setq js2-strict-missing-semi-warning nil)
-    (setq js2-missing-semi-one-line-override nil)
-    (add-hook 'js2-mode-hook 'agg/progmodes-hooks)
-    (add-hook 'js2-mode-hook #'smartparens-mode)
-    (add-hook 'js2-mode-hook (lambda () (setq js2-basic-offset 2)))
-    (add-hook 'js2-mode-hook #'add-node-modules-path))
+    :hook ((js-ts-mode . add-node-modules-path)
+           (typescript-ts-mode . add-node-modules-path)
+           (tsx-ts-mode . add-node-modules-path)))
 
-  (use-package js2-refactor
-    :ensure t
-    :after (js2-mode)
-    :init
-    (setq js2-skip-preprocessor-directives t)
-    (js2r-add-keybindings-with-prefix "C-c C-m")
-    (add-hook 'js2-mode-hook #'js2-refactor-mode))
-
-  (use-package rjsx-mode
-    :ensure t
-    :disabled
-    :mode
-    "\\.jsx\\'"
-    "\\.tsx\\'"
-    :init
-    (setq js2-strict-missing-semi-warning nil)
-    (setq js2-missing-semi-one-line-override nil)
-    (add-to-list 'interpreter-mode-alist '("node" . rjsx-mode))
-    (add-hook 'rjsx-mode-hook 'agg/progmodes-hooks)
-    (add-hook 'rjsx-mode-hook (lambda () (setq js2-basic-offset 2))))
-
-  (use-package eslint-fix
-    :ensure t)
-
-  (use-package eslintd-fix
-    :ensure t)
+  (add-hook 'js-ts-mode-hook 'agg/progmodes-hooks)
+  (add-hook 'js-ts-mode-hook #'smartparens-mode)
+  (add-hook 'js-ts-mode-hook #'eglot-ensure)
 
   (use-package react-snippets
     :ensure t
