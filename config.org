@@ -1022,9 +1022,8 @@ Configuration for Org Roam.
     :init
     (setq js2-strict-missing-semi-warning nil)
     (setq js2-missing-semi-one-line-override nil)
-    (add-hook 'js2-mode-hook 'progmodes-hooks)
+    (add-hook 'js2-mode-hook 'agg/progmodes-hooks)
     (add-hook 'js2-mode-hook #'smartparens-mode)
-    (add-hook 'js2-mode-hook (lambda () (company-mode)))
     (add-hook 'js2-mode-hook (lambda () (setq js2-basic-offset 2)))
     (add-hook 'js2-mode-hook #'add-node-modules-path))
 
@@ -1046,8 +1045,8 @@ Configuration for Org Roam.
     (setq js2-strict-missing-semi-warning nil)
     (setq js2-missing-semi-one-line-override nil)
     (add-to-list 'interpreter-mode-alist '("node" . rjsx-mode))
-    (add-hook 'rjsx-mode 'progmodes-hooks)
-    (add-hook 'rjsx-mode (lambda () (setq js2-basic-offset 2))))
+    (add-hook 'rjsx-mode-hook 'agg/progmodes-hooks)
+    (add-hook 'rjsx-mode-hook (lambda () (setq js2-basic-offset 2))))
 
   (use-package eslint-fix
     :ensure t)
