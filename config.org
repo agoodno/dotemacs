@@ -1448,13 +1448,7 @@ Configuration for Org Roam.
             magit-insert-stashes))
     (setq magit-repolist-columns
           '(("Name" 40 magit-repolist-column-ident nil)
-            ("Path" 99 magit-repolist-column-path)))
-    (setq magit-repository-directories
-          '(("~/.emacs.d" . 0)
-            ("~/notes" . 0)
-            ("~/sonos-stow" . 0)
-            ("~/sonos-verbs" . 0)
-            ("~/work" . 1))))
+            ("Path" 99 magit-repolist-column-path))))
   ;; diff-hl - inline git change indicators in the fringe
   (use-package diff-hl
     :ensure t
