@@ -160,8 +160,7 @@ values to the ~custom.el~ for future sessions.
   (use-package exec-path-from-shell
     :ensure t
     :init
-    ;;(setq shell-file-name "/usr/local/bin/zsh")
-    (setq exec-path-from-shell-variables '("PATH" "MANPATH")) ;; "PKG_CONFIG_PATH" "LDFLAGS"
+    (setq exec-path-from-shell-variables '("PATH" "MANPATH" "NVM_DIR"))
     :config
     (exec-path-from-shell-initialize)
     ;; Make ansi-term play nice with zsh prompt.
@@ -806,7 +805,9 @@ Configuration for Org Roam.
     :ensure nil
     :commands (eglot eglot-ensure)
     :config
-    (setq eglot-autoshutdown t))  ;; shutdown server when last buffer closed
+    (setq eglot-autoshutdown t)  ;; shutdown server when last buffer closed
+    (add-to-list 'eglot-server-programs
+                 '((typescript-ts-mode tsx-ts-mode) . ("npx" "typescript-language-server" "--stdio")))) ;; Using npx means it'll find the locally installed version automatically, and it works regardless of nvm version or globals
 
   ;; consult-eglot - LSP symbol search with vertico/consult
   (use-package consult-eglot
