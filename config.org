@@ -1426,32 +1426,35 @@ Configuration for Org Roam.
 #+BEGIN_SRC emacs-lisp
   (use-package magit
     :ensure t
-    :init
-    (customize-set-variable 'magit-display-buffer-function
-                            (quote magit-display-buffer-fullframe-status-v1))
-    (customize-set-variable 'magit-status-sections-hook
-                            '(magit-insert-status-headers
-                              magit-insert-merge-log
-                              magit-insert-rebase-sequence
-                              magit-insert-am-sequence
-                              magit-insert-sequencer-sequence
-                              magit-insert-bisect-output
-                              magit-insert-bisect-rest
-                              magit-insert-unpulled-from-upstream
-                              magit-insert-unpulled-from-pushremote
-                              magit-insert-unpushed-to-upstream
-                              magit-insert-unpushed-to-pushremote
-                              magit-insert-staged-changes
-                              magit-insert-unstaged-changes
-                              magit-insert-untracked-files
-                              magit-insert-stashes))
-    (customize-set-variable 'magit-repolist-columns
-                            (quote
-                             (("Name" 40 magit-repolist-column-ident nil)
-                              ("Path" 99 magit-repolist-column-path))))
-    (global-set-key (kbd "C-c g") 'magit-status)
-    (global-set-key (kbd "C-c h") 'magit-list-repositories))
-
+    :bind (("C-c g" . magit-status)
+           ("C-c h" . magit-list-repositories))
+    :config
+    (setq magit-display-buffer-function 'magit-display-buffer-fullframe-status-v1)
+    (setq magit-status-sections-hook
+          '(magit-insert-status-headers
+            magit-insert-merge-log
+            magit-insert-rebase-sequence
+            magit-insert-am-sequence
+            magit-insert-sequencer-sequence
+            magit-insert-bisect-output
+            magit-insert-bisect-rest
+            magit-insert-unpulled-from-upstream
+            magit-insert-unpulled-from-pushremote
+            magit-insert-unpushed-to-upstream
+            magit-insert-unpushed-to-pushremote
+            magit-insert-staged-changes
+            magit-insert-unstaged-changes
+            magit-insert-untracked-files
+            magit-insert-stashes))
+    (setq magit-repolist-columns
+          '(("Name" 40 magit-repolist-column-ident nil)
+            ("Path" 99 magit-repolist-column-path)))
+    (setq magit-repository-directories
+          '(("~/.emacs.d" . 0)
+            ("~/notes" . 0)
+            ("~/sonos-stow" . 0)
+            ("~/sonos-verbs" . 0)
+            ("~/work" . 1))))
   ;; diff-hl - inline git change indicators in the fringe
   (use-package diff-hl
     :ensure t
