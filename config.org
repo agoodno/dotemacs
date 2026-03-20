@@ -206,7 +206,11 @@ values to the ~custom.el~ for future sessions.
       :ensure t
       :config
       ;; 'latte 'frappe 'macchiato 'mocha
-      (customize-set-variable 'catppuccin-flavor 'mocha)
+      (customize-set-variable 'catppuccin-flavor 'latte)
+      (custom-set-faces
+       `(tab-bar-tab ((t (:background ,(catppuccin-get-color 'surface2)
+                          :foreground ,(catppuccin-get-color 'text)
+                          :bold t)))))
       (catppuccin-reload))
 
     (use-package spacemacs-theme
