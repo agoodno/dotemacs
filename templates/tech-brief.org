@@ -1,0 +1,43 @@
+#+date: %<%Y-%m-%d>
+#+status: Draft
+
+* Tech Brief: ${title}
+** Background
+
+Describe the problem being solved and the motivation for this feature. What exists today, why it falls short, and what the high-level goal is.
+
+*** Links
+
+- [[link][Description]]
+
+** Assumptions
+
+- List constraints, out-of-scope items, and things being taken for granted.
+
+** Project/Feature/Change
+
+High-level description of what is being built and how it fits into the broader system.
+
+** Suggested Story Breakdown
+
+Ordered list of implementation stories. (front-load foundational work to minimize merge conflicts).
+
+0. *Story zero* — Description.
+
+1. *Story one* — Description.
+
+2. *Story two* — Description.
+
+** Questions
+
+Open questions that need answers before or during implementation.
+
+*** Answered Questions
+
+- *Question* — Answer and rationale.
+
+*** Outstanding Questions
+
+Questions still open at the time of writing.
+
+- *Question* — An open question.

@@ -717,6 +717,11 @@ Configuration for Org Roam.
      '(("d" "default" plain "%?"
         :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
                            "#+title: ${title}\n#+options: toc:nil\n")
+        :unnarrowed t)
+       ("t" "tech brief" plain
+        (file "~/.emacs.d/templates/tech-brief.org")
+        :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
+                           "#+title: ${title}\n#+options: toc:nil\n")
         :unnarrowed t)))
     :bind (("C-c n l" . org-roam-buffer-toggle)
            ("C-c n f" . org-roam-node-find)
