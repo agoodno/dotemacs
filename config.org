@@ -257,7 +257,7 @@ values to the ~custom.el~ for future sessions.
     ;; (load-theme 'gruvbox-dark-soft t)
     ;; (load-theme 'gruvbox-dark-medium t) ;; default
 
-    ;; (load-theme 'spacemacs-light t)
+    (load-theme 'spacemacs-light t)
     ;; (load-theme 'spacemacs-dark t)
 
     ;; (load-theme 'timu-spacegrey t)
@@ -1427,6 +1427,9 @@ Configuration for Org Roam.
     (setq-default flycheck-disabled-checkers
                   (append flycheck-disabled-checkers
                           '(json-jsonlist)))
+    (setq-default flycheck-disabled-checkers
+                  (append flycheck-disabled-checkers
+                          '(org-lint)))
     (global-flycheck-mode))
 #+END_SRC
 
