@@ -133,7 +133,14 @@ values to the ~custom.el~ for future sessions.
     ;; Change backups to go to a backup directory
     (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
 
-    ;; Auto revert all files changed elsewhere
+    ;; Auto revert all files changed elsewhere.
+    ;; Use polling instead of file notifications: on macOS the kqueue
+    ;; backend watches a file's descriptor, which is invalidated when the
+    ;; file is rewritten on save. auto-revert tears the watch down and an
+    ;; in-flight event can hit it while its callback is momentarily nil,
+    ;; producing "file-notify--call-handler: Symbol's function definition
+    ;; is void: nil". Polling sidesteps the race entirely.
+    (setq auto-revert-use-notify nil)
     (global-auto-revert-mode t)
 
     ;; Set pager to cat for shell
