@@ -89,6 +89,13 @@ empty default over a value that was already right. The same applies to
     "Directory holding the work `org-roam' notes on this machine."
     :type 'directory
     :group 'agg)
+
+  (defcustom agg-trackpad-device "SynPS/2 Synaptics TouchPad"
+    "xinput device name for this machine's trackpad.
+  Used on Linux to suppress the trackpad while Emacs has focus. Run
+  `xinput list' to find the name on a given machine."
+    :type 'string
+    :group 'agg)
 #+END_SRC
 *** Editor
 #+BEGIN_SRC emacs-lisp
@@ -301,6 +308,12 @@ empty default over a value that was already right. The same applies to
 #+BEGIN_SRC emacs-lisp
   (global-hl-line-mode +1)
 
+  ;; Replaces the block cursor with a vertical bar.
+  ;; CURRENTLY OFF -- change the 0 to 1 to turn it on.
+  (use-package bar-cursor
+    :ensure t
+    :init (bar-cursor-mode 0))
+
   (use-package beacon
     :ensure t
     :init (beacon-mode 1))
@@ -422,6 +435,54 @@ empty default over a value that was already right. The same applies to
     "Select the previous window, the reverse of `other-window'."
     (interactive)
     (other-window -1))
+
+  ;; Trackpad suppression while Emacs has focus (Linux/X11 only). Stops stray
+  ;; palm contact moving point while typing.
+  (defun agg/set-trackpad (enable)
+    "Enable the trackpad when ENABLE is non-nil, otherwise disable it.
+  Uses call-process rather than `shell-command' because this runs on every
+  focus change: DESTINATION 0 discards output and returns without waiting, so
+  there is no synchronous shell and no \"succeeded with no output\" echo. A
+  no-op where xinput is unavailable, which keeps it quiet on macOS and on
+  Linux hosts without it."
+    (when (executable-find "xinput")
+      (call-process "xinput" nil 0 nil
+                    (if enable "--enable" "--disable")
+                    agg-trackpad-device)))
+
+  (defun agg/turn-off-mouse (&optional _frame)
+    "Disable the laptop trackpad."
+    (interactive)
+    (agg/set-trackpad nil))
+
+  (defun agg/turn-on-mouse (&optional _frame)
+    "Re-enable the laptop trackpad."
+    (interactive)
+    (agg/set-trackpad t))
+
+  (defun agg/update-trackpad-for-focus ()
+    "Disable the trackpad while Emacs is focused, re-enable it when it is not."
+    (if (frame-focus-state)
+        (agg/turn-off-mouse)
+      (agg/turn-on-mouse)))
+
+  (defun agg/register-mouse-hooks ()
+    "Suppress the trackpad while Emacs holds focus.
+  `focus-in-hook' and `focus-out-hook' were used here originally; both have
+  been obsolete since 27.1 and the byte-compiler flags them. Their replacement
+  `after-focus-change-function' fires for focus gained *and* lost, so a single
+  handler has to branch on `frame-focus-state' -- adding both turn-on and
+  turn-off to it, as an earlier attempt in this file did, cannot work.
+
+  The trackpad is always re-enabled when a frame is deleted or Emacs exits,
+  otherwise it would be left disabled outside Emacs."
+    (add-function :after after-focus-change-function
+                  #'agg/update-trackpad-for-focus)
+    (add-hook 'delete-frame-functions #'agg/turn-on-mouse)
+    (add-hook 'kill-emacs-hook #'agg/turn-on-mouse))
+
+  (when (eq system-type 'gnu/linux)
+    (agg/register-mouse-hooks))
 
   (defun agg/insert-ruby-debug-print (start end)
     "Insert a Ruby debug print for the expression between START and END.
@@ -1120,6 +1181,11 @@ Configuration for Org Roam.
   ;; machine elmlang.slack.com user token password "xoxc-ZZZ"
   ;; machine elmlang.slack.com user cookie password "xoxd-zzz; d-s-789; lc=012"
 
+  ;; OFF BY DEFAULT. `:commands' defers the whole package, so nothing here runs
+  ;; until `slack-start' (C-c S S) is invoked -- no connection, no team
+  ;; registration, and no credential lookup at startup. The `slack-register-team'
+  ;; calls below live in `:config' for that reason; moving them to `:init' would
+  ;; make them run on every launch.
   (use-package slack
     :ensure t
     :commands (slack-start)
