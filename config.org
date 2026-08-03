@@ -484,17 +484,13 @@ values to the ~custom.el~ for future sessions.
   ;; If you want to be able to M-x without meta (phones, etc)
   (global-set-key (kbd "C-x C-m") 'execute-extended-command)
 
-  ;; Fetch the contents at a URL, display it raw.
-  (global-set-key (kbd "C-x C-h") 'view-url)
-
   ;; Help should search more than just commands
   (global-set-key (kbd "C-h a") 'apropos)
 
-  ;; Should be able to eval-and-replace anywhere.
-  (global-set-key (kbd "C-c e") 'eval-and-replace)
-
-  ;; For debugging Emacs modes
-  (global-set-key (kbd "C-c p") 'message-point)
+  ;; Removed: C-x C-h -> view-url, C-c e -> eval-and-replace, and
+  ;; C-c p -> message-point. All three were Emacs Starter Kit bindings whose
+  ;; helper functions were never carried over into this config, so the keys
+  ;; only ever raised void-function. C-c p is claimed by projectile anyway.
 
   ;; Comment or uncomment region
   (global-set-key (kbd "C-c C-;") 'comment-or-uncomment-region)
@@ -702,7 +698,7 @@ Configuration for Org Mode.
     :bind (("C-c h" . org-store-link) ;; h for href
            ("C-c c" . org-capture)
            ("C-c a" . org-agenda)
-           ("C-c t" . ins-tommorrows-date)
+           ("C-c t" . agg/ins-tommorrows-date)
            ("C-c d" . insdate-insert-current-date)
            :map org-mode-map
            ("C-c !" . org-time-stamp-inactive))
