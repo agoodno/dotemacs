@@ -24,6 +24,14 @@ jobs:
       # land in the runner's real home.
       HOME: ${{ github.workspace }}
 
+      # The yaml grammar has a C++ scanner, so its shared object needs
+      # libstdc++ at dlopen time. setup-emacs installs Emacs through nix, whose
+      # loader path excludes the system C++ runtime, and treesit reports only
+      # "cannot open shared object file" for the grammar itself -- the real
+      # cause (libstdc++.so.6) is one line inside a long list of tried paths.
+      # Needed by both the install step and the tests, which dlopen the result.
+      LD_LIBRARY_PATH: /usr/lib/x86_64-linux-gnu
+
     steps:
       - uses: actions/checkout@v4
         with:
