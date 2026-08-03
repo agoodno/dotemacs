@@ -429,11 +429,21 @@ empty default over a value that was already right. The same applies to
     (interactive)
     (other-window -1))
 
-  (defun agg/log-region (&optional arg)
-    "Keyboard macro."
-    (interactive "p")
-    (kmacro-exec-ring-item
-     (quote ([134217847 16 5 return 112 117 116 115 32 34 25 61 35 123 25 125 34] 0 "%d")) arg))
+  (defun agg/insert-ruby-debug-print (start end)
+    "Insert a Ruby debug print for the expression between START and END.
+  With `foo' selected, adds a line above the current one reading
+
+    puts \"foo=#{foo}\"
+
+  Replaces an opaque keyboard-macro vector that did the same thing through
+  `kmacro-exec-ring-item', obsolete as of 29.1."
+    (interactive "r")
+    (let ((expr (buffer-substring-no-properties start end)))
+      (beginning-of-line)
+      (insert (format "puts \"%s=#{%s}\"\n" expr expr))
+      (forward-line -1)
+      (indent-according-to-mode)
+      (forward-line 1)))
 
 #+END_SRC
 ** Key Bindings
@@ -544,7 +554,7 @@ empty default over a value that was already right. The same applies to
 
   (global-set-key (kbd "s-n") 'next-buffer)
 
-  (global-set-key (kbd "C-x C-l") 'agg/log-region)
+  (global-set-key (kbd "C-x C-l") 'agg/insert-ruby-debug-print)
 
   ;; Two approaches are discussed here for local key bindings
   ;; http://stackoverflow.com/questions/9818307/emacs-mode-specific-custom-key-bindings-local-set-key-vs-define-key

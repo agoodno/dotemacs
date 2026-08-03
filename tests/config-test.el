@@ -102,7 +102,8 @@ not merely an autoload pointing at a library that lacks it."
   (let (bad)
     (dolist (key '("C-c h" "C-c H" "C-c g" "C-c G" "C-c t" "C-c d" "C-c c"
                    "C-c a" "C-c w" "C-c v" "C-c V" "C-c p" "C-x C-b" "C-x m"
-                   "C-x \\" "M-/" "s-p" "s-n" "C-," "C-." "<f5>" "<f12>"))
+                   "C-x \\" "M-/" "s-p" "s-n" "C-," "C-." "<f5>" "<f12>"
+                   "C-x C-l"))
       (let ((cmd (key-binding (kbd key))))
         (when (and cmd (symbolp cmd) (not (keymapp cmd)) (not (fboundp cmd)))
           (push (cons key cmd) bad))))

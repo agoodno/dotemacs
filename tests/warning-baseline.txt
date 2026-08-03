@@ -1,4 +1,3 @@
-Warning: `kmacro-exec-ring-item' is an obsolete function (as of 29.1); use `funcall' instead.
 Warning: `set-buffer-process-coding-system' is for interactive use only; use `set-process-coding-system' instead.
 Warning: assignment to free variable `apropos-do-all'
 Warning: assignment to free variable `auto-revert-use-notify'
