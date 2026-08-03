@@ -9,6 +9,7 @@ help:
 	@echo "make tangle    - tangle config.org to config.el"
 	@echo "make grammars  - install every tree-sitter grammar the config declares"
 	@echo "make baseline  - re-record the byte-compile warning baseline"
+	@echo "make clean-tangle - remove the generated config.el"
 
 check: lint test
 
