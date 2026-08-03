@@ -24,6 +24,12 @@
 
 set -uo pipefail
 
+# comm requires both inputs collated identically. The warnings contain curly
+# quotes, so locale-dependent collation makes a baseline written on one machine
+# unusable on another -- it shows every line as simultaneously added and removed.
+# LC_ALL=C pins byte order everywhere sort and comm are used.
+export LC_ALL=C
+
 cd "$(dirname "$0")/.." || exit 1
 EMACS="${EMACS:-emacs}"
 BASELINE="tests/warning-baseline.txt"
