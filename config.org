@@ -1430,6 +1430,11 @@ Configuration for Org Roam.
     (setq-default flycheck-disabled-checkers
                   (append flycheck-disabled-checkers
                           '(org-lint)))
+    ;; Don't enable flycheck in *scratch*: on Emacs 30+ the emacs-lisp
+    ;; byte-compile checker is gated on `trusted-content-p', which is nil for
+    ;; non-file buffers, and emacs-lisp-checkdoc is disabled above -- leaving no
+    ;; eligible checker and a "no syntax checker ... can run here" warning.
+    (setq flycheck-global-modes '(not lisp-interaction-mode))
     (global-flycheck-mode))
 #+END_SRC
 
