@@ -358,7 +358,11 @@ values to the ~custom.el~ for future sessions.
 
   (defun agg/progmodes-hooks ()
     "Hooks for programming modes"
-    (add-hook 'before-save-hook 'agg/progmodes-before-save-hook))
+    ;; LOCAL (5th) arg is essential: without it this registers the cleanup
+    ;; in the *global* before-save-hook, so untabify + whitespace-cleanup
+    ;; would run on every save in every buffer -- including Makefiles and
+    ;; Markdown, where tabs and trailing whitespace are significant.
+    (add-hook 'before-save-hook #'agg/progmodes-before-save-hook nil t))
 
   (defun agg/shell-dir (name dir)
     "Open a shell buffer named NAME with DIR as its working directory.
