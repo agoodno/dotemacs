@@ -301,10 +301,6 @@ empty default over a value that was already right. The same applies to
 #+BEGIN_SRC emacs-lisp
   (global-hl-line-mode +1)
 
-  ;; (use-package bar-cursor
-  ;;   :ensure t
-  ;;   :init (bar-cursor-mode 1))
-
   (use-package beacon
     :ensure t
     :init (beacon-mode 1))
@@ -711,9 +707,6 @@ Configuration for Org Mode.
 
   (use-package org-bullets
     :ensure t)
-
-  ;; (require 'ob-sh)
-  ;; (org-babel-do-load-languages 'org-babel-load-languages '((shell . t)))
 #+END_SRC
 *** Notes
 Configuration for Org Roam.
@@ -792,11 +785,6 @@ Configuration for Org Roam.
           org-roam-ui-update-on-save t
           org-roam-ui-open-on-start t))
 
-#+END_SRC
-*** Browsing
-#+BEGIN_SRC emacs-lisp
-  ;; (use-package w3m
-  ;;   :ensure t)
 #+END_SRC
 *** Killing/Yanking
 #+BEGIN_SRC emacs-lisp
@@ -1004,12 +992,6 @@ Configuration for Org Roam.
 #+BEGIN_SRC emacs-lisp
   (add-hook 'html-mode-hook 'turn-off-auto-fill)
   (add-hook 'html-mode-hook 'agg/progmodes-hooks)
-
-  ;; (use-package org-preview-html)
-
-  ;; (use-package web-mode
-  ;;   :ensure t
-  ;;   :defer t)
 #+END_SRC
 **** Java
 #+BEGIN_SRC emacs-lisp
@@ -1076,13 +1058,6 @@ Configuration for Org Roam.
     :init
     (add-hook 'enh-ruby-mode-hook 'ruby-tools-mode)
     :diminish ruby-tools-mode)
-
-  ;; (use-package rbenv
-  ;;   :ensure t
-  ;;   :defer t
-  ;;   :init
-  ;;   (add-hook 'enh-ruby-mode-hook 'rbenv-use-corresponding)
-  ;;   (global-rbenv-mode))
 
   (use-package chruby
     :ensure t)
@@ -1256,8 +1231,6 @@ Configuration for Org Roam.
   (use-package flycheck
     :ensure t
     :init
-    ;; (setq flycheck-javascript-eslint-executable "~/work/wastewitness/node_modules/.bin/eslint")
-    ;; (setq flycheck-javascript-standard-executable "~/work/wastewitness/node_modules/.bin/standard")
     (setq-default flycheck-disabled-checkers
                   '(emacs-lisp-checkdoc))
     (setq-default flycheck-disabled-checkers
