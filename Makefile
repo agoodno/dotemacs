@@ -31,10 +31,7 @@ baseline:
 # treesit-ready-p, so without grammars the config silently falls back to the
 # classic modes and the mode-dispatch tests fail.
 grammars:
-	$(EMACS) --batch -l init.el --eval '(dolist (src treesit-language-source-alist) \
-	  (unless (treesit-ready-p (car src) t) \
-	    (message "installing %s" (car src)) \
-	    (treesit-install-language-grammar (car src))))' </dev/null
+	$(EMACS) --batch -l init.el -l tests/install-grammars.el </dev/null
 
 clean-tangle:
 	rm -f config.el config.elc
