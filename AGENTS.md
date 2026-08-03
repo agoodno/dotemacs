@@ -67,22 +67,17 @@ Tests should `skip-unless` rather than fail when the environment genuinely canno
 support them (a tree-sitter grammar that will not build, an absent `custom.el`),
 and must log what they skipped. A silent pass is worse than either.
 
-## Gotchas that have caused real breakage here
+## Two things the test suite cannot catch
 
-- **`add-hook` from a mode hook needs its LOCAL argument.** Without it the hook
-  lands in the *global* value and applies to every buffer. This once put
-  `untabify` + `whitespace-cleanup` on every save in the session.
-- **`setq` inside a mode hook sets the global value.** Use `setq-local`.
-- **`major-mode-remap-alist` does not resolve mode aliases.** `auto-mode-alist`
-  names `javascript-mode`, so a `(js-mode . js-ts-mode)` key never fires. Verify
-  mode dispatch with a real `find-file`, not by reading `auto-mode-alist`.
-- **Closing `emacs --batch` on stdin.** vterm prompts to build its native module
-  and will hang forever. Every Makefile target that loads the config redirects
-  `</dev/null`; do the same in ad-hoc commands.
-- **Reading exit codes through a pipe.** `make foo | grep bar; echo $?` reports
-  `grep`'s status, not `make`'s. This hid a broken target that had never worked.
-- **Block language must be `emacs-lisp`.** `org-babel-load-file` tangles
-  `"emacs-lisp\|elisp"`; anything else is silently dropped from `config.el`.
+- **New code blocks must be `#+begin_src emacs-lisp`.** `org-babel-load-file`
+  tangles only `"emacs-lisp\|elisp"`, so a block in any other language is
+  silently dropped from `config.el` — the code simply never runs, with no error.
+- **Redirect `</dev/null` when running `emacs --batch` by hand.** vterm prompts
+  to build its native module and will otherwise hang forever. The Makefile
+  targets already do this.
+
+Everything else worth knowing is enforced by `make check`; read the failing test
+name rather than guessing.
 
 ## Package management
 
