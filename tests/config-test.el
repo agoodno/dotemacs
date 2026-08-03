@@ -49,6 +49,21 @@ lookup would disagree with Emacs in exactly the cases worth testing."
   "Function symbols on HOOK's global value, ignoring lambdas and closures."
   (seq-filter #'symbolp (and (boundp hook) (default-value hook))))
 
+(defconst config-test--should-be-deferred
+  '(enh-ruby-mode inf-ruby yari rubocop robe ruby-tools chruby projectile-rails
+    dockerfile-mode terraform-mode elm-mode
+    browse-kill-ring unfill impostman f smartparens org-bullets
+    color-theme-sanityinc-tomorrow dracula-theme gruvbox-theme
+    timu-spacegrey-theme)
+  "Packages that must not be loaded merely by starting Emacs.")
+
+(defconst config-test--loaded-at-startup
+  (seq-filter #'featurep config-test--should-be-deferred)
+  "Snapshot of which deferred packages were loaded when this file loaded.
+Taken at load time on purpose. Tests below open Ruby, org and JavaScript
+buffers, which legitimately pull several of these in, so asking `featurep'
+during a test would depend on test execution order.")
+
 ;;; Invariants ----------------------------------------------------------------
 
 (ert-deftest config-mode-hooks-reference-defined-functions ()
@@ -108,6 +123,14 @@ not merely an autoload pointing at a library that lacks it."
         (when (and cmd (symbolp cmd) (not (keymapp cmd)) (not (fboundp cmd)))
           (push (cons key cmd) bad))))
     (should (equal nil bad))))
+
+(ert-deftest config-deferred-packages-stay-deferred ()
+  "Deferred packages must not creep back into startup.
+Deferral is easy to lose by accident -- a `require' in `:init', or an
+`add-hook' written by hand where `:hook' would both defer and autoload. This
+pins the set that was deferred so a regression shows up as a test failure
+rather than as a slower launch nobody attributes to a config change."
+  (should (equal nil config-test--loaded-at-startup)))
 
 (ert-deftest config-agg-commands-are-documented ()
   "Interactive agg/ commands should carry a docstring."

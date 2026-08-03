@@ -785,7 +785,6 @@ Configuration for Org Mode.
     (setq org-todo-keywords
           '((sequence "TODO" "INPROGRESS" "|" "DONE" "CANCELED")))
     (setq org-hide-leading-stars t)
-    (add-hook 'org-mode-hook (lambda () (org-bullets-mode t)))
     :bind (("C-c h" . org-store-link) ;; h for href
            ("C-c c" . org-capture)
            ("C-c a" . org-agenda)
@@ -797,8 +796,11 @@ Configuration for Org Mode.
     :config
     (require 'org-id))
 
+  ;; :hook here rather than an anonymous lambda on org-mode-hook in org's :init,
+  ;; which loaded the package at startup whether or not an org file was opened.
   (use-package org-bullets
-    :ensure t)
+    :ensure t
+    :hook (org-mode . org-bullets-mode))
 
   ;; Languages org-babel may execute in source blocks. emacs-lisp must stay t:
   ;; it is the default, and it is what makes C-c C-c work inside this file.
