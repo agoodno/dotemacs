@@ -875,14 +875,21 @@ Configuration for Org Roam.
 *** Killing/Yanking
 #+BEGIN_SRC emacs-lisp
   (use-package browse-kill-ring
-    :ensure t)
+    :ensure t
+    :defer t)
 #+END_SRC
 ** Development
 *** General
 #+BEGIN_SRC emacs-lisp
+  ;; `(require 'smartparens-config)' in :init forced this to load at startup.
+  ;; In :config it runs when smartparens is actually pulled in, and :hook both
+  ;; defers the package and autoloads smartparens-mode. The hook that used to
+  ;; live in the Javascript section is folded in here so all of it is in one
+  ;; place.
   (use-package smartparens
     :ensure t
-    :init
+    :hook ((js-ts-mode . smartparens-mode))
+    :config
     (require 'smartparens-config))
 
   (use-package yasnippet
@@ -1101,7 +1108,6 @@ Configuration for Org Roam.
            (tsx-ts-mode . add-node-modules-path)))
 
   (add-hook 'js-ts-mode-hook 'agg/progmodes-hooks)
-  (add-hook 'js-ts-mode-hook #'smartparens-mode)
   (add-hook 'js-ts-mode-hook #'eglot-ensure)
 
   (use-package react-snippets
@@ -1295,13 +1301,20 @@ Configuration for Org Roam.
 #+END_SRC
 *** Verb REST client
 #+BEGIN_SRC emacs-lisp
+  ;; :after org is required, not cosmetic. `:config' dereferences org-mode-map,
+  ;; which is only bound once org has loaded; this worked purely because
+  ;; org-babel-load-file has already required org by the time config.el runs.
+  ;; It cannot be deferred further while the binding lives in org-mode-map,
+  ;; since verb-command-map does not exist until verb loads.
   (use-package verb
     :ensure t
+    :after org
     :config
     (define-key org-mode-map (kbd "C-c C-r") verb-command-map))
 
   (use-package impostman
-    :ensure t)
+    :ensure t
+    :defer t)
 #+END_SRC
 ** Packages
 *** browse-url
@@ -1318,7 +1331,8 @@ Configuration for Org Roam.
 *** f
 #+BEGIN_SRC emacs-lisp
   (use-package f
-    :ensure t)
+    :ensure t
+    :defer t)
 #+END_SRC
 *** flycheck
 
@@ -1438,7 +1452,8 @@ Configuration for Org Roam.
 *** unfill
 #+BEGIN_SRC emacs-lisp
   (use-package unfill
-    :ensure t)
+    :ensure t
+    :defer t)
 #+END_SRC
 *** uniquify
 #+BEGIN_SRC emacs-lisp
