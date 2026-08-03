@@ -409,6 +409,7 @@ empty default over a value that was already right. The same applies to
       (insert (format-time-string format))))
 
   (defun agg/ins-tommorrows-date ()
+    "Insert tomorrow's date, written out long: \"Monday, August 4, 2026\"."
     (interactive)
     (insert (format-time-string "%A, %B %e, %Y" (time-add (current-time) (seconds-to-time (* 60 (* 60 (* 24))))))))
 
@@ -424,6 +425,7 @@ empty default over a value that was already right. The same applies to
   ;; (decode-time (seconds-to-time (+ (float-time (current-time)) (* 60 (* 60 (* 24))))))
 
   (defun agg/back-window ()
+    "Select the previous window, the reverse of `other-window'."
     (interactive)
     (other-window -1))
 
@@ -434,10 +436,12 @@ empty default over a value that was already right. The same applies to
      (quote ([134217847 16 5 return 112 117 116 115 32 34 25 61 35 123 25 125 34] 0 "%d")) arg))
 
   (defun agg/turn-off-mouse (&optional frame)
+    "Disable the laptop trackpad via xinput.  Linux only; FRAME is ignored."
     (interactive)
     (shell-command "xinput --disable \"SynPS/2 Synaptics TouchPad\""))
 
   (defun agg/turn-on-mouse (&optional frame)
+    "Re-enable the laptop trackpad via xinput.  Linux only; FRAME is ignored."
     (interactive)
     (shell-command "xinput --enable \"SynPS/2 Synaptics TouchPad\""))
 
@@ -938,7 +942,7 @@ Configuration for Org Roam.
 #+END_SRC
 *** Languages
 **** Treesitter Setup
-#+begin_src elisp
+#+begin_src emacs-lisp
   ;; Remap traditional modes to tree-sitter modes (built-in to Emacs 29+).
   ;; Entries are (LANGUAGE CLASSIC-MODE . TS-MODE). Each remap is installed
   ;; only when its grammar is actually present, so a missing grammar degrades

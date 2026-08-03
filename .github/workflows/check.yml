@@ -1,6 +1,9 @@
 name: check
 
-on: push
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
 
 jobs:
   check:
@@ -8,25 +11,77 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        emacs_version:
-          - 27.1
-        ignore_warnings:
-          - true
-        include:
-          - emacs_version: snapshot
-            ignore_warnings: false
+        emacs_version: ['30.1', 'snapshot']
+    # snapshot breaks for reasons that have nothing to do with this config,
+    # so let it report without failing the build.
+    continue-on-error: ${{ matrix.emacs_version == 'snapshot' }}
+
+    env:
+      # init.el loads "~/.emacs.d/config.org" by absolute path, so the checkout
+      # has to *be* ~/.emacs.d. Pointing HOME at the workspace achieves that and
+      # sandboxes the run at the same time -- the config starts a server and
+      # writes recentf, savehist, places and org-roam.db, none of which should
+      # land in the runner's real home.
+      HOME: ${{ github.workspace }}
+
     steps:
-    - uses: actions/checkout@v2
-    - uses: purcell/setup-emacs@master
-      with:
-        version: ${{ matrix.emacs_version }}
-    - uses: leotaku/elisp-check@master
-      with:
-        check: load-file
-        file: init.el
-        ignore_warnings: ${{ matrix.ignore_warnings }}
-    - uses: leotaku/elisp-check@master
-      with:
-        check: byte-compile
-        file: init.el
-        ignore_warnings: ${{ matrix.ignore_warnings }}
+      - uses: actions/checkout@v4
+        with:
+          path: .emacs.d
+
+      - uses: purcell/setup-emacs@master
+        with:
+          version: ${{ matrix.emacs_version }}
+
+      # vterm builds a native module and would otherwise prompt (and hang) or
+      # fail outright; the rest is what tree-sitter grammars need to compile.
+      - name: Install build dependencies
+        run: sudo apt-get update && sudo apt-get install -y cmake libtool-bin build-essential
+
+      # Keyed on config.org because that file *is* the package manifest.
+      - name: Cache packages and grammars
+        uses: actions/cache@v4
+        with:
+          path: |
+            ${{ github.workspace }}/.emacs.d/elpa
+            ${{ github.workspace }}/.emacs.d/tree-sitter
+          key: ${{ matrix.emacs_version }}-${{ hashFiles('.emacs.d/config.org') }}
+          restore-keys: ${{ matrix.emacs_version }}-
+
+      # config.org refreshes the archives asynchronously, which races the
+      # :ensure installs on a cold cache. Do one synchronous refresh first, then
+      # let loading init.el perform the actual installs.
+      - name: Bootstrap packages
+        working-directory: .emacs.d
+        run: |
+          emacs --batch --eval "(progn \
+            (require 'package) \
+            (add-to-list 'package-archives '(\"melpa\" . \"https://melpa.org/packages/\")) \
+            (package-initialize) \
+            (package-refresh-contents))"
+          emacs --batch -l init.el --eval '(message "bootstrap load complete")' </dev/null
+
+      # The tree-sitter remaps are guarded on treesit-ready-p, so without
+      # grammars the config quietly falls back to the classic modes and the
+      # mode-dispatch assertions would be testing the wrong thing.
+      - name: Install tree-sitter grammars
+        working-directory: .emacs.d
+        run: make grammars
+
+      # Fails only on warnings absent from tests/warning-baseline.txt.
+      - name: Lint (byte-compile against warning baseline)
+        working-directory: .emacs.d
+        run: make lint
+
+      - name: Test (ERT)
+        working-directory: .emacs.d
+        run: make test
+
+      - name: Diagnostics on failure
+        if: failure()
+        working-directory: .emacs.d
+        run: |
+          echo "--- tangled line count ---"
+          wc -l config.el || true
+          echo "--- tail of a verbose load ---"
+          emacs --batch -l init.el --eval '(message "loaded")' </dev/null 2>&1 | tail -40 || true

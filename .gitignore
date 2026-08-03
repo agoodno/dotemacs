@@ -35,3 +35,4 @@ package-quickstart.elc
 request/
 projects
 .claude/
+projectile-frecency.eld

@@ -1,0 +1,49 @@
+Warning: assignment to free variable ‘apropos-do-all’
+Warning: assignment to free variable ‘auto-revert-use-notify’
+Warning: assignment to free variable ‘c-basic-offset’
+Warning: assignment to free variable ‘compilation-scroll-output’
+Warning: assignment to free variable ‘erc-auto-query’
+Warning: assignment to free variable ‘erc-autojoin-channels-alist’
+Warning: assignment to free variable ‘erc-echo-notices-in-minibuffer-flag’
+Warning: assignment to free variable ‘erc-email-userid’
+Warning: assignment to free variable ‘erc-fill-column’
+Warning: assignment to free variable ‘erc-fill-function’
+Warning: assignment to free variable ‘erc-fill-static-center’
+Warning: assignment to free variable ‘erc-header-line-format’
+Warning: assignment to free variable ‘erc-hide-list’
+Warning: assignment to free variable ‘erc-log-write-after-insert’
+Warning: assignment to free variable ‘erc-log-write-after-send’
+Warning: assignment to free variable ‘erc-nick’
+Warning: assignment to free variable ‘erc-prompt’
+Warning: assignment to free variable ‘erc-save-buffer-on-part’
+Warning: assignment to free variable ‘erc-save-queries-on-quit’
+Warning: assignment to free variable ‘erc-server’
+Warning: assignment to free variable ‘erc-track-exclude-types’
+Warning: assignment to free variable ‘erc-user-full-name’
+Warning: assignment to free variable ‘js-indent-level’
+Warning: assignment to free variable ‘native-comp-async-report-warnings-errors’
+Warning: assignment to free variable ‘native-compile-prune-cache’
+Warning: assignment to free variable ‘org-roam-v2-ack’
+Warning: assignment to free variable ‘recentf-max-saved-items’
+Warning: assignment to free variable ‘rubocop-autocorrect-on-save’
+Warning: assignment to free variable ‘save-place-file’
+Warning: assignment to free variable ‘tidy-config-file’
+Warning: assignment to free variable ‘tidy-shell-command’
+Warning: assignment to free variable ‘tidy-temp-directory’
+Warning: docstring wider than 80 characters
+Warning: file has no ‘lexical-binding’ directive on its first line
+Warning: ‘focus-in-hook’ is an obsolete variable (as of 27.1); after-focus-change-function
+Warning: ‘focus-out-hook’ is an obsolete variable (as of 27.1); after-focus-change-function
+Warning: ‘kmacro-exec-ring-item’ is an obsolete function (as of 29.1); use ‘funcall’ instead.
+Warning: reference to free variable ‘bitlbee-password’
+Warning: reference to free variable ‘compilation-filter-start’
+Warning: reference to free variable ‘erc-session-server’
+Warning: reference to free variable ‘org-roam-dailies-map’
+Warning: ‘set-buffer-process-coding-system’ is for interactive use only; use ‘set-process-coding-system’ instead.
+Warning: the function ‘agg-set-fill-column’ is not known to be defined.
+Warning: the function ‘agg/org-roam-switch’ is not known to be defined.
+Warning: the function ‘ansi-color-apply-on-region’ might not be defined at runtime.
+Warning: the function ‘catppuccin-get-color’ might not be defined at runtime.
+Warning: the function ‘catppuccin-reload’ might not be defined at runtime.
+Warning: the function ‘erc-default-target’ is not known to be defined.
+Warning: the function ‘erc-message’ is not known to be defined.
