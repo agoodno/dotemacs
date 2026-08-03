@@ -238,14 +238,30 @@ empty default over a value that was already right. The same applies to
     ;; A second assignment here previously pointed at lisp/custom-themes,
     ;; which does not exist, hiding agg-light/agg-dark from load-theme.
 
+    ;; The unused theme packages are deferred. load-theme finds a theme through
+    ;; custom-theme-load-path, which package activation populates, so it can
+    ;; still load one of these on demand without the package being loaded now.
+    ;; Any `:init' below still runs at startup, which is where the theme
+    ;; variables need to be set.
+    ;;
+    ;; catppuccin-theme is deliberately NOT deferred. Its `:config' calls
+    ;; catppuccin-reload, which *enables* the catppuccin theme -- custom-enabled-themes
+    ;; is (spacemacs-light catppuccin), with spacemacs-light layered on top -- and
+    ;; the tab-bar-tab face is derived from catppuccin's palette
+    ;; (background #acb0be, latte's surface2). Deferring it would change how the
+    ;; frame looks. Untangling that belongs with pruning the theme set.
+
     (use-package color-theme-sanityinc-tomorrow
-      :ensure t)
+      :ensure t
+      :defer t)
 
     (use-package dracula-theme
-      :ensure t)
+      :ensure t
+      :defer t)
 
     (use-package gruvbox-theme
-      :ensure t)
+      :ensure t
+      :defer t)
 
     (use-package catppuccin-theme
       :ensure t
@@ -260,12 +276,14 @@ empty default over a value that was already right. The same applies to
 
     (use-package spacemacs-theme
       :ensure t
+      :defer t
       :init
       (setq spacemacs-theme-org-agenda-height nil)
       (setq spacemacs-theme-org-height nil))
 
     (use-package timu-spacegrey-theme
       :ensure t
+      :defer t
       :init
       (customize-set-variable 'timu-spacegrey-flavour "light")
       (customize-set-variable 'timu-spacegrey-contrasted-comments nil)
