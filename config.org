@@ -931,7 +931,11 @@ Configuration for Org Roam.
   ;; Entries are (LANGUAGE CLASSIC-MODE . TS-MODE). Each remap is installed
   ;; only when its grammar is actually present, so a missing grammar degrades
   ;; to the classic mode rather than erroring when a file is opened.
-  (when (and (fboundp 'treesit-available-p) (treesit-available-p))
+  ;; eval-and-compile so the byte-compiler also sees treesit's definitions;
+  ;; the `nil t' keeps this harmless on a build without tree-sitter support.
+  (eval-and-compile (require 'treesit nil t))
+
+  (when (and (featurep 'treesit) (treesit-available-p))
     (dolist (entry '((bash       sh-mode      . bash-ts-mode)
                      (css        css-mode     . css-ts-mode)
                      (json       js-json-mode . json-ts-mode)
