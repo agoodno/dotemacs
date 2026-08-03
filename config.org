@@ -922,17 +922,43 @@ Configuration for Org Roam.
 *** Languages
 **** Treesitter Setup
 #+begin_src elisp
-  ;; Remap traditional modes to tree-sitter modes (built-in to Emacs 29+)
-  (setq major-mode-remap-alist
-        '((bash-mode . bash-ts-mode)
-          (css-mode . css-ts-mode)
-          (go-mode . go-ts-mode)
-          (html-mode . html-ts-mode)
-          (js-mode . js-ts-mode)
-          (json-mode . json-ts-mode)
-          (python-mode . python-ts-mode)
-          (ruby-mode . ruby-ts-mode)
-          (yaml-mode . yaml-ts-mode)))
+  ;; Remap traditional modes to tree-sitter modes (built-in to Emacs 29+).
+  ;; Entries are (LANGUAGE CLASSIC-MODE . TS-MODE). Each remap is installed
+  ;; only when its grammar is actually present, so a missing grammar degrades
+  ;; to the classic mode rather than erroring when a file is opened.
+  (when (and (fboundp 'treesit-available-p) (treesit-available-p))
+    (dolist (entry '((bash       sh-mode     . bash-ts-mode)
+                     (css        css-mode    . css-ts-mode)
+                     (json       json-mode   . json-ts-mode)
+                     (python     python-mode . python-ts-mode)
+                     (yaml       yaml-mode   . yaml-ts-mode)))
+      (when (treesit-ready-p (car entry) t)
+        (add-to-list 'major-mode-remap-alist (cdr entry))))
+
+    ;; A remap only fires when auto-mode-alist names the exact mode used as the
+    ;; key, so these two need explicit extension entries instead:
+    ;;
+    ;;   .go  -- unclaimed by default, and go-mode is not installed
+    ;;   .js  -- auto-mode-alist names `javascript-mode', an alias for js-mode;
+    ;;           the remap lookup does not resolve aliases, so a (js-mode . _)
+    ;;           key never matched and js-ts-mode-hook never ran. That hook
+    ;;           carries eglot-ensure, add-node-modules-path, apheleia and
+    ;;           smartparens, so JS buffers were silently getting none of them.
+    (when (treesit-ready-p 'go t)
+      (add-to-list 'auto-mode-alist '("\\.go\\'" . go-ts-mode)))
+    (when (treesit-ready-p 'javascript t)
+      (add-to-list 'auto-mode-alist '("\\.[cm]?js\\'" . js-ts-mode))))
+
+  ;; html-mode is deliberately not remapped: auto-mode-alist sends .html to
+  ;; mhtml-mode, which is a distinct mode (not an alias), so an (html-mode . _)
+  ;; key never fired. mhtml-mode is kept on purpose -- it sub-modes embedded
+  ;; <script>/<style> blocks, which html-ts-mode does not. html-mode-hook still
+  ;; runs, since mhtml-mode derives from html-mode.
+
+  ;; ruby-mode is deliberately not remapped: enh-ruby-mode claims .rb via
+  ;; auto-mode-alist (see the Ruby section), so a ruby-ts-mode remap could
+  ;; never fire. The surrounding tooling -- robe, rubocop, ruby-tools,
+  ;; inf-ruby, projectile-rails -- is all built around enh-ruby-mode.
 
   ;; Grammar sources for M-x treesit-install-language-grammar
   (setq treesit-language-source-alist
