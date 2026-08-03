@@ -156,8 +156,10 @@ values to the ~custom.el~ for future sessions.
     (setq compilation-scroll-output t)
     ;;(setq compilation-scroll-output 'first-error)
 
-    ;; Show on top of current buffer instead of new buffer
-    (add-to-list 'same-window-buffer-names "*compilation*")
+    ;; Show on top of current buffer instead of new buffer.
+    ;; same-window-buffer-names has been obsolete since 24.3.
+    (add-to-list 'display-buffer-alist
+                 '("\\*compilation\\*" display-buffer-same-window))
 
     ;; Smooth scrolling (Emacs 29+, feels native on macOS trackpads)
     (pixel-scroll-precision-mode 1)
@@ -196,8 +198,11 @@ values to the ~custom.el~ for future sessions.
     :ensure t
     :init
     (defun agg/ansi-colorize-buffer ()
+      "Colorize only the newly-arrived output.
+  Colorizing (point-min) to (point-max) on every filter call is quadratic
+  in the size of a compilation, which stalls long builds."
       (let ((buffer-read-only nil))
-        (ansi-color-apply-on-region (point-min) (point-max))))
+        (ansi-color-apply-on-region compilation-filter-start (point))))
     (add-hook 'compilation-filter-hook 'agg/ansi-colorize-buffer))
 #+END_SRC
 *** Themes
@@ -376,10 +381,6 @@ values to the ~custom.el~ for future sessions.
     (let ((default-directory dir))
       (shell name)))
 
-  (defun agg/insert-current-date ()
-    (interactive)
-    (insert (shell-command-to-string "echo -n $(date +%Y-%m-%d)")))
-
   (require 'calendar)
   (defun insdate-insert-current-date (&optional omit-day-of-week-p)
     "Insert today's date using the current locale.
@@ -390,11 +391,14 @@ values to the ~custom.el~ for future sessions.
                                   omit-day-of-week-p)))
 
   (defun agg/insert-date (prefix)
-    "Insert the current date. With prefix-argument, use ISO format. With
-             two prefix arguments, write out the day and month name."
+    "Insert the current date in ISO format.
+  With one prefix argument use the local locale's date format; with two,
+  write out the day and month name."
     (interactive "P")
-    (let ((format "%Y-%m-%d")
-          (system-time-locale "en_US"))
+    (let ((system-time-locale "en_US")
+          (format (cond ((equal prefix '(16)) "%A, %B %e, %Y")
+                        ((equal prefix '(4))  "%x")
+                        (t                    "%Y-%m-%d"))))
       (insert (format-time-string format))))
 
   (defun agg/ins-tommorrows-date ()
@@ -905,7 +909,7 @@ Configuration for Org Roam.
 *** DSLs
 **** SQL
 #+BEGIN_SRC emacs-lisp
-  (setq auto-mode-alist (cons '("\\.psql$" . sql-mode) auto-mode-alist))
+  (add-to-list 'auto-mode-alist '("\\.psql\\'" . sql-mode))
 
   (add-hook 'sql-mode-hook 'turn-off-auto-fill)
   (add-hook 'sql-mode-hook 'agg/progmodes-hooks)
@@ -1039,14 +1043,6 @@ Configuration for Org Roam.
 
 **** Ruby
 #+BEGIN_SRC emacs-lisp
-  (defun enh-ruby-mode-before-save-hook ()
-    (when (eq major-mode 'enh-ruby-mode)
-      (message (current-buffer))))
-
-  (defun enh-ruby-mode-hooks ()
-    "Hooks for ruby programming"
-    (add-hook 'before-save-hook 'enh-ruby-mode-before-save-hook))
-
   (use-package enh-ruby-mode
     :ensure t
     :init
@@ -1547,18 +1543,20 @@ Configuration for Org Roam.
   (autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
   (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 
-  (add-hook 'shell-mode-hook '(lambda () (toggle-truncate-lines 1)))
+  (add-hook 'shell-mode-hook (lambda () (toggle-truncate-lines 1)))
 
   ;; comint-mode hooks
   (defun agg/init-comint ()
+    ;; setq-local throughout: this runs from comint-mode-hook, so plain setq
+    ;; would set the *global* value for every buffer in the session.
     ;; Stops echo of command
-    (setq comint-process-echoes t)
+    (setq-local comint-process-echoes t)
     ;; The default font lock rules can be expensive and cause hangs
     ;; on long lines but this doesn't disable font-lock completely
     ;; because I like having the prompt highlighted.
-    (setq shell-font-lock-keywords nil)
+    (setq-local shell-font-lock-keywords nil)
     ;; Makes the prompt read-only running in emacs 'M-x shell'
-    (setq comint-prompt-read-only t))
+    (setq-local comint-prompt-read-only t))
   (add-hook 'comint-mode-hook 'agg/init-comint)
 #+END_SRC
 *** vterm
