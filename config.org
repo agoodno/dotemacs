@@ -1383,19 +1383,9 @@ Configuration for Org Roam.
     :bind (("C-c v" . vterm)
            ("C-c V" . vterm-other-window)))
 #+END_SRC
-*** tidy
-#+BEGIN_SRC emacs-lisp
-  (setq tidy-shell-command "/usr/local/bin/tidy")
-  (setq tidy-config-file "~/.tidyrc")
-  (setq tidy-temp-directory "/tmp")
-#+END_SRC
 *** tramp
 #+BEGIN_SRC emacs-lisp
   (setq tramp-default-method "ssh")
-
-  (defun connect-patproc-test ()
-    (interactive)
-    (dired "/lcbuser@patproc-test-host.library.wisc.edu:/opt/patproc-test/"))
 #+END_SRC
 *** unfill
 #+BEGIN_SRC emacs-lisp
