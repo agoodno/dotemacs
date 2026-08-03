@@ -1133,9 +1133,13 @@ Configuration for Org Roam.
   ;; See this to get it working with enterprise tokens:
   ;; https://github.com/emacs-slack/emacs-slack/commit/472c48673f21148d85c069e8f404584349e780ca
 
-  (setq auth-sources '("~/.authinfo"))
+  ;; auth-sources is deliberately left at its default,
+  ;; ("~/.authinfo" "~/.authinfo.gpg" "~/.netrc"). Setting it to just
+  ;; ("~/.authinfo") only narrowed that list, dropping the encrypted option
+  ;; while gaining nothing. Prefer ~/.authinfo.gpg -- these are live Slack
+  ;; session tokens, and the plain file stores them in cleartext.
 
-  ;; == ~/.authinfo contents ==
+  ;; == ~/.authinfo.gpg contents ==
   ;; machine clojurians.slack.com user token password "xoxc-XXX"
   ;; machine clojurians.slack.com user cookie password "xoxd-YYY; d-s=123; lc=456"
   ;; machine elmlang.slack.com user token password "xoxc-ZZZ"
@@ -1147,7 +1151,6 @@ Configuration for Org Roam.
     :init
     (setq slack-buffer-emojify t)
     (setq slack-prefer-current-team t)
-    (setq auth-source-debug 'trivia)
     :bind (("C-c S S" . slack-start)
            ("C-c S K" . slack-stop)
            ("C-c S c" . slack-select-rooms)
