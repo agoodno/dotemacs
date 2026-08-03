@@ -1129,7 +1129,13 @@ Configuration for Org Roam.
            (typescript-ts-mode . agg/progmodes-hooks)
            (tsx-ts-mode . agg/progmodes-hooks))
     :config
-    (setq typescript-ts-mode-indent-offset 4))
+    ;; Renamed in Emacs 31; the old name survives as an obsolete alias. Resolve
+    ;; the symbol at runtime so the byte-compiler never sees a literal reference
+    ;; to either name and this stays warning-free on 30 and 31 alike.
+    (set-default (if (boundp 'typescript-ts-indent-offset)
+                     'typescript-ts-indent-offset
+                   'typescript-ts-mode-indent-offset)
+                 4))
 #+END_SRC
 
 ** Embedded Clients

@@ -78,13 +78,13 @@ jobs:
 
       - name: Install tree-sitter grammars
         working-directory: .emacs.d
-        # GRAMMARS_ALLOW_FAILURE is the fallback if the staging trick does not
-        # work on a given runner: yaml is then reported but not fatal, and the
-        # mode-dispatch test skips .yaml/.yml rather than asserting the wrong
-        # mode. Check the step log to see which path actually happened.
+        # The staged libstdc++ above is enough for the C++ yaml scanner, so no
+        # grammar is exempted here. If a future runner cannot build one, set
+        # GRAMMARS_ALLOW_FAILURE to a comma-separated list: it is reported but
+        # not fatal, and the mode-dispatch test then skips the affected
+        # extensions instead of asserting the mode they wrongly fall back to.
         env:
           LD_LIBRARY_PATH: ${{ github.workspace }}/grammar-libs
-          GRAMMARS_ALLOW_FAILURE: yaml
         run: make grammars
 
       # Fails only on warnings absent from tests/warning-baseline.txt.
@@ -97,7 +97,6 @@ jobs:
         # Same staging as the grammar step: the tests dlopen the grammars too.
         env:
           LD_LIBRARY_PATH: ${{ github.workspace }}/grammar-libs
-          GRAMMARS_ALLOW_FAILURE: yaml
         run: make test
 
       - name: Diagnostics on failure
