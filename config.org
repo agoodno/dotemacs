@@ -361,8 +361,8 @@ values to the ~custom.el~ for future sessions.
     (add-hook 'before-save-hook 'agg/progmodes-before-save-hook))
 
   (defun agg/shell-dir (name dir)
-    "Opens a shell into the specified directory
-           ex. (shell-dir "cmd-rails" "/Users/agoodnough/src/rails/")"
+    "Open a shell buffer named NAME with DIR as its working directory.
+  ex. (agg/shell-dir \"cmd-rails\" \"/Users/agoodnough/src/rails/\")"
     (let ((default-directory dir))
       (shell name)))
 
