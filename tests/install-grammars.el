@@ -13,6 +13,19 @@
 ;; to the classic modes -- which looks fine until the mode-dispatch tests start
 ;; asserting against the wrong modes.
 
+;; Grammars named in GRAMMARS_ALLOW_FAILURE (comma-separated) are reported but
+;; do not fail the run. Needed for grammars with C++ scanners on hosts where the
+;; C++ runtime cannot be made visible to Emacs -- a nix-installed Emacs cannot
+;; take LD_LIBRARY_PATH pointing at the system lib directory, because that
+;; shadows glibc as well and Emacs then refuses to start. The mode-dispatch test
+;; skips any extension whose grammar is not ready, so coverage stays honest
+;; rather than silently asserting the wrong mode.
+(defvar install-grammars--tolerated
+  (let ((raw (getenv "GRAMMARS_ALLOW_FAILURE")))
+    (if (and raw (not (string-empty-p raw)))
+        (mapcar #'intern (split-string raw "," t "[ \t]+"))
+      '())))
+
 (let ((failed '())
       (installed '())
       (present '()))
@@ -31,7 +44,15 @@
   (message "grammars already present: %s" (nreverse present))
   (message "grammars installed now:   %s" (nreverse installed))
   (when failed
+    (setq failed (nreverse failed))
     (message "grammars FAILED:")
-    (dolist (f (nreverse failed))
-      (message "  %s: %s" (car f) (cdr f)))
-    (kill-emacs 1)))
+    (dolist (f failed)
+      (message "  %s: %s%s" (car f) (cdr f)
+               (if (memq (car f) install-grammars--tolerated) " [tolerated]" "")))
+    (let ((fatal (seq-remove (lambda (f)
+                               (memq (car f) install-grammars--tolerated))
+                             failed)))
+      (when fatal
+        (message "%d grammar(s) failed and are not tolerated" (length fatal))
+        (kill-emacs 1)))
+    (message "all failures tolerated via GRAMMARS_ALLOW_FAILURE")))

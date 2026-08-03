@@ -64,18 +64,27 @@ jobs:
       # The tree-sitter remaps are guarded on treesit-ready-p, so without
       # grammars the config quietly falls back to the classic modes and the
       # mode-dispatch assertions would be testing the wrong thing.
+      # The yaml grammar's scanner is C++, so its shared object needs libstdc++
+      # at dlopen time, which a nix-installed Emacs cannot see. LD_LIBRARY_PATH
+      # cannot simply point at /usr/lib/x86_64-linux-gnu: that shadows glibc too
+      # and the nix Emacs then refuses to start ("version GLIBC_2.42 not found").
+      # Stage a directory holding *only* libstdc++ so glibc still resolves from
+      # Emacs' own RPATH.
+      - name: Stage libstdc++ for grammar loading
+        run: |
+          mkdir -p "$HOME/grammar-libs"
+          ln -sf /usr/lib/x86_64-linux-gnu/libstdc++.so.6 "$HOME/grammar-libs/"
+          ls -l "$HOME/grammar-libs/"
+
       - name: Install tree-sitter grammars
         working-directory: .emacs.d
-        # The yaml grammar has a C++ scanner, so its shared object needs
-        # libstdc++ at dlopen time, and nix-installed Emacs has a loader path
-        # that excludes the system C++ runtime. treesit reports this only as
-        # "cannot open shared object file" for the grammar itself -- the real
-        # cause (libstdc++.so.6) sits one line into a long list of tried paths.
-        #
-        # Scoped per step on purpose. Setting it job-wide makes the nix binaries
-        # in setup-emacs segfault (exit 139) before Emacs is even installed.
+        # GRAMMARS_ALLOW_FAILURE is the fallback if the staging trick does not
+        # work on a given runner: yaml is then reported but not fatal, and the
+        # mode-dispatch test skips .yaml/.yml rather than asserting the wrong
+        # mode. Check the step log to see which path actually happened.
         env:
-          LD_LIBRARY_PATH: /usr/lib/x86_64-linux-gnu
+          LD_LIBRARY_PATH: ${{ github.workspace }}/grammar-libs
+          GRAMMARS_ALLOW_FAILURE: yaml
         run: make grammars
 
       # Fails only on warnings absent from tests/warning-baseline.txt.
@@ -85,9 +94,10 @@ jobs:
 
       - name: Test (ERT)
         working-directory: .emacs.d
-        # Same reason as the grammar step: the tests dlopen the grammars.
+        # Same staging as the grammar step: the tests dlopen the grammars too.
         env:
-          LD_LIBRARY_PATH: /usr/lib/x86_64-linux-gnu
+          LD_LIBRARY_PATH: ${{ github.workspace }}/grammar-libs
+          GRAMMARS_ALLOW_FAILURE: yaml
         run: make test
 
       - name: Diagnostics on failure

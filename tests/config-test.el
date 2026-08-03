@@ -128,21 +128,34 @@ Covers the tree-sitter remap keys that used to name nonexistent modes
 \(bash-mode), unclaimed extensions (.go), alias mismatches (.js resolving to
 javascript-mode so js-ts-mode-hook never ran, taking eglot and apheleia with
 it), and YAML/JSON, which only worked because undeclared yaml-mode and
-json-mode packages happened to be present in elpa/."
-  (dolist (case '(("sh"   . bash-ts-mode)
-                  ("go"   . go-ts-mode)
-                  ("js"   . js-ts-mode)
-                  ("py"   . python-ts-mode)
-                  ("css"  . css-ts-mode)
-                  ("json" . json-ts-mode)
-                  ("yaml" . yaml-ts-mode)
-                  ("yml"  . yaml-ts-mode)
-                  ("ts"   . typescript-ts-mode)
-                  ("tsx"  . tsx-ts-mode)
-                  ("rb"   . enh-ruby-mode)
-                  ("psql" . sql-mode)))
-    (let ((ext (car case)))
-      (should (eq (config-test--mode-for ext) (cdr case))))))
+json-mode packages happened to be present in elpa/.
+
+Each case names the grammar it needs. The remaps are guarded on
+`treesit-ready-p', so an extension whose grammar is missing legitimately falls
+back; those are skipped with a message rather than asserted against the wrong
+mode, since silently passing would be worse than either."
+  (let (skipped)
+    (dolist (case '(("sh"   bash-ts-mode       . bash)
+                    ("go"   go-ts-mode         . go)
+                    ("js"   js-ts-mode         . javascript)
+                    ("py"   python-ts-mode     . python)
+                    ("css"  css-ts-mode        . css)
+                    ("json" json-ts-mode       . json)
+                    ("yaml" yaml-ts-mode       . yaml)
+                    ("yml"  yaml-ts-mode       . yaml)
+                    ("ts"   typescript-ts-mode . typescript)
+                    ("tsx"  tsx-ts-mode        . tsx)
+                    ("rb"   enh-ruby-mode      . nil)
+                    ("psql" sql-mode           . nil)))
+      (let ((ext (car case))
+            (expected (cadr case))
+            (grammar (cddr case)))
+        (if (and grammar (not (treesit-ready-p grammar t)))
+            (push ext skipped)
+          (should (eq (config-test--mode-for ext) expected)))))
+    (when skipped
+      (message "NOTE: skipped extensions with no grammar installed: %s"
+               (nreverse skipped)))))
 
 (ert-deftest config-contested-keys-resolve-to-chosen-command ()
   "Keys that more than one package wants, pinned to the intended winner.
@@ -193,11 +206,25 @@ its :config block does on load."
                    (expand-file-name (eval saved t))))))
 
 (ert-deftest config-declared-treesit-grammars-are-usable ()
-  "Every grammar a remap or auto-mode entry depends on must be installed.
-Without this the ts-mode errors on file open instead of degrading."
+  "Every grammar a remap or auto-mode entry depends on should be installed.
+Run `make grammars' if this fails locally.
+
+Grammars listed in GRAMMARS_ALLOW_FAILURE are exempt, using the same variable
+`tests/install-grammars.el' honours, so a host that genuinely cannot build one
+\(a C++ scanner under a nix-installed Emacs, for instance) reports it in one
+place instead of failing here and skipping silently there."
   (skip-unless (and (fboundp 'treesit-available-p) (treesit-available-p)))
-  (dolist (lang '(bash css javascript json python typescript tsx yaml go))
-    (should (treesit-ready-p lang t))))
+  (let* ((raw (getenv "GRAMMARS_ALLOW_FAILURE"))
+         (exempt (if (and raw (not (string-empty-p raw)))
+                     (mapcar #'intern (split-string raw "," t "[ \t]+"))
+                   '()))
+         (missing (seq-remove
+                   (lambda (lang)
+                     (or (treesit-ready-p lang t) (memq lang exempt)))
+                   '(bash css javascript json python typescript tsx yaml go))))
+    (when exempt
+      (message "NOTE: grammars exempt via GRAMMARS_ALLOW_FAILURE: %s" exempt))
+    (should (equal nil missing))))
 
 (ert-deftest config-shell-dir-is-callable ()
   "`agg/shell-dir' had an unescaped quote that ended its docstring early,
