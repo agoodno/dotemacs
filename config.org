@@ -917,7 +917,8 @@ Configuration for Org Roam.
 #+END_SRC
 **** YAML
 #+BEGIN_SRC emacs-lisp
-  ;; yaml-ts-mode is built-in (Emacs 29+), activated via treesitter remap
+  ;; yaml-ts-mode is built-in (Emacs 29+). Emacs ships no auto-mode-alist entry
+  ;; for YAML, so .yaml/.yml are wired up in the Treesitter Setup section.
 #+END_SRC
 *** Languages
 **** Treesitter Setup
@@ -927,13 +928,15 @@ Configuration for Org Roam.
   ;; only when its grammar is actually present, so a missing grammar degrades
   ;; to the classic mode rather than erroring when a file is opened.
   (when (and (fboundp 'treesit-available-p) (treesit-available-p))
-    (dolist (entry '((bash       sh-mode     . bash-ts-mode)
-                     (css        css-mode    . css-ts-mode)
-                     (json       json-mode   . json-ts-mode)
-                     (python     python-mode . python-ts-mode)
-                     (yaml       yaml-mode   . yaml-ts-mode)))
+    (dolist (entry '((bash       sh-mode      . bash-ts-mode)
+                     (css        css-mode     . css-ts-mode)
+                     (json       js-json-mode . json-ts-mode)
+                     (python     python-mode  . python-ts-mode)))
       (when (treesit-ready-p (car entry) t)
         (add-to-list 'major-mode-remap-alist (cdr entry))))
+
+    ;; Explicit extension entries. add-to-list prepends, so these win over any
+    ;; entry a third-party package's autoloads may have registered.
 
     ;; A remap only fires when auto-mode-alist names the exact mode used as the
     ;; key, so these two need explicit extension entries instead:
@@ -944,10 +947,23 @@ Configuration for Org Roam.
     ;;           key never matched and js-ts-mode-hook never ran. That hook
     ;;           carries eglot-ensure, add-node-modules-path, apheleia and
     ;;           smartparens, so JS buffers were silently getting none of them.
+    ;;   .yaml/.yml -- Emacs ships no auto-mode entry for YAML at all
+    ;;   .json -- Emacs' own entry names js-json-mode (handled by the remap
+    ;;           above), but an installed json-mode package registers .json for
+    ;;           itself and would otherwise win
+    ;;
+    ;; The YAML and JSON entries previously worked only by accident: undeclared
+    ;; yaml-mode and json-mode packages were sitting in elpa/, so a clean
+    ;; rebuild (the documented "rm -rf elpa" test) would have dropped YAML to
+    ;; fundamental-mode and taken json-ts-mode-hook and apheleia with it.
     (when (treesit-ready-p 'go t)
       (add-to-list 'auto-mode-alist '("\\.go\\'" . go-ts-mode)))
     (when (treesit-ready-p 'javascript t)
-      (add-to-list 'auto-mode-alist '("\\.[cm]?js\\'" . js-ts-mode))))
+      (add-to-list 'auto-mode-alist '("\\.[cm]?js\\'" . js-ts-mode)))
+    (when (treesit-ready-p 'yaml t)
+      (add-to-list 'auto-mode-alist '("\\.ya?ml\\'" . yaml-ts-mode)))
+    (when (treesit-ready-p 'json t)
+      (add-to-list 'auto-mode-alist '("\\.json\\'" . json-ts-mode))))
 
   ;; html-mode is deliberately not remapped: auto-mode-alist sends .html to
   ;; mhtml-mode, which is a distinct mode (not an alias), so an (html-mode . _)
