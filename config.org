@@ -435,32 +435,6 @@ empty default over a value that was already right. The same applies to
     (kmacro-exec-ring-item
      (quote ([134217847 16 5 return 112 117 116 115 32 34 25 61 35 123 25 125 34] 0 "%d")) arg))
 
-  (defun agg/turn-off-mouse (&optional frame)
-    "Disable the laptop trackpad via xinput.  Linux only; FRAME is ignored."
-    (interactive)
-    (shell-command "xinput --disable \"SynPS/2 Synaptics TouchPad\""))
-
-  (defun agg/turn-on-mouse (&optional frame)
-    "Re-enable the laptop trackpad via xinput.  Linux only; FRAME is ignored."
-    (interactive)
-    (shell-command "xinput --enable \"SynPS/2 Synaptics TouchPad\""))
-
-  (defun agg/register-mouse-hooks ()
-    (progn
-      (add-hook 'focus-in-hook #'agg/turn-off-mouse)
-      (add-hook 'focus-out-hook #'agg/turn-on-mouse)
-      (add-hook 'delete-frame-functions #'agg/turn-on-mouse)
-      (add-hook 'kill-emacs-hook #'agg/turn-on-mouse)))
-
-  ;; new style for 27.1 (doesn't quite work yet)
-  ;; (defun register-new-mouse-hooks ()
-  ;;   (progn
-  ;;    (add-function :after after-focus-change-function #'agg/turn-off-mouse)
-  ;;    (add-function :after after-focus-change-function #'agg/turn-on-mouse)
-  ;;    (add-function :after delete-frame-functions #'agg/turn-on-mouse)))
-
-  (if (string-equal system-type "gnu/linux")
-      (agg/register-mouse-hooks))
 #+END_SRC
 ** Key Bindings
 #+BEGIN_SRC emacs-lisp

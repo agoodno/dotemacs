@@ -1,5 +1,3 @@
-Warning: `focus-in-hook' is an obsolete variable (as of 27.1); after-focus-change-function
-Warning: `focus-out-hook' is an obsolete variable (as of 27.1); after-focus-change-function
 Warning: `kmacro-exec-ring-item' is an obsolete function (as of 29.1); use `funcall' instead.
 Warning: `set-buffer-process-coding-system' is for interactive use only; use `set-process-coding-system' instead.
 Warning: assignment to free variable `apropos-do-all'
