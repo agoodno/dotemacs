@@ -202,7 +202,9 @@ values to the ~custom.el~ for future sessions.
 #+END_SRC
 *** Themes
 #+BEGIN_SRC emacs-lisp
-    (setq custom-theme-directory (expand-file-name "lisp/custom-themes" user-emacs-directory))
+    ;; custom-theme-directory is set once, under "Custom initialization".
+    ;; A second assignment here previously pointed at lisp/custom-themes,
+    ;; which does not exist, hiding agg-light/agg-dark from load-theme.
 
     (use-package color-theme-sanityinc-tomorrow
       :ensure t)
