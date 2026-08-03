@@ -66,22 +66,29 @@ values to the ~custom.el~ for future sessions.
   agg
 #+END_SRC
 
+Identity variables deliberately live *outside* this group. ~user-full-name~
+already arrives correct from the OS (macOS supplies it from the account's
+RealName), and ~user-mail-address~ is a standard ~defcustom~ in
+~startup.el~ -- set it with =M-x customize-variable RET user-mail-address=
+if anything ever needs it. Redeclaring either here only risked persisting an
+empty default over a value that was already right. The same applies to
+~system-name~ and ~user-login-name~.
+
 #+BEGIN_SRC emacs-lisp
-  ;; `user-full-name' is a plain C-level variable with no customize type, so
-  ;; declare one here to make it reachable from `customize-group RET agg'.
-  ;; The "" default is inert: defcustom never overwrites an already-bound value.
-  (defcustom user-full-name ""
-    "Name used in tool config."
-    :type 'string
+  (defgroup agg nil
+    "Machine-specific settings for this configuration."
+    :group 'local)
+
+  (defcustom agg-org-roam-personal-directory "~/notes/"
+    "Directory holding the personal `org-roam' notes on this machine."
+    :type 'directory
     :group 'agg)
 
-  ;; `user-mail-address' is already a defcustom (startup.el), so pull the real
-  ;; variable into the agg group rather than declaring a parallel one.
-  (custom-add-to-group 'agg 'user-mail-address 'custom-variable)
-
-  ;; Consider setting these variables in future
-  ;; system-name ""
-  ;; user-login-name ""
+  (defcustom agg-org-roam-work-directory
+    "~/Google Drive/My Drive/sonosnotes/"
+    "Directory holding the work `org-roam' notes on this machine."
+    :type 'directory
+    :group 'agg)
 #+END_SRC
 *** Editor
 #+BEGIN_SRC emacs-lisp
@@ -766,21 +773,26 @@ Configuration for Org Roam.
     (add-hook 'org-roam-find-file-hook #'agg-set-fill-column)
     (add-hook 'org-roam-find-file-hook #'turn-on-auto-fill)
 
-    (defun agg/org-roam-switch (dir)
-      "Switch org-roam to DIR with a per-directory database."
-      (setq org-roam-directory dir
+    (defun agg/org-roam-switch (dir &optional no-sync)
+      "Switch org-roam to DIR with a per-directory database.
+  Unless NO-SYNC, rebuild the database for DIR afterwards."
+      (setq org-roam-directory (expand-file-name dir)
             org-roam-db-location (expand-file-name "org-roam.db" dir))
-      (org-roam-db-sync))
+      (unless no-sync (org-roam-db-sync)))
 
     (defun agg/org-roam-personal ()
       "Switch to personal org-roam."
       (interactive)
-      (agg/org-roam-switch "~/notes/"))
+      (agg/org-roam-switch agg-org-roam-personal-directory))
 
     (defun agg/org-roam-work ()
       "Switch to work org-roam."
       (interactive)
-      (agg/org-roam-switch "~/Google Drive/My Drive/sonosnotes/"))
+      (agg/org-roam-switch agg-org-roam-work-directory))
+
+    ;; No startup switch here on purpose: `org-roam-directory' is a standard
+    ;; defcustom and is already set per-machine in custom.el, which is the right
+    ;; place for it. Forcing a value here would override that.
 
     (org-roam-db-autosync-mode))
 
