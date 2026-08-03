@@ -929,7 +929,8 @@ Configuration for Org Roam.
 **** Docker
 #+BEGIN_SRC emacs-lisp
   (use-package dockerfile-mode
-    :ensure t)
+    :ensure t
+    :defer t)
 #+END_SRC
 **** JSON
 #+BEGIN_SRC emacs-lisp
@@ -984,7 +985,8 @@ Configuration for Org Roam.
 **** Terrform
 #+BEGIN_SRC emacs-lisp
   (use-package terraform-mode
-    :ensure t)
+    :ensure t
+    :defer t)
 #+END_SRC
 **** YAML
 #+BEGIN_SRC emacs-lisp
@@ -1072,7 +1074,8 @@ Configuration for Org Roam.
 **** Elm
 #+begin_src emacs-lisp
   (use-package elm-mode
-    :ensure t)
+    :ensure t
+    :defer t)
 #+end_src
 **** HTML
 #+BEGIN_SRC emacs-lisp
@@ -1108,51 +1111,52 @@ Configuration for Org Roam.
 
 **** Ruby
 #+BEGIN_SRC emacs-lisp
+  ;; The whole Ruby stack is deferred. Each package is pulled in by the hook or
+  ;; mode that first needs it, so none of it costs anything until a Ruby file is
+  ;; opened. Using `:hook' rather than `add-hook' in `:init' matters here: it
+  ;; both defers the package and generates the autoload for the mode function,
+  ;; where a bare `:defer t' plus a manual add-hook would rely on the package's
+  ;; own autoloads happening to cover it.
   (use-package enh-ruby-mode
     :ensure t
-    :init
-    ;; automatically run rubocop autocorrect on save
-    (setq rubocop-autocorrect-on-save t)
-    ;; use enh-ruby-mode for these files
-    (add-to-list 'auto-mode-alist
-                 '("\\(?:\\.rb\\|ru\\|rake\\|thor\\|jbuilder\\|gemspec\\|podspec\\|/\\(?:Gem\\|Rake\\|Cap\\|Thor\\|Vagrant\\|Guard\\|Pod\\)file\\)\\'" . enh-ruby-mode))
-    (add-hook 'enh-ruby-mode-hook 'agg/progmodes-hooks))
+    :mode "\\(?:\\.rb\\|ru\\|rake\\|thor\\|jbuilder\\|gemspec\\|podspec\\|/\\(?:Gem\\|Rake\\|Cap\\|Thor\\|Vagrant\\|Guard\\|Pod\\)file\\)\\'"
+    :hook (enh-ruby-mode . agg/progmodes-hooks))
 
   (use-package inf-ruby
     :ensure t
-    :init
-    (add-hook 'enh-ruby-mode-hook 'inf-ruby-minor-mode))
+    :hook (enh-ruby-mode . inf-ruby-minor-mode))
 
   (use-package yari
     :ensure t
-    ;; C-h R
-    :init (define-key 'help-command "R" 'yari))
+    ;; C-h R. Binding into help-map generates yari's autoload, so the package
+    ;; loads on first use instead of at startup.
+    :bind (:map help-map ("R" . yari)))
 
   (use-package rubocop
     :ensure t
-    :init
-    (add-hook 'enh-ruby-mode-hook 'rubocop-mode))
+    ;; rubocop-autocorrect-on-save belongs to this package, not enh-ruby-mode,
+    ;; where it used to be set.
+    :custom (rubocop-autocorrect-on-save t)
+    :hook (enh-ruby-mode . rubocop-mode))
 
   (use-package robe
     :ensure t
-    :after (enh-ruby-mode)
-    :init
-    (add-hook 'enh-ruby-mode-hook 'robe-mode))
+    :hook (enh-ruby-mode . robe-mode))
 
   (use-package ruby-tools
     :ensure t
-    :init
-    (add-hook 'enh-ruby-mode-hook 'ruby-tools-mode)
+    :hook (enh-ruby-mode . ruby-tools-mode)
     :diminish ruby-tools-mode)
 
   (use-package chruby
-    :ensure t)
+    :ensure t
+    :defer t)
 
   (use-package projectile-rails
     :ensure t
+    :hook (enh-ruby-mode . projectile-rails-mode)
     :config
-    (define-key projectile-rails-mode-map (kbd "C-c r") 'projectile-rails-command-map)
-    (add-hook 'enh-ruby-mode-hook 'projectile-rails-mode))
+    (define-key projectile-rails-mode-map (kbd "C-c r") 'projectile-rails-command-map))
 #+END_SRC
 **** Typescript
 
