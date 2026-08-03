@@ -601,7 +601,7 @@ values to the ~custom.el~ for future sessions.
     (setq register-preview-delay 0.5
           register-preview-function #'consult-register-format)
     :bind (("C-c M-x" . consult-mode-command)
-           ("C-c h" . consult-history)
+           ("C-c H" . consult-history)  ;; C-c h is org-store-link
            ("C-c k" . consult-kmacro)
            ("C-c m" . consult-man)
            ("C-c i" . consult-info)
@@ -1487,7 +1487,7 @@ Configuration for Org Roam.
   (use-package magit
     :ensure t
     :bind (("C-c g" . magit-status)
-           ("C-c h" . magit-list-repositories))
+           ("C-c G" . magit-list-repositories))  ;; C-c h is org-store-link
     :config
     (setq magit-display-buffer-function 'magit-display-buffer-fullframe-status-v1)
     (setq magit-status-sections-hook
@@ -1520,7 +1520,9 @@ Configuration for Org Roam.
   (use-package projectile
     :ensure t
     :config
-    (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
+    ;; C-c p only: s-p is deliberately left to `previous-buffer', which pairs
+    ;; with s-n -> next-buffer in the Key Bindings section. Binding it here in
+    ;; projectile-mode-map shadowed that pair in every project buffer.
     (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
     (projectile-mode +1))
 #+END_SRC
