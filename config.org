@@ -296,8 +296,6 @@ empty default over a value that was already right. The same applies to
   ;; Tabs stop every 2 spaces
   (setq-default tab-stop-list (quote (2 4 6 8 10)))
 
-  (use-package aggressive-indent
-    :ensure t)
 #+END_SRC
 *** Line and cursor
 #+BEGIN_SRC emacs-lisp
@@ -865,11 +863,6 @@ Configuration for Org Roam.
   (add-hook 'json-ts-mode-hook (lambda ()
                                  (setq-local indent-tabs-mode nil)
                                  (setq-local tab-width 4)))
-
-  (use-package json-reformat
-    :ensure t
-    :init
-    (customize-set-variable 'json-reformat:indent-width 4))
 #+END_SRC
 **** XML
 #+BEGIN_SRC emacs-lisp
