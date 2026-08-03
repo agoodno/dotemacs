@@ -161,6 +161,20 @@ empty default over a value that was already right. The same applies to
   (setq line-number-mode t)
   (setq column-number-mode t)
 
+  ;; Trust this configuration's own directory.
+  ;;
+  ;; Emacs 30 gates anything that macro-expands untrusted code -- which means
+  ;; byte-compilation, which means the elisp diagnostics in both flymake
+  ;; (`elisp-flymake-byte-compile') and flycheck (its `emacs-lisp' checker) --
+  ;; behind `trusted-content-p'. See CVE-2024-53920. With the default nil, a
+  ;; file in this directory gets no elisp diagnostics at all beyond checkdoc
+  ;; style notes, which is why flycheck reported having no usable checker here.
+  ;;
+  ;; Scoped to this directory only: :all would trust every file Emacs opens,
+  ;; including anything downloaded or cloned, which is a genuine hole. Add
+  ;; further entries per project if wanted; a trailing "/" marks a directory.
+  (setq trusted-content '("~/.emacs.d/"))
+
   ;; Prompt - use short yes/no answers
   (setq use-short-answers t)
 
