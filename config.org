@@ -768,6 +768,21 @@ Configuration for Org Mode.
 
   (use-package org-bullets
     :ensure t)
+
+  ;; Languages org-babel may execute in source blocks.
+  ;;
+  ;; SHELL IS CURRENTLY OFF -- change its nil to t to allow #+begin_src shell
+  ;; blocks to run. emacs-lisp must stay t: it is the default, and it is what
+  ;; makes C-c C-c work inside this file.
+  ;;
+  ;; Previously a commented-out `(require 'ob-sh)' sat here. That library no
+  ;; longer exists -- it was renamed ob-shell -- so the line would have errored
+  ;; had it ever been uncommented. org-babel-do-load-languages pulls in the
+  ;; right library on its own, so no explicit require is needed.
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((emacs-lisp . t)
+     (shell . nil)))
 #+END_SRC
 *** Notes
 Configuration for Org Roam.
