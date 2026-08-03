@@ -122,8 +122,10 @@ values to the ~custom.el~ for future sessions.
     ;; Turn off initial scratch buffer text message
     (setq initial-scratch-message nil)
 
-    ;; Disable line wrap
-    (setq default-truncate-lines t)
+    ;; Disable line wrap. `default-truncate-lines' has not existed for many
+    ;; versions -- setting it was a silent no-op, so lines were still wrapping.
+    ;; Toggle per-buffer with F12 (`toggle-truncate-lines', bound below).
+    (setq-default truncate-lines t)
 
     ;; Display line and column numbers
     (setq line-number-mode t)
