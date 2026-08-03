@@ -120,65 +120,71 @@ empty default over a value that was already right. The same applies to
     ;; useful beyond Corfu.
     (read-extended-command-predicate #'command-completion-default-include-p))
 
-    ;; Note: *inhibit-startup-message* and *inhibit-splash-screen* are aliases for this variable
-    ;; Turn off startup splash
-    (setq inhibit-startup-screen t)
+  ;; ---------------------------------------------------------------------------
+  ;; The `use-package emacs' form ends above. Everything below is plain
+  ;; top-level configuration -- it was previously indented as though it were
+  ;; still inside that form, which made the scope read wrongly.
+  ;; ---------------------------------------------------------------------------
 
-    ;; Turn off menu
-    (menu-bar-mode -1)
+  ;; Note: *inhibit-startup-message* and *inhibit-splash-screen* are aliases for this variable
+  ;; Turn off startup splash
+  (setq inhibit-startup-screen t)
 
-    ;; Turn off tool-bar
-    (when (fboundp 'tool-bar-mode)
-      (tool-bar-mode -1))
+  ;; Turn off menu
+  (menu-bar-mode -1)
 
-    ;; Turn off scroll-bar
-    (when (fboundp 'scroll-bar-mode)
-      (scroll-bar-mode -1))
+  ;; Turn off tool-bar
+  (when (fboundp 'tool-bar-mode)
+    (tool-bar-mode -1))
 
-    ;; Turn off initial scratch buffer text message
-    (setq initial-scratch-message nil)
+  ;; Turn off scroll-bar
+  (when (fboundp 'scroll-bar-mode)
+    (scroll-bar-mode -1))
 
-    ;; Disable line wrap. `default-truncate-lines' has not existed for many
-    ;; versions -- setting it was a silent no-op, so lines were still wrapping.
-    ;; Toggle per-buffer with F12 (`toggle-truncate-lines', bound below).
-    (setq-default truncate-lines t)
+  ;; Turn off initial scratch buffer text message
+  (setq initial-scratch-message nil)
 
-    ;; Display line and column numbers
-    (setq line-number-mode t)
-    (setq column-number-mode t)
+  ;; Disable line wrap. `default-truncate-lines' has not existed for many
+  ;; versions -- setting it was a silent no-op, so lines were still wrapping.
+  ;; Toggle per-buffer with F12 (`toggle-truncate-lines', bound below).
+  (setq-default truncate-lines t)
 
-    ;; Prompt - use short yes/no answers
-    (setq use-short-answers t)
+  ;; Display line and column numbers
+  (setq line-number-mode t)
+  (setq column-number-mode t)
 
-    ;; Change backups to go to a backup directory
-    (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
+  ;; Prompt - use short yes/no answers
+  (setq use-short-answers t)
 
-    ;; Auto revert all files changed elsewhere.
-    ;; Use polling instead of file notifications: on macOS the kqueue
-    ;; backend watches a file's descriptor, which is invalidated when the
-    ;; file is rewritten on save. auto-revert tears the watch down and an
-    ;; in-flight event can hit it while its callback is momentarily nil,
-    ;; producing "file-notify--call-handler: Symbol's function definition
-    ;; is void: nil". Polling sidesteps the race entirely.
-    (setq auto-revert-use-notify nil)
-    (global-auto-revert-mode t)
+  ;; Change backups to go to a backup directory
+  (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
 
-    ;; Set pager to cat for shell
-    (setenv "PAGER" "/bin/cat")
+  ;; Auto revert all files changed elsewhere.
+  ;; Use polling instead of file notifications: on macOS the kqueue
+  ;; backend watches a file's descriptor, which is invalidated when the
+  ;; file is rewritten on save. auto-revert tears the watch down and an
+  ;; in-flight event can hit it while its callback is momentarily nil,
+  ;; producing "file-notify--call-handler: Symbol's function definition
+  ;; is void: nil". Polling sidesteps the race entirely.
+  (setq auto-revert-use-notify nil)
+  (global-auto-revert-mode t)
 
-    ;; Compilation buffer
+  ;; Set pager to cat for shell
+  (setenv "PAGER" "/bin/cat")
 
-    ;; Scroll with output automatically
-    (setq compilation-scroll-output t)
-    ;;(setq compilation-scroll-output 'first-error)
+  ;; Compilation buffer
 
-    ;; Show on top of current buffer instead of new buffer.
-    ;; same-window-buffer-names has been obsolete since 24.3.
-    (add-to-list 'display-buffer-alist
-                 '("\\*compilation\\*" display-buffer-same-window))
+  ;; Scroll with output automatically
+  (setq compilation-scroll-output t)
+  ;;(setq compilation-scroll-output 'first-error)
 
-    ;; Smooth scrolling (Emacs 29+, feels native on macOS trackpads)
-    (pixel-scroll-precision-mode 1)
+  ;; Show on top of current buffer instead of new buffer.
+  ;; same-window-buffer-names has been obsolete since 24.3.
+  (add-to-list 'display-buffer-alist
+               '("\\*compilation\\*" display-buffer-same-window))
+
+  ;; Smooth scrolling (Emacs 29+, feels native on macOS trackpads)
+  (pixel-scroll-precision-mode 1)
 
 #+END_SRC
 *** Environment
