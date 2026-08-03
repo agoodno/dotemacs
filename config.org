@@ -9,24 +9,26 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
 
 * Emacs Config
 ** Startup performance
-#+BEGIN_SRC emacs-lisp
-  ;; Increase GC threshold during startup to avoid repeated collection
-  (setq gc-cons-threshold most-positive-fixnum)
-
-  ;; Lower after startup to avoid memory bloat during normal use
-  (add-hook 'emacs-startup-hook
-            (lambda ()
-              (setq gc-cons-threshold (* 16 1024 1024))))
-#+END_SRC
+Garbage-collection tuning lives in ~early-init.el~. It has to run before this
+file is tangled and loaded, otherwise it misses most of startup's allocation.
 ** Package initialization
 #+BEGIN_SRC emacs-lisp
   (require 'package)
-  (setq package-enable-at-startup nil)
-  (setq package-quickstart t)
+
+  ;; `package-enable-at-startup' and `package-quickstart' are set in
+  ;; early-init.el -- both are read before this file loads, so setting them here
+  ;; had no effect on the current session.
 
   (add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/"))
   (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
-  (package-initialize)
+
+  ;; Interactively, startup has already run `package-activate-all' by the time
+  ;; this file loads, so activating again would just repeat the work. Under
+  ;; `emacs --batch -l init.el' it has not: startup's guard also requires
+  ;; `user-init-file', which batch leaves nil. Test the same flag
+  ;; `package-activate-all' sets, so each case does the work exactly once.
+  (unless (bound-and-true-p package--activated)
+    (package-initialize))
 
   ;; Refresh package list asynchronously to avoid blocking startup
   (unless package-archive-contents
@@ -178,9 +180,6 @@ empty default over a value that was already right. The same applies to
     ;; Smooth scrolling (Emacs 29+, feels native on macOS trackpads)
     (pixel-scroll-precision-mode 1)
 
-    ;; Suppress native-comp warnings from third-party packages
-    (setq native-comp-async-report-warnings-errors nil)
-    (setq native-compile-prune-cache t)
 #+END_SRC
 *** Environment
 #+BEGIN_SRC emacs-lisp
