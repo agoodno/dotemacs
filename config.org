@@ -11,6 +11,14 @@ See [[https://www.gnu.org/software/emacs/manual/elisp.html][GNU Emacs Lisp Refer
 ** Startup performance
 Garbage-collection tuning lives in ~early-init.el~. It has to run before this
 file is tangled and loaded, otherwise it misses most of startup's allocation.
+** File header
+The first tangled block supplies ~config.el~'s header line. It must stay first:
+Emacs only honours a ~lexical-binding~ cookie on line 1 of a file, and without
+it the whole configuration is evaluated with dynamic binding.
+
+#+BEGIN_SRC emacs-lisp
+  ;;; config.el --- Tangled from config.org -*- lexical-binding: t; -*-
+#+END_SRC
 ** Package initialization
 #+BEGIN_SRC emacs-lisp
   (require 'package)
