@@ -481,6 +481,24 @@ empty default over a value that was already right. The same applies to
     (interactive)
     (other-window -1))
 
+  ;; Diagnostics are split between flymake (eglot buffers) and flycheck
+  ;; (everything else) -- see the Diagnostics section -- so M-g f dispatches
+  ;; rather than naming one of them.
+  ;;
+  ;; Defined here, ahead of consult's `:bind', on purpose. use-package generates
+  ;; an autoload for a `:bind' target that is not yet fboundp; for a function
+  ;; defined in this file that produces both a "defined multiple times" warning
+  ;; and an autoload pointing at the wrong library.
+  (declare-function consult-flymake "consult-flymake")
+  (declare-function consult-flycheck "consult-flycheck")
+
+  (defun agg/consult-diagnostics ()
+    "Browse diagnostics using whichever checker owns this buffer."
+    (interactive)
+    (cond ((bound-and-true-p flymake-mode) (consult-flymake))
+          ((bound-and-true-p flycheck-mode) (consult-flycheck))
+          (t (user-error "No diagnostics backend is active in this buffer"))))
+
   ;; Trackpad suppression while Emacs has focus (Linux/X11 only). Stops stray
   ;; palm contact moving point while typing.
   (defun agg/set-trackpad (enable)
@@ -716,7 +734,7 @@ empty default over a value that was already right. The same applies to
            ("M-y" . consult-yank-pop)                ;; orig. yank-pop
            ;; M-g bindings in `goto-map'
            ("M-g e" . consult-compile-error)
-           ("M-g f" . consult-flymake)               ;; Alternative: consult-flycheck
+           ("M-g f" . agg/consult-diagnostics)       ;; dispatches flymake/flycheck
            ("M-g g" . consult-goto-line)             ;; orig. goto-line
            ("M-g M-g" . consult-goto-line)           ;; orig. goto-line
            ("M-g o" . consult-outline)               ;; Alternative: consult-org-heading
@@ -1368,29 +1386,68 @@ Configuration for Org Roam.
     :ensure t
     :defer t)
 #+END_SRC
-*** flycheck
+*** Diagnostics: flycheck and flymake
+
+Two diagnostic systems are in play, deliberately, each owning the buffers it is
+better at.
+
+- *flymake* is built in and is the only system =eglot= reports through, so it
+  owns every LSP-managed buffer -- TypeScript, TSX and JavaScript here.
+- *flycheck* owns everything else. It ships ready-made checkers for the
+  external linters this setup uses (shellcheck, yamllint, jq, xmllint,
+  =ruby -w=), which flymake would need a third-party backend collection to
+  match.
+
+They must not both annotate one buffer, which is what used to happen in
+TypeScript: =global-flycheck-mode= covered it while eglot separately switched
+flymake on. =agg/flycheck-defer-to-eglot= below resolves that by handing the
+buffer to whichever system is appropriate.
+
+Measured before choosing this: with the external linters installed, the two are
+at parity on shell, YAML, JSON and XML; flycheck is ahead on Ruby, since
+=flymake-collection= targets =ruby-mode= and this config uses =enh-ruby-mode=;
+and flymake's apparent lead on Emacs Lisp is four =checkdoc= style notes, which
+=emacs-lisp-checkdoc= is disabled below precisely to avoid. Going
+flymake-only would therefore have added a dependency and lost =html-tidy=
+without improving a single diagnostic.
 
 #+BEGIN_SRC emacs-lisp
   (use-package flycheck
     :ensure t
     :init
+    ;; checkdoc is style commentary rather than correctness, jshint is
+    ;; superseded by eslint, json-jsonlist duplicates the json checkers, and
+    ;; org-lint is noisy on org-roam notes.
     (setq-default flycheck-disabled-checkers
-                  '(emacs-lisp-checkdoc))
-    (setq-default flycheck-disabled-checkers
-                  (append flycheck-disabled-checkers
-                          '(javascript-jshint)))
-    (setq-default flycheck-disabled-checkers
-                  (append flycheck-disabled-checkers
-                          '(json-jsonlist)))
-    (setq-default flycheck-disabled-checkers
-                  (append flycheck-disabled-checkers
-                          '(org-lint)))
-    ;; Don't enable flycheck in *scratch*: on Emacs 30+ the emacs-lisp
+                  '(emacs-lisp-checkdoc javascript-jshint json-jsonlist org-lint))
+
+    ;; Don't enable flycheck in *scratch*. On Emacs 30+ the emacs-lisp
     ;; byte-compile checker is gated on `trusted-content-p', which is nil for
-    ;; non-file buffers, and emacs-lisp-checkdoc is disabled above -- leaving no
-    ;; eligible checker and a "no syntax checker ... can run here" warning.
+    ;; any buffer without a file -- a buffer with no name cannot match a
+    ;; trusted directory prefix, so trusting ~/.emacs.d/ does not help here.
+    ;; With emacs-lisp-checkdoc disabled above, that leaves no eligible checker
+    ;; and a "no syntax checker ... can run here" warning on every launch.
     (setq flycheck-global-modes '(not lisp-interaction-mode))
     (global-flycheck-mode))
+
+  (declare-function flycheck-may-enable-mode "flycheck")
+
+  (defun agg/flycheck-defer-to-eglot ()
+    "Yield to flymake while eglot manages this buffer, and take it back after.
+  Runs from `eglot-managed-mode-hook', which fires both when eglot starts
+  managing a buffer and when it stops, so this has to test the current state
+  rather than assume a direction."
+    (cond ((and (fboundp 'eglot-managed-p) (eglot-managed-p))
+           (flycheck-mode -1))
+          ((flycheck-may-enable-mode)
+           (flycheck-mode 1))))
+
+  (add-hook 'eglot-managed-mode-hook #'agg/flycheck-defer-to-eglot)
+
+  (use-package consult-flycheck
+    :ensure t
+    :after (consult flycheck)
+    :commands (consult-flycheck))
 #+END_SRC
 
 *** magit

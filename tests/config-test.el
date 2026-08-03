@@ -22,6 +22,7 @@
 
 (require 'ert)
 (require 'seq)
+(require 'cl-lib)
 
 ;;; Helpers -------------------------------------------------------------------
 
@@ -131,6 +132,54 @@ Deferral is easy to lose by accident -- a `require' in `:init', or an
 pins the set that was deferred so a regression shows up as a test failure
 rather than as a slower launch nobody attributes to a config change."
   (should (equal nil config-test--loaded-at-startup)))
+
+(ert-deftest config-flycheck-defers-to-eglot ()
+  "flycheck must yield to flymake while eglot manages a buffer, and resume after.
+Two systems annotating one buffer is exactly the state this policy exists to
+prevent, and it is invisible in a screenshot -- the duplicate underlines look
+like one checker being noisy.
+
+eglot-managed-p is stubbed: starting a real language server in batch is neither
+reliable nor the thing under test."
+  (skip-unless (fboundp 'agg/flycheck-defer-to-eglot))
+  (should (memq 'agg/flycheck-defer-to-eglot
+                (default-value 'eglot-managed-mode-hook)))
+  (let ((buf (find-file-noselect (config-test--file "json"))))
+    (unwind-protect
+        (with-current-buffer buf
+          (skip-unless (flycheck-may-enable-mode))
+          (flycheck-mode 1)
+          (should (bound-and-true-p flycheck-mode))
+          (cl-letf (((symbol-function 'eglot-managed-p) (lambda () t)))
+            (agg/flycheck-defer-to-eglot))
+          (should-not (bound-and-true-p flycheck-mode))
+          ;; The hook also fires when eglot stops managing the buffer, so the
+          ;; handoff has to work in both directions.
+          (cl-letf (((symbol-function 'eglot-managed-p) (lambda () nil)))
+            (agg/flycheck-defer-to-eglot))
+          (should (bound-and-true-p flycheck-mode)))
+      (kill-buffer buf))))
+
+(ert-deftest config-diagnostics-dispatcher-routes-by-active-checker ()
+  "M-g f must reach whichever system owns the buffer.
+Binding it straight to `consult-flymake' was wrong for most buffers, since
+flycheck owns everything eglot does not manage."
+  (skip-unless (fboundp 'agg/consult-diagnostics))
+  (should (eq (key-binding (kbd "M-g f")) 'agg/consult-diagnostics))
+  (let (called)
+    (cl-letf (((symbol-function 'consult-flymake) (lambda (&rest _) (setq called 'flymake)))
+              ((symbol-function 'consult-flycheck) (lambda (&rest _) (setq called 'flycheck))))
+      (with-temp-buffer
+        (setq-local flymake-mode t)
+        (agg/consult-diagnostics)
+        (should (eq called 'flymake)))
+      (setq called nil)
+      (with-temp-buffer
+        (setq-local flycheck-mode t)
+        (agg/consult-diagnostics)
+        (should (eq called 'flycheck)))
+      (with-temp-buffer
+        (should-error (agg/consult-diagnostics) :type 'user-error)))))
 
 (ert-deftest config-agg-commands-are-documented ()
   "Interactive agg/ commands should carry a docstring."

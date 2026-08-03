@@ -44,6 +44,46 @@ Then set the machine-specific values with `M-x customize-group RET agg`
 (org-roam directories) and `M-x customize-themes` for the theme. Those land in
 `custom.el`, which is deliberately not committed.
 
+## Diagnostics: flycheck and flymake, deliberately both
+
+Two diagnostic systems run, each owning the buffers it is better at.
+
+| | Owns | Why |
+| --- | --- | --- |
+| **flymake** | LSP-managed buffers — TypeScript, TSX, JavaScript | Built in, and the only system `eglot` reports through |
+| **flycheck** | everything else | Ships ready-made checkers for the external linters used here — shellcheck, yamllint, jq, xmllint, `ruby -w` |
+
+`agg/flycheck-defer-to-eglot` runs from `eglot-managed-mode-hook` and switches
+flycheck off when eglot takes a buffer, back on when it releases it. Without
+that, TypeScript buffers got annotated twice — which reads as one checker being
+noisy rather than as two systems overlapping.
+
+`M-g f` is bound to `agg/consult-diagnostics`, which dispatches to
+`consult-flymake` or `consult-flycheck` depending on which is live. Binding it
+straight at either one is wrong for most buffers.
+
+**Why not flymake alone?** It was measured, not assumed. With the external
+linters installed the two are at parity on shell, YAML, JSON and XML. flycheck
+is ahead on Ruby, because `flymake-collection` targets `ruby-mode` while this
+config uses `enh-ruby-mode`. flymake's apparent lead on Emacs Lisp is four
+`checkdoc` style notes, and `emacs-lisp-checkdoc` is disabled here precisely to
+avoid those. So flymake-only would have added a dependency and lost `html-tidy`
+without improving a single diagnostic. It remains a reasonable future move —
+flymake and eglot are both core, and the test suite makes switching cheap — but
+it buys nothing today.
+
+**External linters.** Several checkers are inert without their CLI tool. Present
+and working: `shellcheck`, `yamllint`, `jq`, `xmllint`, `ruby`. `eslint`
+resolves per project via `add-node-modules-path` rather than globally, so it
+works inside a repo that depends on it and nowhere else.
+
+**Emacs Lisp needs trust.** Emacs 30 gates byte-compilation of untrusted code
+(CVE-2024-53920), which is what elisp diagnostics rely on, so
+`trusted-content` is set to `("~/.emacs.d/")`. Buffers with no file — `*scratch*`
+in particular — cannot match a directory prefix and so get no elisp checker
+regardless; that is why `flycheck-global-modes` excludes
+`lisp-interaction-mode`.
+
 ## Development
 
 | Command | What it does |
