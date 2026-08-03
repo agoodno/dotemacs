@@ -67,15 +67,17 @@ values to the ~custom.el~ for future sessions.
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
+  ;; `user-full-name' is a plain C-level variable with no customize type, so
+  ;; declare one here to make it reachable from `customize-group RET agg'.
+  ;; The "" default is inert: defcustom never overwrites an already-bound value.
   (defcustom user-full-name ""
     "Name used in tool config."
     :type 'string
     :group 'agg)
 
-  (defcustom user-email-address ""
-    "Email used in tool config."
-    :type 'string
-    :group 'agg)
+  ;; `user-mail-address' is already a defcustom (startup.el), so pull the real
+  ;; variable into the agg group rather than declaring a parallel one.
+  (custom-add-to-group 'agg 'user-mail-address 'custom-variable)
 
   ;; Consider setting these variables in future
   ;; system-name ""
