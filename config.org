@@ -265,18 +265,6 @@ empty default over a value that was already right. The same applies to
     ;; (background #acb0be, latte's surface2). Deferring it would change how the
     ;; frame looks. Untangling that belongs with pruning the theme set.
 
-    (use-package color-theme-sanityinc-tomorrow
-      :ensure t
-      :defer t)
-
-    (use-package dracula-theme
-      :ensure t
-      :defer t)
-
-    (use-package gruvbox-theme
-      :ensure t
-      :defer t)
-
     (use-package catppuccin-theme
       :ensure t
       :config
@@ -295,42 +283,22 @@ empty default over a value that was already right. The same applies to
       (setq spacemacs-theme-org-agenda-height nil)
       (setq spacemacs-theme-org-height nil))
 
-    (use-package timu-spacegrey-theme
-      :ensure t
-      :defer t
-      :init
-      (customize-set-variable 'timu-spacegrey-flavour "light")
-      (customize-set-variable 'timu-spacegrey-contrasted-comments nil)
-      (customize-set-variable 'timu-spacegrey-scale-org-document-title t)
-      (customize-set-variable 'timu-spacegrey-scale-org-document-info t)
-      (customize-set-variable 'timu-spacegrey-scale-org-level-1 t)
-      (customize-set-variable 'timu-spacegrey-scale-org-level-2 t)
-      (customize-set-variable 'timu-spacegrey-scale-org-level-3 t))
+    ;; Themes still installed: spacemacs-theme, catppuccin-theme, and the
+    ;; hand-written agg-light / agg-dark in custom-themes/. Others available via
+    ;; M-x customize-themes; the removed packages were sanityinc-tomorrow,
+    ;; dracula, gruvbox and timu-spacegrey, none of which was ever enabled.
 
-    ;; Use M-x customize-themes to save theme choice to custom.el so it saves across sessions without manually loading here
-    ;;
-    ;; (load-theme 'agg-light t)
-    ;; (load-theme 'agg-dark t)
-
-    ;; (load-theme 'sanityinc-tomorrow-day)
-    ;; (load-theme 'sanityinc-tomorrow-night)
-    ;; (load-theme 'sanityinc-tomorrow-blue)
-    ;; (load-theme 'sanityinc-tomorrow-bright)
-    ;; (load-theme 'sanityinc-tomorrow-eighties)
-
-    ;; (load-theme 'dracula t)
-
-    ;; (load-theme 'gruvbox t) ;; sets to default
-    ;; (load-theme 'gruvbox-light-soft t)
-    ;; (load-theme 'gruvbox-light-medium t)
-    ;; (load-theme 'gruvbox-light-hard t)
-    ;; (load-theme 'gruvbox-dark-soft t)
-    ;; (load-theme 'gruvbox-dark-medium t) ;; default
-
+    ;; NOTE: two mechanisms currently select a theme, and both take effect.
+    ;; custom.el records custom-enabled-themes as (catppuccin) via
+    ;; M-x customize-themes, and the load-theme call below then layers
+    ;; spacemacs-light on top -- custom-enabled-themes ends up
+    ;; (spacemacs-light catppuccin). The result is a blend, not either theme:
+    ;; disabling catppuccin changes 423 of 704 faces, because spacemacs-light
+    ;; leaves many undefined and they fall back to catppuccin rather than to
+    ;; Emacs defaults. The tab-bar-tab face set in catppuccin's :config above is
+    ;; part of that.
     (load-theme 'spacemacs-light t)
     ;; (load-theme 'spacemacs-dark t)
-
-    ;; (load-theme 'timu-spacegrey t)
 #+END_SRC
 *** Indenting
 #+BEGIN_SRC emacs-lisp
