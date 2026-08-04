@@ -312,12 +312,6 @@ empty default over a value that was already right. The same applies to
 #+BEGIN_SRC emacs-lisp
   (global-hl-line-mode +1)
 
-  ;; Replaces the block cursor with a vertical bar.
-  ;; CURRENTLY OFF -- change the 0 to 1 to turn it on.
-  (use-package bar-cursor
-    :ensure t
-    :init (bar-cursor-mode 0))
-
   (use-package beacon
     :ensure t
     :init (beacon-mode 1))
