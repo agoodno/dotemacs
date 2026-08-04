@@ -276,29 +276,20 @@ empty default over a value that was already right. The same applies to
                           :bold t)))))
       (catppuccin-reload))
 
-    (use-package spacemacs-theme
-      :ensure t
-      :defer t
-      :init
-      (setq spacemacs-theme-org-agenda-height nil)
-      (setq spacemacs-theme-org-height nil))
-
-    ;; Themes still installed: spacemacs-theme, catppuccin-theme, and the
-    ;; hand-written agg-light / agg-dark in custom-themes/. Others available via
-    ;; M-x customize-themes; the removed packages were sanityinc-tomorrow,
-    ;; dracula, gruvbox and timu-spacegrey, none of which was ever enabled.
-
-    ;; NOTE: two mechanisms currently select a theme, and both take effect.
-    ;; custom.el records custom-enabled-themes as (catppuccin) via
-    ;; M-x customize-themes, and the load-theme call below then layers
-    ;; spacemacs-light on top -- custom-enabled-themes ends up
-    ;; (spacemacs-light catppuccin). The result is a blend, not either theme:
-    ;; disabling catppuccin changes 423 of 704 faces, because spacemacs-light
-    ;; leaves many undefined and they fall back to catppuccin rather than to
-    ;; Emacs defaults. The tab-bar-tab face set in catppuccin's :config above is
-    ;; part of that.
-    (load-theme 'spacemacs-light t)
-    ;; (load-theme 'spacemacs-dark t)
+    ;; Catppuccin is the theme. Loaded here rather than left to custom.el so the
+    ;; choice is tracked and a fresh clone gets a theme: custom.el is gitignored,
+    ;; and it is the only thing that was enabling catppuccin. Its
+    ;; custom-enabled-themes entry now agrees with this line instead of
+    ;; competing with it.
+    ;;
+    ;; Previously this loaded spacemacs-light on top of the catppuccin that
+    ;; custom.el had enabled, so custom-enabled-themes was
+    ;; (spacemacs-light catppuccin) and the frame showed a blend of the two
+    ;; rather than either one.
+    ;;
+    ;; Themes available: catppuccin (flavors set above) and the hand-written
+    ;; agg-light / agg-dark in custom-themes/. See M-x customize-themes.
+    (load-theme 'catppuccin t)
 #+END_SRC
 *** Indenting
 #+BEGIN_SRC emacs-lisp
