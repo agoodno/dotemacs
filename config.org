@@ -157,6 +157,8 @@ empty default over a value that was already right. The same applies to
   ;; Toggle per-buffer with F12 (`toggle-truncate-lines', bound below).
   (setq-default truncate-lines t)
 
+  (setq-default fill-column 180)
+
   ;; Display line and column numbers
   (setq line-number-mode t)
   (setq column-number-mode t)
@@ -839,8 +841,6 @@ Configuration for Org Roam.
     ("C-c n d" . org-roam-dailies-map)
     :config
     (require 'org-roam-dailies) ;; Ensure the keymap is available
-    (defun agg-set-fill-column () (setq-local fill-column 180))
-    (add-hook 'org-roam-find-file-hook #'agg-set-fill-column)
     (add-hook 'org-roam-find-file-hook #'turn-on-auto-fill)
 
     (defun agg/org-roam-switch (dir &optional no-sync)
@@ -1260,35 +1260,41 @@ Configuration for Org Roam.
            (:map slack-message-compose-buffer-mode-map
                  (("C-c '" . slack-message-send-from-buffer))))
     :config
-    (slack-register-team
-     :name "elmlang"
-     :default t
-     :full-and-display-names t
-     :subscribed-channels '(beginners)
-     :token (auth-source-pick-first-password
-             :host "elmlang.slack.com"
-             :user "token"
-             :type 'netrc
-             :max 1)
-     :cookie (auth-source-pick-first-password
-              :host "elmlang.slack.com"
-              :user "cookie"
-              :type 'netrc
-              :max 1))
-    (slack-register-team
-     :name "clojurians"
-     :full-and-display-names t
-     :subscribed-channels '(announcements beginners clojurescript)
-     :token (auth-source-pick-first-password
-             :host "clojurians.slack.com"
-             :user "token"
-             :type 'netrc
-             :max 1)
-     :cookie (auth-source-pick-first-password
-              :host "clojurians.slack.com"
-              :user "cookie"
-              :type 'netrc
-              :max 1)))
+    ;; Upgrading an already-loaded `slack' package reloads slack.el,
+    ;; which re-fires this :config block. Guard against re-registering
+    ;; (and re-flapping the connection) on that reload.
+    (defvar agg/slack-teams-registered nil)
+    (unless agg/slack-teams-registered
+      (setq agg/slack-teams-registered t)
+      (slack-register-team
+       :name "elmlang"
+       :default t
+       :full-and-display-names t
+       :subscribed-channels '(beginners)
+       :token (auth-source-pick-first-password
+               :host "elmlang.slack.com"
+               :user "token"
+               :type 'netrc
+               :max 1)
+       :cookie (auth-source-pick-first-password
+                :host "elmlang.slack.com"
+                :user "cookie"
+                :type 'netrc
+                :max 1))
+      (slack-register-team
+       :name "clojurians"
+       :full-and-display-names t
+       :subscribed-channels '(announcements beginners clojurescript)
+       :token (auth-source-pick-first-password
+               :host "clojurians.slack.com"
+               :user "token"
+               :type 'netrc
+               :max 1)
+       :cookie (auth-source-pick-first-password
+                :host "clojurians.slack.com"
+                :user "cookie"
+                :type 'netrc
+                :max 1))))
   ;; (slack-register-team
   ;;  :name "zendesk"
   ;;  :token (auth-source-pick-first-password
