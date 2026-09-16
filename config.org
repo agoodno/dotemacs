@@ -805,6 +805,49 @@ Configuration for Org Mode.
 Configuration for Org Roam.
 
 #+BEGIN_SRC emacs-lisp
+  ;; These live at top level rather than in `use-package''s :config because they
+  ;; are the commands you reach for to *get into* a notes tree -- defined inside
+  ;; :config they did not exist until something else had already loaded org-roam,
+  ;; so `M-x agg/roam-toggle-notes' was void after a restart. `agg--roam-switch' pulls
+  ;; org-roam in itself, so invoking any of them from a cold session works.
+  (defun agg--roam-switch (dir &optional no-sync)
+    "Switch org-roam to DIR with a per-directory database.
+  Unless NO-SYNC, rebuild the database for DIR afterwards."
+    (require 'org-roam)
+    (setq org-roam-directory (expand-file-name dir)
+          org-roam-db-location (expand-file-name "org-roam.db" dir))
+    (unless no-sync (org-roam-db-sync)))
+
+  (defun agg/roam-switch-to-personal-notes ()
+    "Switch to personal org-roam."
+    (interactive)
+    (agg--roam-switch agg-org-roam-personal-directory))
+
+  (defun agg/roam-switch-to-work-notes ()
+    "Switch to work org-roam."
+    (interactive)
+    (agg--roam-switch agg-org-roam-work-directory))
+
+  (defun agg--roam-dirs-equal-p (a b)
+    "Non-nil if directories A and B name the same directory.
+  Normalizes trailing slashes and symlinks; safe on paths that do not exist."
+    (string= (file-name-as-directory (file-truename (expand-file-name a)))
+             (file-name-as-directory (file-truename (expand-file-name b)))))
+
+  (defun agg/roam-toggle-notes ()
+    "Toggle org-roam between the work and personal notes.
+  From the work notes, switch to personal; from anywhere else -- including an
+  unrecognized `org-roam-directory' -- switch to work, so a stray value resolves
+  to the startup default rather than staying stuck."
+    (interactive)
+    ;; Before reading `org-roam-directory': custom.el does not bind a defcustom
+    ;; whose library has not loaded yet, so cold this read is void.
+    (require 'org-roam)
+    (if (agg--roam-dirs-equal-p org-roam-directory agg-org-roam-work-directory)
+        (agg/roam-switch-to-personal-notes)
+      (agg/roam-switch-to-work-notes))
+    (message "org-roam notes: %s" org-roam-directory))
+
   (use-package org-roam
     :ensure t
     :after org
@@ -843,26 +886,16 @@ Configuration for Org Roam.
     (require 'org-roam-dailies) ;; Ensure the keymap is available
     (add-hook 'org-roam-find-file-hook #'turn-on-auto-fill)
 
-    (defun agg/org-roam-switch (dir &optional no-sync)
-      "Switch org-roam to DIR with a per-directory database.
-  Unless NO-SYNC, rebuild the database for DIR afterwards."
-      (setq org-roam-directory (expand-file-name dir)
-            org-roam-db-location (expand-file-name "org-roam.db" dir))
-      (unless no-sync (org-roam-db-sync)))
-
-    (defun agg/org-roam-personal ()
-      "Switch to personal org-roam."
-      (interactive)
-      (agg/org-roam-switch agg-org-roam-personal-directory))
-
-    (defun agg/org-roam-work ()
-      "Switch to work org-roam."
-      (interactive)
-      (agg/org-roam-switch agg-org-roam-work-directory))
-
-    ;; No startup switch here on purpose: `org-roam-directory' is a standard
-    ;; defcustom and is already set per-machine in custom.el, which is the right
-    ;; place for it. Forcing a value here would override that.
+    ;; custom.el owns `org-roam-directory' -- it is a defcustom set per machine,
+    ;; and forcing a value here once pointed org-roam at a directory that did not
+    ;; exist and had autosync build an empty database there. So follow it rather
+    ;; than override it, and only fix the half that has no per-machine setting:
+    ;; `org-roam-db-location' would otherwise keep its default under
+    ;; `user-emacs-directory', leaving a fresh session reading a database that
+    ;; has nothing to do with the notes. Which notes load at startup stays a
+    ;; custom.el decision (currently the work notes).
+    ;; NO-SYNC: skip the rebuild at startup; autosync keeps it current.
+    (agg--roam-switch org-roam-directory t)
 
     (org-roam-db-autosync-mode))
 

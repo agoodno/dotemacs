@@ -44,6 +44,48 @@ Then set the machine-specific values with `M-x customize-group RET agg`
 (org-roam directories) and `M-x customize-themes` for the theme. Those land in
 `custom.el`, which is deliberately not committed.
 
+## Notes: two org-roam trees, personal and work
+
+Each tree keeps its database beside its own notes, so the two never mix:
+
+| Directory | `defcustom` | Holds |
+| --- | --- | --- |
+| `~/notes/` | `agg-org-roam-personal-directory` | Personal notes |
+| `~/Google Drive/My Drive/sonosnotes/` | `agg-org-roam-work-directory` | Work notes |
+
+Both paths are machine-specific and set through `M-x customize-group RET agg`.
+
+| Command | Effect |
+| --- | --- |
+| `agg/roam-toggle-notes` | Flip between the two. From work it goes personal; from anywhere else — including an unrecognized `org-roam-directory` — it goes to work, so a stray value resolves to a known state. |
+| `agg/roam-switch-to-work-notes` | Go to the work notes, wherever you started. |
+| `agg/roam-switch-to-personal-notes` | Go to the personal notes, wherever you started. |
+
+Each repoints `org-roam-directory` *and* `org-roam-db-location`, then rebuilds
+that tree's database. Nothing is bound to a key; reach them from `M-x`.
+
+**Which tree you start in is a `custom.el` decision, not a `config.org` one.**
+`org-roam-directory` is an ordinary defcustom, and forcing a value from
+`config.org` once pointed org-roam at a directory that did not exist on the
+machine and let autosync build an empty database there;
+`config-does-not-override-org-roam-directory` in `tests/config-test.el` guards
+against a repeat. To change which notes load at startup, customize
+`org-roam-directory` itself — the switch commands above do not persist.
+
+`config.org` sets only the other half at startup: `org-roam-db-location`, which
+has no per-machine setting and would otherwise keep its default under
+`user-emacs-directory`, leaving a fresh session pointed at the notes from
+`custom.el` while reading a stale `~/.emacs.d/org-roam.db`. It derives the
+location from whatever directory `custom.el` names, without a database rebuild
+— `org-roam-db-autosync-mode` keeps it current from there.
+
+**Do not also set `org-roam-db-location` in `custom.el`.** `custom.el` loads
+early, while the derivation runs from org-roam's `:config` block whenever
+org-roam first loads, so a customized value is set and then overwritten — it
+looks authoritative and does nothing. Worse, it would be a second source of
+truth: change the notes directory and a hand-set database location silently
+keeps pointing at the old tree. Set the directory only; the database follows.
+
 ## Diagnostics: flycheck and flymake, deliberately both
 
 Two diagnostic systems run, each owning the buffers it is better at.

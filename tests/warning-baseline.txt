@@ -4,13 +4,15 @@ Warning: assignment to free variable `auto-revert-use-notify'
 Warning: assignment to free variable `c-basic-offset'
 Warning: assignment to free variable `compilation-scroll-output'
 Warning: assignment to free variable `js-indent-level'
+Warning: assignment to free variable `org-roam-db-location'
+Warning: assignment to free variable `org-roam-directory'
 Warning: assignment to free variable `org-roam-v2-ack'
 Warning: assignment to free variable `recentf-max-saved-items'
 Warning: assignment to free variable `save-place-file'
 Warning: reference to free variable `compilation-filter-start'
 Warning: reference to free variable `org-roam-dailies-map'
+Warning: reference to free variable `org-roam-directory'
 Warning: the function `agg-set-fill-column' is not known to be defined.
-Warning: the function `agg/org-roam-switch' is not known to be defined.
 Warning: the function `ansi-color-apply-on-region' might not be defined at runtime.
 Warning: the function `catppuccin-get-color' might not be defined at runtime.
 Warning: the function `catppuccin-reload' might not be defined at runtime.
