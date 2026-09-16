@@ -50,6 +50,38 @@ lookup would disagree with Emacs in exactly the cases worth testing."
   "Function symbols on HOOK's global value, ignoring lambdas and closures."
   (seq-filter #'symbolp (and (boundp hook) (default-value hook))))
 
+(defconst config-test--root
+  (file-name-directory
+   (directory-file-name
+    (file-name-directory (or load-file-name buffer-file-name default-directory))))
+  "Repository root, resolved from this file's own path.
+Captured at load time: `load-file-name' is bound only while loading, so reading
+it inside a function yields nil.
+
+This finds init.el next to this file without assuming anything about
+`user-emacs-directory'. It does not make the repo relocatable -- init.el loads
+config.org from ~/.emacs.d by absolute path, which is why CI points HOME at its
+checkout.")
+
+(defun config-test--cold-emacs (form)
+  "Evaluate FORM in a fresh `emacs --batch -l init.el' and return its stdout.
+Some properties only hold *before* anything loads a deferred package, and this
+suite loads org-roam itself, so they cannot be observed in-process.
+
+Runs the Emacs currently executing, so it follows $EMACS, against the repo at
+`config-test--root'. stderr is discarded to keep startup
+chatter out of the result; anything the test needs to report, FORM princ-es to
+stdout. INFILE nil closes stdin -- vterm otherwise prompts to build its native
+module and hangs the run, as the Makefile notes."
+  (let* ((emacs (expand-file-name invocation-name invocation-directory))
+         (root config-test--root)
+         (default-directory root))
+    (with-output-to-string
+      (with-current-buffer standard-output
+        (call-process emacs nil '(t nil) nil "--batch"
+                      "-l" (expand-file-name "init.el" root)
+                      "--eval" (prin1-to-string form))))))
+
 (defconst config-test--should-be-deferred
   '(enh-ruby-mode inf-ruby yari rubocop robe ruby-tools chruby projectile-rails
     dockerfile-mode terraform-mode elm-mode
@@ -277,6 +309,36 @@ its :config block does on load."
     (skip-unless saved)
     (should (equal (expand-file-name org-roam-directory)
                    (expand-file-name (eval saved t))))))
+
+(ert-deftest config-notes-commands-are-usable-from-a-cold-session ()
+  "The org-roam notes commands must work before anything loads org-roam.
+They were defined inside org-roam's `use-package' :config block, which does not
+run until something loads the package -- it is deferred -- so after a restart
+none of them existed and `M-x' could not offer them at all. Hoisting them out
+exposed a second half: `agg/roam-toggle-notes' reads `org-roam-directory', and
+custom.el does not bind a defcustom whose library has not loaded, so it failed
+with void-variable even once defined. Both halves are user-visible only from a
+cold session, which is why this shells out.
+
+Deliberately does not assert org-roam is unloaded: if it were ever made eager
+the commands would still be available, and availability is the property that
+matters here."
+  (let ((out (config-test--cold-emacs
+              '(let (bad)
+                 (dolist (c '(agg/roam-toggle-notes
+                              agg/roam-switch-to-work-notes
+                              agg/roam-switch-to-personal-notes))
+                   (unless (commandp c)
+                     (push (format "%s is not a command" c) bad)))
+                 ;; Stub the switch: running it for real would rebuild the
+                 ;; notes database as a side effect of running the tests.
+                 (fset 'agg--roam-switch (lambda (&rest _) nil))
+                 (condition-case e (agg/roam-toggle-notes)
+                   (error (push (format "toggle failed: %S" e) bad)))
+                 (princ (if bad
+                            (mapconcat #'identity (nreverse bad) "; ")
+                          "cold-session-ok"))))))
+    (should (string-match-p "cold-session-ok" out))))
 
 (ert-deftest config-declared-treesit-grammars-are-usable ()
   "Every grammar a remap or auto-mode entry depends on should be installed.
