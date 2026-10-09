@@ -327,6 +327,25 @@ empty default over a value that was already right. The same applies to
   ;; Paste and backspace operations delete the selection and "pastes over" it
   (delete-selection-mode t)
 #+END_SRC
+*** Terminal clipboard
+Copy out via OSC 52 (works through tmux and ssh; needs ~set-clipboard on~ in tmux).
+Paste in via ~pbpaste~, since terminals rarely allow OSC 52 reads.
+#+BEGIN_SRC emacs-lisp
+  (use-package clipetty
+    :ensure t
+    :hook (after-init . global-clipetty-mode))
+
+  (defun agg/pbpaste ()
+    "Return the macOS pasteboard text when it differs from the kill ring head."
+    (when (and (eq system-type 'darwin)
+               (not (display-graphic-p))
+               (executable-find "pbpaste"))
+      (let ((text (shell-command-to-string "pbpaste")))
+        (unless (or (string-empty-p text) (string= text (car kill-ring)))
+          text))))
+
+  (setq interprogram-paste-function #'agg/pbpaste)
+#+END_SRC
 *** Windowing
 #+BEGIN_SRC emacs-lisp
   ;; Make side by side buffers function the same as the main window
